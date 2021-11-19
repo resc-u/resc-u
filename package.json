@@ -1,0 +1,37 @@
+{
+  "name": "resc-u",
+  "version": "1.0.0",
+  "description": "Adopt an animal. Rescue yourself.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --ext js,hbs,css,html server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/resc-u/resc-u.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/resc-u/resc-u/issues"
+  },
+  "homepage": "https://github.com/resc-u/resc-u#readme",
+  "dependencies": {
+    "bcrypt": "^5",
+    "connect-mongo": "^4",
+    "cookie-parser": "^1",
+    "dotenv": "^10",
+    "express": "^4",
+    "express-session": "^1",
+    "hbs": "^4",
+    "http-errors": "^1",
+    "mongoose": "^6",
+    "morgan": "^1",
+    "serve-favicon": "^2"
+  },
+  "devDependencies": {
+    "debug": "~2.6.9",
+    "nodemon": "^2.0.15"
+  }
+}
