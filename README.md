@@ -6,24 +6,23 @@ Adopt an animal. Rescue yourself.
 
 resc-u is an app for connecting animals in need of adoption with an adopter.
 
-<!-- ## User Stories
+## User Stories
 
-- **homepage/login** - the page you see before logging in. Here you find a link to signup
-- **sign up** - As a user I want to sign up on the webpage so that I can see all the events that I could attend
-- **404** - As a user I want to see a nice 404 page when I go to a page that doesn’t exist so that I know it was my fault
-- **500** - As a user I want to see a nice error page when the super team screws it up so that I know that is not my fault
+There are 3 types of user: the adopter, the shelter, and the admin.
 
-### Logged in - adopter
+### Adopter
+- An adopter's user flow will be as follows: They register, or log in if they have already an account. They see their profile page, where they can edit their adopter profile, their preferences, and also see their favorite animals, as well as the animals that are "a match" regarding her preferences. They can see a list of the animals awaiting adoption, sort them, filter them by their preferences, visit an animal's profile page, read the adoption information, and the shelter's contact information. 
 
-- **profile** - The adopter sees page with their information & preferences and a small feed of animals.
-- **profile edit** - .
+### Shelter
+- A shelter can log in in Resc-u with the credentials created previously by us, the admin. They can add (create new) animals in the application, and see their full list of animals later on. They can also visit any adopter's profile pages. 
 
-### Logged in - shelter
+### Admin
+- The admin is us, the developers of the app, who can view, edit, and delete everything in the application. 
 
-- **profile** - Rescue centers have their own profile page with their details and a list of their animals
-- **animal create** - As a user I want to create an event so that I can invite others to attend -->
 
-<!-- ## Backlog
+<!--
+
+ ## Backlog
 
 List of other features outside of the MVPs scope
 
@@ -35,15 +34,6 @@ User profile:
 - list of events created by the user
 - list events the user is attending
 
-Geo Location:
-
-- add geolocation to events when creating
-- show event in a map in event detail page
-- show all events in a map in the event list page
-
-Homepage
-
-- ...
  -->
 
 ## Pages:
