@@ -42,7 +42,7 @@ User profile:
 | ------------------------- | --------------------------------------------------- | -------------- |
 | **/users**                |                                                     |                |
 | GET "/"                   | renders the homepage/login                          | All            |
-| GET "/users/signup"       | renders the signup form for adopters, & admin       | Adopter, Admin |
+| GET "/signup"             | renders the signup form for adopters, & admin       | Adopter, Admin |
 | GET "/users/profile"      | shows profile page, different for each type of user | All            |
 | GET "/users/profile/edit" | shows form to edit a profile                        | All            |
 | **/shelters**             |                                                     |                |
@@ -59,7 +59,7 @@ User profile:
 | -------------------------- | ------------------------------------------------------------------------------ | -------------- |
 | **/users**                 |                                                                                |                |
 | GET "/users/delete/:id"    | deletes a user                                                                 | Adopter, Admin |
-| POST "/users/signup"       | creates a new user passes email, username, password. Redirects to edit profile | All            |
+| POST "/signup"       | creates a new user passes email, username, password. Redirects to edit profile | All            |
 | POST "/users/profile/edit" | edits an adopters' or shelters' profile info                                   | Adopter, Admin |
 | **/animals**               |                                                                                |                |
 | POST "/animals/new"        | creates a new animal                                                           | Shelter, Admin |
