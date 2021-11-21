@@ -6,24 +6,30 @@
     {{> alertMessages }}
 
     {{#if isAdopter }}
-        <p>Showing adopter's profile</p>
+        <h3>Showing adopter's profile</h3>
 
-        <a href="/users/profile/edit/{{loggedInUser.id}}" class="btn">Edit profile</a>
+        <p>Username: {{ user.username }}</p>
+        <p>Fullname: {{user.fullname}} </p>
+        <p>Children: {{user.children}} </p>
+        <p>Animal Preference: {{user.animalPreference}}</p>
+        <p>Size living place: {{user.housingSize}}</p>
+
+        <a href="/users/profile/edit/adopter/{{loggedInUser.id}}" class="btn">Edit profile</a>
 
     {{else if isShelter}}
         <p>Showing shelter's profile</p>
 
-        <a href="/users/profile/edit/{{loggedInUser.id}}" class="btn">Edit profile</a>
+        <a href="/users/profile/edit/shelter/{{loggedInUser.id}}" class="btn">Edit profile</a>
 
     {{else if isAdmin}}
-        <p>Showing admin's profile</p>
+        <h3>Showing admin's profile</h3>
 
         <a href="#" class="btn">Animals</a>
         <a href="#" class="btn">Adopters</a>
         <a href="#" class="btn">Shelters</a>
 
     {{else}}
-        <p>ERROR! User unkown!</p>
+        <p>No profile to show... user unkown!</p>
     {{/if}}
 
 </section>

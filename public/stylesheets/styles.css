@@ -22,6 +22,7 @@ h1 {
 
 .fields {
     display: flex;
+    align-items: center;
     margin: 20px 0px;
 }
 .form label {
@@ -34,10 +35,15 @@ h1 {
     border: solid 1px #ccc;
     width: 200px;
     padding: 10px;
+    font-family: Futura;
 }
 
 .form select {
     width: 220px;   /* needs a little more width */
+}
+
+.form input[type=radio] {
+    width: 50px;
 }
 
 .btn {
@@ -50,6 +56,8 @@ h1 {
     cursor: pointer;
     text-decoration: none;
     font-weight: normal;
+    margin-top: 30px;
+    display: block;
 }
 
 .btn:hover {
