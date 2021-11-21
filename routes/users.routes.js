@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User.model")
+const Adopter = require("../models/Adopter.model")
 
 // GET /users ==> list of users
 router
@@ -55,37 +56,32 @@ router.get('/profile/edit/:role/:id', async (req, res) => {
 router.post('/profile/edit/adopter/:id', async (req, res) => { 
         
     let { fullname, children, animalPreference, housingSize } = req.body
-    let userToUpdate = null
-    let updatedUser = null
 
-    try {
+    console.log(req.params.id)
+    console.log("req.body",  req.body)
 
-        console.log(req.params.id)
-        console.log("req.body",  req.body)
-
-        if (!fullname) res.render('profile/edit/:id', { error: {type: "FORM_ERROR", message: "Fullname is required." }})
+    if (!fullname) res.render('profile/edit/:id', { error: {type: "FORM_ERROR", message: "Fullname is required." }})
         
-        userToUpdate = await User.findById(req.params.id)
-        console.log("user to update", userToUpdate)
-        if (!userToUpdate) res.render(`profile/edit/adopter/${req.params.id}`, { error: {type: "DB_ERROR", message: "Error in the DB" }})
-       
-        updatedUser = await User.findByIdAndUpdate(req.params.id, 
-                                                    { fullname: "Monica Saiz Martinez", 
-                                                    children: 0, 
-                                                    animalPreference: "dog", 
-                                                    housingSize: "small appartment", 
-                                                    new: true })
+    Adopter.findById(req.params.id)
+            .then( (user) => {
+                console.log("user to update", user)
+                if (!user) res.render(`profile/edit/adopter/${req.params.id}`, { error: {type: "DB_ERROR", message: "Error in the DB" }})
+                Adopter.findByIdAndUpdate(req.params.id, 
+                                         { fullname, children, animalPreference, housingSize}, 
+                                         { new: true })
+                        .then( (updatedUser) => {
+                            console.log("updatedUser", updatedUser)
+                            res.render('users/profile', { user: updatedUser, isAdopter: true, loggedInUser: updatedUser })
+                        })
+                        .catch( (e) => {
+                            error = { errType: "DB_ERR", message: e }
+                        })
+            })
+            .catch( (e) => {
+                error = { errType: "DB_ERR", message: e }
+            })     
+    })
 
-        console.log("updatedUser", updatedUser)
-
-    } catch (e) {
-        error = { errType: "DB_ERR", message: e }
-    } finally {
-
-        res.render('users/profile', { user: updatedUser, isAdopter: true, loggedInUser: updatedUser })
-    
-    }
-})  
 
 // GET /profile/:id
 router.get('/profile/:id', async (req, res) => {
