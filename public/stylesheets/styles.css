@@ -1,0 +1,97 @@
+/* general formatting */
+
+body {
+    font-family: Futura;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin-left: 50px;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+}
+
+.fields {
+    display: flex;
+    margin: 20px 0px;
+}
+.form label {
+    width: 200px;
+}
+
+.form input,
+.form select {
+    border-radius: 6px;
+    border: solid 1px #ccc;
+    width: 200px;
+    padding: 10px;
+}
+
+.form select {
+    width: 220px;   /* needs a little more width */
+}
+
+.btn {
+    border: solid 1px black;
+    background-color: #E7F4EA;
+    color: black;
+    width: max-content;
+    padding: 10px 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.btn:hover {
+    background-color: #fff;
+}
+
+.message {
+    border: solid 1px #097969;
+    background-color: #DAF7A6;
+}
+
+.error_message {
+    border: solid 1px brown;
+    background-color: #ffcccb;
+}
+
+.message,
+.error_message {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px 40px;
+}
+
+.hello_user {
+    text-align: center;
+}
+
+/* ====== Login and Signup ======== */
+.section_login,
+.section_signup {
+    width: max-content;
+    margin: 50px auto;
+}
+.signup_now,
+.login_now {
+    text-align: center;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.section_signup .subtitle {
+    text-align: center;
+}
