@@ -1,0 +1,29 @@
+
+<section class="section_profile">
+
+    <h1>My Profile </h1>
+
+    {{> alertMessages }}
+
+    {{#if isAdopter }}
+        <p>Showing adopter's profile</p>
+
+        <a href="/users/profile/edit/{{loggedInUser.id}}" class="btn">Edit profile</a>
+
+    {{else if isShelter}}
+        <p>Showing shelter's profile</p>
+
+        <a href="/users/profile/edit/{{loggedInUser.id}}" class="btn">Edit profile</a>
+
+    {{else if isAdmin}}
+        <p>Showing admin's profile</p>
+
+        <a href="#" class="btn">Animals</a>
+        <a href="#" class="btn">Adopters</a>
+        <a href="#" class="btn">Shelters</a>
+
+    {{else}}
+        <p>ERROR! User unkown!</p>
+    {{/if}}
+
+</section>

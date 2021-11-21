@@ -1,0 +1,19 @@
+<section class="section_edit_profile shelter">
+
+  <h1>Edit profile shelter</h1>
+  
+  {{> alertMessages }}
+
+  <form class="form edit-profile-shelter" action="/users/profile/edit/{{id}}" method="POST">
+
+      <div class="fields">
+        <label for="name">Blablabla: </label>
+        <input type="text" name="name" required placeholder="choose a name"/>
+      </div>
+      
+      // TO DO !!
+
+      <button class="btn" type="submit">Save changes</button>
+  </form>
+
+</section>

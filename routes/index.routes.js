@@ -51,6 +51,9 @@ router
       let loggedInUser = null
       let error = null
       let message = ""
+      let isAdopter = false
+      let isAdmin = false
+      let isShelter = false
 
       try {
 
@@ -65,6 +68,15 @@ router
         if (isPwdCorrect) {
           //req.session.loggedInUser = loggedInUser
           message = "You are logged in!"
+
+          switch(loggedInUser.role) {
+            case "adopter": isAdopter = true
+              break;
+            case "shelter": isShelter = true
+              break;
+            default: isAdmin = true
+          }
+
         } else {
           message = "Password is incorrect!" 
           error = {type: "USER_ERROR", message }
@@ -74,8 +86,7 @@ router
           error = { errType: "DB_ERR", message: e }
 
       } finally {
-        console.log(loggedInUser)
-          res.render("index", { loggedInUser, message, error })
+          res.render("users/profile", { loggedInUser, message, error, isAdopter, isAdmin, isShelter })
       }
     })
 
