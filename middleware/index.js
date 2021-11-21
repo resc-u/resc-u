@@ -1,11 +1,7 @@
 const express = require("express");
-
 const logger = require("morgan");
-
 const cookieParser = require("cookie-parser");
-
 const favicon = require("serve-favicon");
-
 const path = require("path");
 
 module.exports = (app) => {

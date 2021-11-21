@@ -11,6 +11,7 @@ require("./middleware")(app);
 // routers
 const index = require("./routes/index.routes");
 
+//route handling
 app.use("/", index);
 
 module.exports = app;
