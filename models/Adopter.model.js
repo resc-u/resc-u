@@ -15,4 +15,4 @@ const Adopter = User.discriminator("Adopter",
     })
 );
 
-module.exports = model("Adopter", Adopter);
+module.exports = model('Adopter');
