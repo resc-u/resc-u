@@ -25,5 +25,4 @@ const animalSchema = new Schema({
   shelter: { type: Schema.Types.ObjectId, ref: "Shelter" },
 });
 
-const Animal = model("Animal", animalSchema);
-module.exports = Animal;
+module.exports = model("Animal", animalSchema);
