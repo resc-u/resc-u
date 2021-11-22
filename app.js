@@ -19,4 +19,7 @@ app.use("/", indexRouter);
 const usersRouter = require("./routes/users.routes");
 app.use("/users", usersRouter);
 
+
+const animalsRouter = require("./routes/animals.routes");
+app.use("/animals", animalsRouter);
 module.exports = app;

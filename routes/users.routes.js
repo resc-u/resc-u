@@ -1,6 +1,12 @@
 const router = require("express").Router();
 const User = require("../models/User.model")
 const Adopter = require("../models/Adopter.model")
+const Animal = require("../models/Animal.model.js")
+
+
+// ********* require fileUploader in order to use it *********
+const fileUploader = require('../config/cloudinary.config');
+
 
 // GET /users ==> list of users
 router
@@ -105,5 +111,24 @@ router.get('/profile/:role/:id', async (req, res) => {
     }
 
  })  
+
+ // POST route for saving a new animal in the database
+// This route has the image upload example 
+ router.post('/profile/edit/shelter/:id', fileUploader.array('animal-image[]', 3), (req, res) => {
+    let user = null
+    let { id, role } = req.params
+
+    const { name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly } = req.body;
+    
+    Animal.create({ name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly, imageUrl: req.files, sheler: req.params.id })
+    .then(newlyCreatedAnimalFromDB => {
+      console.log(newlyCreatedAnimalFromDB);
+      res.render("/"); 
+    })
+    .catch(error => console.log(`Error while creating a new animal: ${error}`));
+
+})
+
+
 
 module.exports = router;
