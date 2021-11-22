@@ -1,0 +1,55 @@
+<section class="section_edit_profile adopter">
+
+  <h1>Edit profile adopter</h1>
+  
+  {{> alertMessages }}
+
+  <form class="form edit-profile-adopter" action="/users/profile/edit/adopter/{{user.id}}" method="POST">
+
+        <div class="fields">
+            <label for="name">Username: </label>
+            <p>{{ user.username }}</p>
+        </div>
+
+        <div class="fields">
+            <label for="name">Email: </label>
+            <p>{{ user.email }}</p>
+        </div>
+
+
+      <div class="fields">
+        <label for="fullname">Fullname: </label>
+        <input type="text" value={{user.fullname}} name="fullname" required placeholder="enter fullname" />
+      </div>
+      
+      <div class="fields">
+        <label>Do you have children? </label>
+        <input type="radio" id="no" name="children" value="0" checked> No
+        <input type="radio" id="yes" name="children" value="1"> Yes
+      </div>
+
+    <div class="fields">    
+        <label for="animalPreference">Animal of preference:</label>
+        <select name="animalPreference" placeholder="choose an option" required>
+            <option disabled>- tell us which animal you prefer -</option>
+            <option value="dog">Dog</option>
+            <option value="cat">Cat</option>
+            <option value="turtle">Turtle</option>
+            <option value="fish">Fish</option>
+        </select>
+    </div>
+
+    <div class="fields">    
+        <label for="housingSize">Housing size:</label>
+        <select name="housingSize" placeholder="choose an option" required>
+            <option disabled>- how big is your living place? -</option>
+            <option value="small appartment">Small appartment</option>
+            <option value="big appartment">Big appartment</option>
+            <option value="house">House</option>
+        </select>
+    </div>
+
+    <button class="btn" type="submit">Save changes</button>
+  </form>
+
+</section>
