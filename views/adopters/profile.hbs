@@ -1,0 +1,18 @@
+
+<section class="section_profile">
+
+    <h1>My Profile </h1>
+
+    {{> alertMessages }}
+
+    <h3>Showing adopter's profile</h3>
+
+    <p>Username: {{ user.username }}</p>
+    <p>Fullname: {{user.fullname}} </p>
+    <p>Children: {{user.children}} </p>
+    <p>Animal Preference: {{user.animalPreference}}</p>
+    <p>Size living place: {{user.housingSize}}</p>
+
+    <a href="/users/profile/edit/adopter/{{user.id}}" class="btn">Edit profile</a>
+
+</section>

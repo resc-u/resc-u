@@ -57,9 +57,6 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
         
     let { fullname, children, animalPreference, housingSize } = req.body
 
-    console.log(req.params.id)
-    console.log("req.body",  req.body)
-
     if (!fullname) res.render('profile/edit/:id', { error: {type: "FORM_ERROR", message: "Fullname is required." }})
         
     Adopter.findById(req.params.id)
@@ -71,7 +68,7 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
                                          { new: true })
                         .then( (updatedUser) => {
                             console.log("updatedUser", updatedUser)
-                            res.render('users/profile', { user: updatedUser, isAdopter: true, loggedInUser: updatedUser })
+                            res.render(`adopters/profile`, { user: updatedUser, loggedInUser: updatedUser })
                         })
                         .catch( (e) => {
                             error = { errType: "DB_ERR", message: e }
@@ -84,29 +81,29 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
 
 
 // GET /profile/:id
-router.get('/profile/:id', async (req, res) => {
+router.get('/profile/:role/:id', async (req, res) => {
     let user = null
-    let isAdopter = false
-    let isShelter = false
-    let isAdmin = false
+    let { id, role } = req.params
 
     try {
-        user = await User.findById(req.params.id)
-        switch(loggedInUser.role) {
-            case "adopter": isAdopter = true
-              break;
-            case "shelter": isShelter = true
-              break;
-            default: isAdmin = true
-          }
+
+        user = await User.findById(id)
 
     } catch (e) {
         error = { errType: "DB_ERR", message: e }
     } finally {
-        res.render('/profile', {user, loggedInUser: user, isAdopter, isShelter, isAdmin})
+
+        switch(role) {
+            case "adopter":  
+              res.render(`adopters/profile`, {user, loggedInUser: user })
+              break;
+            case "shelter": 
+            res.render(`shelters/profile`, {user, loggedInUser: user })
+              break;
+            default: isAdmin = true
+          }
     }
 
  })  
-
 
 module.exports = router;

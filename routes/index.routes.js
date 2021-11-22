@@ -12,8 +12,6 @@ router
     .post( async (req, res) => {
         
         let error = null
-        let isAdopter = false
-        let isShelter = false
         let newUser = null
         let { username, email, password, role } = req.body
         
@@ -31,21 +29,19 @@ router
 
           if (role === "adopter") {
             newUser = await Adopter.create({ username, email, role, password: hashedPwd })
-            isAdopter = true
+            if (newUser) res.render(`adopters/profile`, { loggedInUser: newUser, username, email, role, message: "User created successfully!!" })
           } else if (role === "shelter") {
             newUser = await Shelter.create({ username, email, role, password: hashedPwd })
-            isShelter = true
+            if (newUser) res.render(`shelters/profile`, { loggedInUser: newUser, message: "User created successfully!!" })
           }
 
+          // otherwise, we render signup again
+          res.render("signup", { username, email, role, error: { type: "DB_ERROR", message: "Error in the DB" }})
+          
         } catch (e) {
           error = { errType: "DB_ERR", message: e }
           
-        } finally {
-          
-          if (newUser) res.render("users/profile", { loggedInUser: newUser, username, email, role, isAdopter, isShelter, message: "User created successfully!!" })
-          else res.render("signup", { username, email, role, error: { type: "DB_ERROR", message: "Error in the DB" }})
-          
-        }
+        } 
   })
 
 
@@ -58,9 +54,6 @@ router
       let loggedInUser = null
       let error = null
       let message = ""
-      let isAdopter = false
-      let isAdmin = false
-      let isShelter = false
 
       try {
 
@@ -76,25 +69,23 @@ router
           //req.session.loggedInUser = loggedInUser
           message = "You are logged in!"
 
-          switch(loggedInUser.role) { 
-            case "adopter": isAdopter = true
-              break;
-            case "shelter": isShelter = true
-              break;
-            default: isAdmin = true
-          }
-
         } else {
           message = "Password is incorrect!" 
           error = {type: "USER_ERROR", message }
         }
 
+        if (loggedInUser.role === "adopter") {
+          res.render(`adopters/profile`, { loggedInUser, user: loggedInUser, message, error })
+        } else if (loggedInUser.role === "shelter") {
+          res.render(`shelters/profile`, { loggedInUser, user: loggedInUser, message, error })
+        } else if (loggedInUser.role === "admin") {
+          res.render(`admin/control-panel`, { loggedInUser, user: loggedInUser, message, error })
+        }
+
       } catch (e) {
           error = { errType: "DB_ERR", message: e }
 
-      } finally {
-          res.render("users/profile", { loggedInUser, user: loggedInUser, message, error, isAdopter, isAdmin, isShelter })
-      }
+      } 
     })
 
 
