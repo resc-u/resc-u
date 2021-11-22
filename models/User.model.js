@@ -14,7 +14,8 @@ const User = new Schema(
       role: { 
         type: String,
         enum: ["adopter", "shelter", "admin"]
-      }
+      },
+      alertMessage: { type: String, default: "" }
     },
     userOptions
 )

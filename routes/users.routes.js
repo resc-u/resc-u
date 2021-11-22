@@ -57,12 +57,12 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
         
     let { fullname, children, animalPreference, housingSize } = req.body
 
-    if (!fullname) res.render(`profile/edit/adopter/${req.params.id}`, { error: {type: "FORM_ERROR", message: "Fullname is required." }})
+    if (!fullname) res.render('adopters/edit-profile', { error: {type: "FORM_ERROR", message: "Fullname is required." }})
         
     Adopter.findById(req.params.id)
             .then( (user) => {
                 console.log("user to update", user)
-                if (!user) res.render(`profile/edit/adopter/${req.params.id}`, { error: {type: "DB_ERROR", message: "Error in the DB" }})
+                if (!user) res.render('adopters/edit-profile', { user, error: {type: "DB_ERROR", message: "Error in the DB" }})
                 Adopter.findByIdAndUpdate(req.params.id, 
                                          { fullname, children, animalPreference, housingSize}, 
                                          { new: true })

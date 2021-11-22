@@ -16,18 +16,20 @@ router
     let { username, email, password, role } = req.body;
 
     try {
+
+      // user didn't fill all the fields
       if (!username || !email || !password || !role) {
         res.render("signup", {
-          username,
-          email,
-          role,
-          error: {
+          username, email, role,
+          error: { 
             type: "CREDENTIALS_ERROR", message: "All fields are required!",
           },
         });
       }
 
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email })
+
+      // user already exists
       if (user)
         res.render("signup", {
           username, email, role,
@@ -39,16 +41,21 @@ router
 
       // redirect to Profile pages    
       if (role === "adopter") {
-        newUser = await Adopter.create({ username, email, role, password: hashedPwd });
+
+        newUser = await Adopter.create({ username, email, role, password: hashedPwd, alertMessage: "You signed up successfully!" });
         if (newUser) res.redirect(`/users/profile/adopter/${newUser.id}`)
+
       } else if (role === "shelter") {
-        newUser = await Shelter.create({ username, email, role, password: hashedPwd });
+
+        newUser = await Shelter.create({ username, email, role, password: hashedPwd, alertMessage: "You signed up successfully!" });
         if (newUser) res.redirect(`/users/profile/shelter/${newUser.id}`)
+
       }
 
       // otherwise, we render signup again
       res.render("signup", { username, email, role, error: { type: "DB_ERROR", message: "Error in the DB" }});
-    } catch (e) {
+  
+    } catch (e) {   
       error = { errType: "DB_ERR", message: e };
     }
   });
@@ -88,8 +95,11 @@ router
         error = { type: "USER_ERROR", message };
       }
 
-      if (loggedInUser.role === "adopter") res.redirect(`/users/profile/adopter/${loggedInUser.id}`)
-      else if (loggedInUser.role === "shelter") res.redirect(`/users/profile/shelter/${loggedInUser.id}`)
+      if (loggedInUser.role === "adopter") {
+        res.redirect(`/users/profile/adopter/${loggedInUser.id}`, { alertMessage: "You are now logged in!" })
+      } else if (loggedInUser.role === "shelter") {
+        res.redirect(`/users/profile/shelter/${loggedInUser.id}`, { alertMessage: "You are now logged in!" })
+      }
       //else if (loggedInUser.role === "admin") res.redirect('/users/admin/control-panel')
 
     } catch (e) {

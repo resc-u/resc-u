@@ -1,11 +1,12 @@
-  <!-- information and successful messages -->
+
+  <!-- information and successful messages stored in the User -->
   
-  {{#if message}}
-    <p class="message">{{message}}</p>
+  {{#if loggedInUser }}
+    <p class="message">{{ loggedInUser.alertMessage }}</p>
   {{/if}}
 
   <!-- error messages -->
 
   {{#if error }}
-    <p class="error_message">{{error.message}}</p>
+    <p class="error_message">{{ error.message }}</p>
   {{/if}}
