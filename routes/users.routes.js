@@ -66,9 +66,8 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
                 Adopter.findByIdAndUpdate(req.params.id, 
                                          { fullname, children, animalPreference, housingSize}, 
                                          { new: true })
-                        .then( (updatedUser) => {
-                            console.log("updatedUser", updatedUser)
-                            res.render(`adopters/profile`, { user: updatedUser, loggedInUser: updatedUser })
+                        .then( (updatedUser) => { 
+                            res.redirect(`/users/profile/adopter/${req.params.id}`)
                         })
                         .catch( (e) => {
                             error = { errType: "DB_ERR", message: e }
