@@ -99,6 +99,26 @@ section {
 }
 
 /* ====== Login and Signup ======== */
+nav.menu {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #eaeaea;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+nav.menu a {
+    text-decoration: none;
+    color: black;
+}
+
+nav.menu .btn {
+    
+}
+
+
+/* ====== Login and Signup ======== */
 .menu {
     display: flex;
     justify-content: space-between;
