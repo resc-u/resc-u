@@ -57,7 +57,7 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
         
     let { fullname, children, animalPreference, housingSize } = req.body
 
-    if (!fullname) res.render(`profile/edit/adopter/${req.params.id}`, { error: {type: "FORM_ERROR", message: "Fullname is required." }})
+    if (!fullname) res.render('adopters/edit-profile', { error: {type: "FORM_ERROR", message: "Fullname is required." }})
         
     Adopter.findById(req.params.id)
             .then( (user) => {
@@ -65,8 +65,8 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
                 Adopter.findByIdAndUpdate(req.params.id, 
                                          { fullname, children, animalPreference, housingSize}, 
                                          { new: true })
-                        .then( (updatedUser) => {
-                            res.render(`adopters/profile`, { user: updatedUser, loggedInUser: updatedUser })
+                        .then( (updatedUser) => { 
+                            res.redirect(`/users/profile/adopter/${req.params.id}`)
                         })
                         .catch( (e) => {
                             error = { errType: "DB_ERR", message: e }
