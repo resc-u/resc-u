@@ -6,11 +6,11 @@ const app = express();
 //connects to DB
 require("./db");
 
-// middleware
-require("./middleware")(app);
+// sessions
+require("./config/session.config")(app);
 
-const hbs = require("hbs");
-hbs.registerPartials(path.join(__dirname, "views", "partials"));
+// middleware
+require("./config")(app);
 
 // routers
 const indexRouter = require("./routes/index.routes");

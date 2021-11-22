@@ -67,13 +67,11 @@ router.post('/profile/edit/adopter/:id', async (req, res) => {
         
     Adopter.findById(req.params.id)
             .then( (user) => {
-                console.log("user to update", user)
-                if (!user) res.render(`profile/edit/adopter/${req.params.id}`, { error: {type: "DB_ERROR", message: "Error in the DB" }})
+                if (!user) res.render('adopters/edit-profile', { user, error: {type: "DB_ERROR", message: "Error in the DB" }})
                 Adopter.findByIdAndUpdate(req.params.id, 
                                          { fullname, children, animalPreference, housingSize}, 
                                          { new: true })
                         .then( (updatedUser) => {
-                            console.log("updatedUser", updatedUser)
                             res.render(`adopters/profile`, { user: updatedUser, loggedInUser: updatedUser })
                         })
                         .catch( (e) => {
@@ -92,7 +90,6 @@ router.get('/profile/:role/:id', async (req, res) => {
     let { id, role } = req.params
 
     try {
-
         user = await User.findById(id)
 
     } catch (e) {
@@ -101,11 +98,11 @@ router.get('/profile/:role/:id', async (req, res) => {
 
         switch(role) {
             case "adopter":  
-              res.render(`adopters/profile`, {user, loggedInUser: user })
-              break;
+                res.render('adopters/profile', {user, loggedInUser: user })
+                break;
             case "shelter": 
-            res.render(`shelters/profile`, {user, loggedInUser: user })
-              break;
+                res.render('shelters/profile', {user, loggedInUser: user })
+                break;
             default: isAdmin = true
           }
     }

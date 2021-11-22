@@ -6,20 +6,19 @@
 
   <form class="form edit-profile-adopter" action="/users/profile/edit/adopter/{{user.id}}" method="POST">
 
-        <div class="fields">
-            <label for="name">Username: </label>
-            <p>{{ user.username }}</p>
-        </div>
+      <div class="fields">
+          <label for="name">Username: </label>
+          <p>{{ user.username }}</p>
+      </div>
 
-        <div class="fields">
-            <label for="name">Email: </label>
-            <p>{{ user.email }}</p>
-        </div>
-
+      <div class="fields">
+          <label for="name">Email: </label>
+          <p>{{ user.email }}</p>
+      </div>
 
       <div class="fields">
         <label for="fullname">Fullname: </label>
-        <input type="text" value={{user.fullname}} name="fullname" placeholder="enter fullname" required/>
+        <input type="text" value="{{user.fullname}}" name="fullname" placeholder="enter fullname" required/>
       </div>
       
       <div class="fields">
