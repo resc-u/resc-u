@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const Shelter = require("../models/Shelter.model");
 
 const animalSchema = new Schema({
   name: { type: String, required: true },
@@ -13,6 +14,7 @@ const animalSchema = new Schema({
     enum: ["small", "medium", "large"],
   },
   age: { type: Number },
+  description: { type: String },
   status: {
     type: String,
     enum: ["awaiting adoption", "adopted"],
@@ -20,7 +22,7 @@ const animalSchema = new Schema({
   color: { type: String },
   breed: { type: String },
   dateofentry: { type: Date, default: Date.now },
-  images: { type: [String] },
+  imageUrl: { type: Array },
   kidfriendly: { type: Boolean },
   shelter: { type: Schema.Types.ObjectId, ref: "Shelter" },
 });
