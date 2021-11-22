@@ -4,14 +4,15 @@ const User = require("./User.model");
 const Adopter = User.discriminator("Adopter",
   new Schema(
     {
+      fullname: String,
       location: String,
       children: Boolean,
       animalPreference: { type: String, enum: ["dog", "cat", "turtle", "fish"] },
-      house: {
+      housingSize: {
         type: String,
-        enum: ["big apartment", "house", "small apartment"]
+        enum: ["small apartment", "big apartment", "house"]
       }
     })
 );
 
-module.exports = model("Adopter", Adopter);
+module.exports = model('Adopter');

@@ -1,43 +1,28 @@
 const mongoose = require("mongoose");
 const User = require("../models/User.model");
+const Adopter = require("../models/Adopter.model");
+const Shelter = require("../models/Shelter.model");
 const bcrypt = require("bcrypt");
 
-const uri = "mongodb+srv://user:pass@resc-u.okafj.mongodb.net/resc-u";
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  user: "admin",
-  pass: "1234",
-};
-
-// When successfully connected
-mongoose.connection.on("connected", () =>
-  console.log("Mongoose default connection open")
-);
-
-// When the connection is disconnected
-mongoose.connection.on("disconnected", () =>
-  console.log("Mongoose default connection disconnected")
-);
-
-// If the connection throws an error
-mongoose.connection.on("error", (err) =>
-  console.log(`Mongoose default connection error: ${err}`)
-);
-
-const users = [
+const adopters = [
   {
     username: "test-adopter",
     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(4)),
     email: "adopter@test.com",
     role: "adopter",
   },
+];
+
+const shelters = [
   {
     username: "test-shelter",
     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(4)),
     email: "shelter@test.com",
     role: "shelter",
   },
+];
+
+const admins = [
   {
     username: "test-admin",
     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(4)),
@@ -46,24 +31,53 @@ const users = [
   },
 ];
 
-const seedDB = async () => {
-  try {
-    // connect to DB
-    mongoose.connect(uri, options);
+// connects to DB
+require("./index");
 
-    // delete all users in DB
-    const usersInDb = await User.find();
-    const deletedUsers = await User.deleteMany({ usersInDb });
-    console.log(`Deleted ${deletedUsers.deletedCount} testing users`);
+Adopter.deleteMany()
+  .then((users) =>
+    console.log(`Deleted ${users.deletedCount} testing users (adopters)`)
+  )
+  .then(
+    Adopter.insertMany(adopters).then((users) => {
+      console.log(`Created ${users.length} testing users (adopters)`);
+      mongoose.connection.close();
+    })
+  )
+  .catch((err) =>
+    console.log(
+      `An error occurred seeding testing users (adopters) to the DB: ${err}`
+    )
+  );
 
-    // insert test users in DB
-    const insertedUsers = await User.insertMany(users);
-    console.log(`Created ${insertedUsers.length} testing users`);
-  } catch (err) {
-    console.log(`An error occurred seeding testing users to the DB: ${err}`);
-  } finally {
-    mongoose.disconnect();
-  }
-};
+Shelter.deleteMany()
+  .then((users) =>
+    console.log(`Deleted ${users.deletedCount} testing users (shelters)`)
+  )
+  .then(
+    Shelter.insertMany(shelters).then((users) => {
+      console.log(`Created ${users.length} testing users (shelters)`);
+      mongoose.connection.close();
+    })
+  )
+  .catch((err) =>
+    console.log(
+      `An error occurred seeding testing users (shelters) to the DB: ${err}`
+    )
+  );
 
-seedDB();
+User.deleteMany()
+  .then((users) =>
+    console.log(`Deleted ${users.deletedCount} testing users (admins)`)
+  )
+  .then(
+    User.insertMany(admins).then((users) => {
+      console.log(`Created ${users.length} testing users (admins)`);
+      mongoose.connection.close();
+    })
+  )
+  .catch((err) =>
+    console.log(
+      `An error occurred seeding testing users (admins) to the DB: ${err}`
+    )
+  );

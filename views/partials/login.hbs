@@ -1,13 +1,7 @@
 
 <section class="section_login">
   
-  {{#if message}}
-    <p class="message">{{message}}</p>
-  {{/if}}
-
-  {{#if error }}
-    <p class="error_message">{{error.message}}</p>
-  {{/if}}
+  {{> alertMessages }}
 
   <form class="form login" action="/" method="POST">
 
