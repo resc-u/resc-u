@@ -42,12 +42,12 @@ router
       // redirect to Profile pages    
       if (role === "adopter") {
 
-        newUser = await Adopter.create({ username, email, role, password: hashedPwd, alertMessage: "You signed up successfully!" });
+        newUser = await Adopter.create({ username, email, role, password: hashedPwd });
         if (newUser) res.redirect(`/users/profile/adopter/${newUser.id}`)
 
       } else if (role === "shelter") {
 
-        newUser = await Shelter.create({ username, email, role, password: hashedPwd, alertMessage: "You signed up successfully!" });
+        newUser = await Shelter.create({ username, email, role, password: hashedPwd });
         if (newUser) res.redirect(`/users/profile/shelter/${newUser.id}`)
 
       }
@@ -96,9 +96,9 @@ router
       }
 
       if (loggedInUser.role === "adopter") {
-        res.redirect(`/users/profile/adopter/${loggedInUser.id}`, { alertMessage: "You are now logged in!" })
+        res.redirect(`/users/profile/adopter/${loggedInUser.id}`)
       } else if (loggedInUser.role === "shelter") {
-        res.redirect(`/users/profile/shelter/${loggedInUser.id}`, { alertMessage: "You are now logged in!" })
+        res.redirect(`/users/profile/shelter/${loggedInUser.id}`)
       }
       //else if (loggedInUser.role === "admin") res.redirect('/users/admin/control-panel')
 
