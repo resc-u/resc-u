@@ -16,6 +16,9 @@ require("./config")(app);
 const indexRouter = require("./routes/index.routes");
 app.use("/", indexRouter);
 
+const authRouter = require("./routes/auth.routes");
+app.use("/auth", authRouter);
+
 const usersRouter = require("./routes/users.routes");
 app.use("/users", usersRouter);
 
