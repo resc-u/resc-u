@@ -33,10 +33,9 @@ router
           } else if (role === "shelter") {
             newUser = await Shelter.create({ username, email, role, password: hashedPwd })
             if (newUser) res.render(`shelters/profile`, { loggedInUser: newUser, message: "User created successfully!!" })
+          } else {
+            res.render("signup", { username, email, role, error: { type: "USER_ERROR", message: "This user already exists!" }})
           }
-
-          // otherwise, we render signup again
-          res.render("signup", { username, email, role, error: { type: "DB_ERROR", message: "Error in the DB" }})
           
         } catch (e) {
           error = { errType: "DB_ERR", message: e }
