@@ -99,6 +99,23 @@ section {
 }
 
 /* ====== Login and Signup ======== */
+.menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eaeaea;
+    padding: 10px;
+}
+.menu .btn {
+    margin-top: 0;
+}
+.menu a {
+    cursor: pointer;
+}
+
+
+
+/* ====== Login and Signup ======== */
 .section_login,
 .section_signup {
     width: max-content;
