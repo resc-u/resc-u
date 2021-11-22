@@ -108,8 +108,8 @@ router
       let isPwdCorrect = bcrypt.compareSync(password, loggedInUser.password);
 
       if (isPwdCorrect) {
-        //req.session.loggedInUser = loggedInUser
         console.log("SESSION =====> ", req.session);
+        req.session.loggedInUser = loggedInUser;
 
         message = "You are logged in!";
       } else {
