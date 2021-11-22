@@ -1,0 +1,13 @@
+<nav class="menu">
+
+    <a href="/profile/{{loggedInUser.role}}/{{loggedInUser.id}}">My profile</a>
+    <a href="/animals">Animals</a>
+    <a href="/shelters">Shelters</a>
+
+    {{#if loggedInUser}}
+        <a href="/logout" class="btn">Log out</a>
+    {{else}}
+        <a href="/" class="btn">Log in</a>
+    {{/if}}
+
+</nav>
