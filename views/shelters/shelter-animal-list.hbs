@@ -1,0 +1,33 @@
+<h1>This Shelter's animals</h1>
+<hr>
+<div class="row">
+{{#each animalslist}}
+    <div class="col-md-4 mb-5">
+      <div class="card" style="width: 18rem;">
+
+        <img src="{{imageUrl.[0].path}}" class="card-img-top" alt="{{name}}">
+        <img src="{{imageUrl.[1].path}}" class="card-img-top" alt="{{name}}">
+        <img src="{{imageUrl.[2].path}}" class="card-img-top" alt="{{name}}">
+        
+        <div class="card-body">
+          <h5 class="card-title"> Name: {{name}}</h5>
+          <p class="card-text"> Description: {{description}}</p>
+          <p class="card-text"> Type: {{type}}</p>
+          <p class="card-text"> Sex: {{sex}}</p>
+          <p class="card-text"> Size: {{size}}</p>
+          <p class="card-text"> Age: {{age}}</p>
+          <p class="card-text"> Status: {{status}}</p>
+          <p class="card-text"> Color {{color}}</p>
+          <p class="card-text"> Date of Entry: {{dateofentry}}</p>
+          <p class="card-text"> Kid Friendly: {{kidfriendly}}</p>
+          <p class="card-text"> Shelter ID: {{shelter}}</p>
+
+        </div>
+      </div>
+    </div>
+  {{else}}
+    <p>There are no animals from this Shelter</p>
+  {{/each}}
+
+  <hr />
+</div>

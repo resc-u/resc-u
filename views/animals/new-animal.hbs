@@ -1,65 +1,94 @@
 <p>Add an Aminal to Resc-U</p>
 <div class="row">
   <div class="col-md-6">
-    <form class="form edit-profile-shelter" action="/animals/new" method="post" enctype="multipart/form-data"> {{!-- !!! --}}
+    <form
+      class="form add an email"
+      action="/animals/new"
+      method="post"
+      enctype="multipart/form-data"
+    >
+      {{! !!! }}
       <div class="form-group">
         <label>Name:
           <input type="text" name="name" class="form-control" />
         </label>
       </div>
-    <div class="form-group">
+      <div class="form-group">
         <label>Description:
-          <textarea name="description" cols="30" rows="6" class="form-control"> </textarea>
+          <textarea name="description" cols="30" rows="6" class="form-control">
+          </textarea>
         </label>
-    </div>
+      </div>
       <div class="form-group">
         <label>Type:
-          <textarea name="type"  class="form-control"> </textarea>
+          <textarea name="type" class="form-control"> </textarea>
         </label>
       </div>
-    <div class="form-group">
-        <label>Sex:
-          <textarea name="sex" class="form-control"> </textarea>
-        </label>
+      <div class="form-group">
+        <label for="sex">Sex: </label>
+        <select id="sex" name="sex" class="form-control">
+          <option value="male"> Male </option>
+          <option value="female"> Female </option>
+        </select>
       </div>
-    <div class="form-group">
-        <label>Size:
-          <textarea name="size" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
+      <div class="form-group">
+        <label for="size">Size: </label>
+        <select id="size" name="size" class="form-control">
+          <option value="small"> Small </option>
+          <option value="medium"> Medium </option>
+          <option value="large"> Large </option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>age:
           <textarea name="age" class="form-control"> </textarea>
         </label>
-    </div>
-    <div class="form-group">
-        <label>Status:
-          <textarea name="status" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
+        <label for="status">Status: </label>
+        <select id="status" name="status" class="form-control">
+          <option value="awaiting adoption"> Awaiting adoption </option>
+          <option value="adopted"> Adopted </option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>Color:
           <textarea name="color" class="form-control"> </textarea>
         </label>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
         <label>Breed:
           <textarea name="breed" class="form-control"> </textarea>
         </label>
-    </div>
-    <div class="form-group">
-        <label>Date of entry:
-          <textarea name="dateofentry" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Kid Friendly:
-          <textarea name="kidfriendly" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
+      </div>
+      <div class="form-group">
+        <label for="dateofentry">Date of entry: </label>
+        <input
+          type="date"
+          id="dateofentry"
+          name="dateofentry"
+          class="form-control"
+          value="2021-11-22"
+          min="2021-01-01"
+          max="2021-12-31"
+        />
+      </div>
+      <div class="form-group">
+        <label for="kidfriendly">Kid Friendly: </label>
+        <select id="kidfriendly" name="kidfriendly" class="form-control">
+          <option value="true"> Yes </option>
+          <option value="false"> No! </option>
+        </select>
+
+      </div>
+      <div class="form-group">
         <label>Images:
-          <input type="file" name="animal-image[]" multiple class="form-control-file" />
+          <input
+            type="file"
+            name="animal-image[]"
+            multiple
+            class="form-control-file"
+          />
         </label>
       </div>
 

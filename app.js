@@ -23,3 +23,7 @@ app.use("/users", usersRouter);
 const animalsRouter = require("./routes/animals.routes");
 app.use("/animals", animalsRouter);
 module.exports = app;
+
+const sheltersRouter = require("./routes/shelters.routes");
+app.use("/shelters", sheltersRouter);
+module.exports = app;

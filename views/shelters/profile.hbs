@@ -11,79 +11,10 @@
 
     <a href="/users/profile/edit/shelter/{{user.id}}" class="btn">Edit profile</a>
 
-<p>Add an Aminal to Resc-U</p>
-<div class="row">
-  <div class="col-md-6">
-    <form class="form edit-profile-shelter" action="/animals/new" method="post" enctype="multipart/form-data"> {{!-- !!! --}}
-      <div class="form-group">
-        <label>Name:
-          <input type="text" name="name" class="form-control" />
-        </label>
-      </div>
-    <div class="form-group">
-        <label>Description:
-          <textarea name="description" cols="30" rows="6" class="form-control"> </textarea>
-        </label>
-    </div>
-      <div class="form-group">
-        <label>Type:
-          <textarea name="type"  class="form-control"> </textarea>
-        </label>
-      </div>
-    <div class="form-group">
-        <label>Sex:
-          <textarea name="sex" class="form-control"> </textarea>
-        </label>
-      </div>
-    <div class="form-group">
-        <label>Size:
-          <textarea name="size" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>age:
-          <textarea name="age" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Status:
-          <textarea name="status" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Color:
-          <textarea name="color" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Breed:
-          <textarea name="breed" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Date of entry:
-          <textarea name="dateofentry" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Kid Friendly:
-          <textarea name="kidfriendly" class="form-control"> </textarea>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Images:
-          <input type="file" name="animal-image[]" multiple class="form-control-file" />
-        </label>
-      </div>
 
-      <button type="submit" class="btn btn-primary">Create</button>
-    </form>
-  </div>
-</div>
+    <a href="/animals/new" class="btn">Add an Animal</a>
 
 
-
-
-
+    <a href="/shelters/animals" class="btn"> List of animals from this Shelter </a>
 
 </section>
