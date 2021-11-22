@@ -85,7 +85,7 @@ h1 {
 .hello_user {
     text-align: center;
     position: absolute;
-    top: 20px;
+    top: 70px;
     left: 20px;
     font-size: 16px;
 }
@@ -98,39 +98,23 @@ section {
     padding: 40px;
 }
 
-/* ====== Login and Signup ======== */
-nav.menu {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    background-color: #eaeaea;
-    padding: 10px;
-    margin-bottom: 20px;
-}
 
-nav.menu a {
-    text-decoration: none;
-    color: black;
-}
-
-nav.menu .btn {
-    
-}
-
-
-/* ====== Login and Signup ======== */
+/* ====== Menu ======== */
 .menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #eaeaea;
-    padding: 10px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
 }
 .menu .btn {
     margin-top: 0;
 }
 .menu a {
     cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
 
 
