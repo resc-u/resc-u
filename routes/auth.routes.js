@@ -2,6 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
+const Shelter = require("../models/Shelter.model");
 
 const isNotLoggedIn = require("../middleware/isNotLoggedIn");
 
@@ -48,12 +49,12 @@ router
   .post(async (req, res) => {
     let error = null;
     let newUser = null;
-    let { username, email, password, role } = req.body;
+    const { username, email, password, role } = req.body;
 
     try {
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
-        res.render("signup", {
+        res.render("auth/signup", {
           username,
           email,
           role,
@@ -66,29 +67,39 @@ router
 
       const user = await User.findOne({ email });
 
+      // correct signup
       if (!user) {
-        // correct signup
+        // encryption
+        const salt = bcrypt.genSaltSync(4);
+        const hashedPwd = bcrypt.hashSync(password, salt);
+
+        if (role === "adopter") {
+          newUser = await Adopter.create({
+            username,
+            email,
+            role,
+            password: hashedPwd,
+          });
+        } else if (role === "shelter") {
+          console.log("here");
+          newUser = await Shelter.create({
+            username,
+            email,
+            role,
+            password: hashedPwd,
+          });
+        }
+        // redirect to profile
         res.redirect("/users/profile");
       } else {
         // user already exists
-        res.render("signup", {
+        res.render("auth/signup", {
           username,
           email,
           role,
           error: { type: "USER_ERROR", message: "This user already exists!" },
         });
       }
-
-      const salt = bcrypt.genSaltSync(4);
-      const hashedPwd = bcrypt.hashSync(password, salt);
-
-      // otherwise, we render signup again
-      res.render("signup", {
-        username,
-        email,
-        role,
-        error: { type: "DB_ERROR", message: "Error in the DB" },
-      });
     } catch (e) {
       error = { errType: "DB_ERR", message: e };
     }
