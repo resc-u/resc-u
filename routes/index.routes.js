@@ -8,7 +8,39 @@ const Shelter = require("../models/Shelter.model");
 router
   .route("/signup")
   .get((req, res) => {
-    res.render("signup");
+    res.render("signup");   
+    .post( async (req, res) => {
+        
+        let error = null
+        let newUser = null
+        let { username, email, password, role } = req.body
+        
+        try {
+
+          if ( !username || !email || !password || !role ) {
+              res.render('signup', { username, email, role, error: {type: "CREDENTIALS_ERROR", message: "All fields are required!" }})
+          }
+  
+          const user = await User.findOne( { email } )
+          if (user) res.render("signup", { username, email, role, error: { type: "USER_ERROR", message: "This user already exists!" }})
+        
+          const salt = bcrypt.genSaltSync(4)
+          const hashedPwd = bcrypt.hashSync(password, salt)
+
+          if (role === "adopter") {
+            newUser = await Adopter.create({ username, email, role, password: hashedPwd })
+            if (newUser) res.render(`adopters/profile`, { loggedInUser: newUser, username, email, role, message: "User created successfully!!" })
+          } else if (role === "shelter") {
+            newUser = await Shelter.create({ username, email, role, password: hashedPwd })
+            if (newUser) res.render(`shelters/profile`, { loggedInUser: newUser, message: "User created successfully!!" })
+          } else {
+            res.render("signup", { username, email, role, error: { type: "USER_ERROR", message: "This user already exists!" }})
+          }
+          
+        } catch (e) {
+          error = { errType: "DB_ERR", message: e }
+          
+        } 
   })
   .post(async (req, res) => {
     let error = null;
