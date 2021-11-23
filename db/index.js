@@ -8,6 +8,8 @@ const options = {
   pass: "1234",
 };
 
+console.log("URI---> ",uri);
+
 mongoose.connect(uri, options);
 const db = mongoose.connection;
 

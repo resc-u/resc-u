@@ -7,7 +7,7 @@ const Adopter = User.discriminator("Adopter",
       fullname: String,
       location: String,
       children: Boolean,
-      animalPreference: { type: String, enum: ["dog", "cat", "turtle", "fish"] },
+      animalPreference: [String],
       housingSize: {
         type: String,
         enum: ["small apartment", "big apartment", "house"]

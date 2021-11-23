@@ -1,3 +1,4 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
@@ -8,26 +9,28 @@ const adopters = [
   {
     username: "test-adopter",
     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(4)),
-    email: "adopter@test.com",
-    role: "adopter",
+    email: "adopter@test.com"
   },
 ];
 
 const shelters = [
   {
-    username: "test-shelter",
+    username: "shelter-barcelona",
     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(4)),
-    email: "shelter@test.com",
-    role: "shelter",
+    email: "shelter-barcelona@test.com"
   },
+  {
+    username: "shelter-madrid",
+    password: bcrypt.hashSync("1234", bcrypt.genSaltSync(4)),
+    email: "shelter-madrid@test.com"
+  }
 ];
 
 const admins = [
   {
     username: "test-admin",
     password: bcrypt.hashSync("1234", bcrypt.genSaltSync(4)),
-    email: "admin@test.com",
-    role: "admin",
+    email: "admin@test.com"
   },
 ];
 
