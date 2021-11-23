@@ -14,7 +14,8 @@ router.route("/").get(async (req, res) => {
     currentUser = req.session.loggedInUser
     listUsers = await User.find();
   } catch (e) {
-    req.flash('error', e)
+    console.log("There's been an error!! ===> ", e)
+    res.render("homepage", { messages: {info: "We are sorry, there has been an error."}} )
   } finally {
     res.render("users/list", { users: listUsers, currentUser });
   }
@@ -51,8 +52,8 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
         break;
     }
 } catch (e) {
-  req.flash('error', e)
-  res.render("homepage")
+  console.log("There's been an error!! ===> ", e)
+  res.render("homepage", { messages: {info: "We are sorry, there has been an error."}} )
 }});
 
 /* profile edit */
@@ -108,21 +109,25 @@ router
 
     } catch (e) {
 
-        req.flash('error', e)
+        console.log("There's been an error!! ===> ", e)
 
+        let route = ""
+        
         switch (user.usertype) {
             case "Adopter":
-              res.render("users/adopters/edit-profile", { currentUser: user })
+              route = "users/adopters/edit-profile"
               break;
             case "Shelter":
-              res.render("users/shelters/edit-profile", { currentUser: user })
+              route = "users/shelters/edit-profile" 
               break;
             default:
-              res.render("users/admin/control-panel", { currentUser: user })
+              route = "users/admin/control-panel"
           }
 
+          res.render(route, { currentUser: user, messages: { info: "We are sorry, there has been an error." }})
+
     } finally {
-      // redirect back to the profile
+
       req.flash('info', 'Changes successfully saved!')
       res.redirect(`/users/${user.usertype}/${user.username}`);
     }
@@ -139,7 +144,7 @@ router
     try {
       await User.findOneAndDelete({ username: req.params.username });
     } catch (e) {
-      req.flash('error', e)
+      console.log("There's been an error!! ===> ", e)
     } finally {
       req.session.destroy((err) => {
         if (err) res.redirect("/");
