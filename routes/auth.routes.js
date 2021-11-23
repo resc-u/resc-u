@@ -4,41 +4,37 @@ const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
 const Shelter = require("../models/Shelter.model");
 
-const isNotLoggedIn = require("../middleware/isNotLoggedIn");
+const { isLoggedIn, isNotLoggedIn } = require("../middleware/userHelper");
 
 /* login */
 router.post("/login", isNotLoggedIn, async (req, res) => {
-  let error = null;
-  let message = "";
 
   try {
+
     const { email, password } = req.body;
     // if one of the fields is missing
     if (!email || !password)
-      res.render("homepage", {
-        error: { type: "CREDENTIALS_ERROR", message: "Invalid credentials" },
-      });
+      res.render("homepage", { error: { type: "CREDENTIALS_ERROR", message: "Invalid credentials" }});
 
     const loggedInUser = await User.findOne({ email });
     if (!loggedInUser)
-      res.render("homepage", {
-        error: { type: "USER_ERROR", message: "User doesn't exist!" },
-      });
+      res.render("homepage", { error: { type: "USER_ERROR", message: "User doesn't exist!" }});
 
     const isPwdCorrect = await bcrypt.compare(password, loggedInUser.password);
 
     if (isPwdCorrect) {
+      // set loggedInUser in session
       req.session.loggedInUser = loggedInUser;
-      console.log("LOGGED IN USER =====> ", req.session.loggedInUser);
-      message = "You are logged in!";
+
+      req.flash('info', 'You are logged in!', false)
       res.redirect("/users/profile");
     } else {
-      message = "Password is incorrect!";
-      error = { type: "USER_ERROR", message };
+      req.flash('error', 'Password is incorrect!', false)
       res.redirect("/");
     }
   } catch (e) {
-    error = { errType: "DB_ERR", message: e };
+    req.flash('error', e, false)
+    res.render("homepage", { error: { type: "USER_ERROR", message: e }})
   }
 });
 
@@ -47,7 +43,7 @@ router
   .route("/signup")
   .get(isNotLoggedIn, (req, res) => res.render("auth/signup-form"))
   .post(async (req, res) => {
-    let error = null;
+
     let newUser = null;
     const { username, email, password, role } = req.body;
 
@@ -55,13 +51,8 @@ router
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
         res.render("auth/signup", {
-          username,
-          email,
-          role,
-          error: {
-            type: "CREDENTIALS_ERROR",
-            message: "All fields are required!",
-          },
+          username, email, role,  
+          error: { type: "CREDENTIALS_ERROR", message: "All fields are required!" }
         });
       }
 
@@ -74,23 +65,14 @@ router
         const hashedPwd = bcrypt.hashSync(password, salt);
 
         if (role === "adopter") {
-          newUser = await Adopter.create({
-            username,
-            email,
-            role,
-            password: hashedPwd,
-          });
+          newUser = await Adopter.create({ username, email, role, password: hashedPwd });
+
         } else if (role === "shelter") {
-          console.log("here");
-          newUser = await Shelter.create({
-            username,
-            email,
-            role,
-            password: hashedPwd,
-          });
+          newUser = await Shelter.create({ username, email, role, password: hashedPwd });
         }
         // redirect to profile
         res.redirect("/users/profile");
+
       } else {
         // user already exists
         res.render("auth/signup", {
@@ -101,8 +83,8 @@ router
         });
       }
     } catch (e) {
-      error = { errType: "DB_ERR", message: e };
-    }
+      res.render("auth/signup", { error: { type: "USER_ERROR", message: e }})
+    } 
   });
 
 /* logout */

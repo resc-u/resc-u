@@ -1,44 +1,43 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
-const Shelter = require("../models/Shelter.model");
 const Adopter = require("../models/Adopter.model");
-const isLoggedIn = require("../middleware/isLoggedIn");
-const Animal = require("../models/Animal.model.js");
-
-// ********* require fileUploader in order to use it *********
+const userHelper = require("../middleware/userHelper");
 const fileUploader = require("../config/cloudinary.config");
 
 // GET /users ==> list of users
 router.route("/").get(async (req, res) => {
   let listUsers = [];
-  let error = null;
 
   try {
+    currentUser = req.session.loggedInUser
     listUsers = await User.find();
   } catch (e) {
-    error = { errType: "DB_ERR", message: e };
+    res.render("users/list", { error: { type: "DB_ERR", message: e, currentUser }})
   } finally {
-    res.render("users/list", { users: listUsers, error });
+    res.render("users/list", { users: listUsers, currentUser });
   }
 });
 
-router.get("/profile", isLoggedIn, async (req, res) => {
-  try {
+router.get("/profile", userHelper.isLoggedIn, async (req, res) => {
+    const user = null
+
+    try {
     // get user info from cookie
-    const user = req.session.loggedInUser;
+    user = req.session.loggedInUser
+
     switch (user.usertype) {
       case "Adopter":
-        res.render("users/adopters/profile", { user });
+        res.render("users/adopters/profile", { user, currentUser: user })
         break;
       case "Shelter":
-        res.render("users/shelters/profile", { user });
+        res.render("users/shelters/profile", { user, currentUser: user })
         break;
       default:
-        res.send("you are a GOD!");
+        res.send("you are a GOD!")
         break;
     }
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    res.render("homepage", { error: { type: "DB_ERR", message: e, currentUser: user }})
   }
 });
 
@@ -47,35 +46,51 @@ router
   .route("/profile/edit")
   .get((req, res) => {
     // get user info from cookie
-    const user = req.session.loggedInUser;
+    const user = req.session.loggedInUser
 
     switch (user.usertype) {
       case "Adopter":
-        res.render("users/adopters/edit-profile", { user });
+        res.render("users/adopters/edit-profile", { user, currentUser: user })
         break;
       case "Shelter":
-        res.render("users/shelters/edit-profile", { user });
+        res.render("users/shelters/edit-profile", { user, currentUser: user })
         break;
       default:
-        res.render("users/admin/control-panel", { user });
+        res.render("users/admin/control-panel", { user, currentUser: user })
     }
   })
   .post(async (req, res) => {
     const user = req.session.loggedInUser;
+    const updatedUser = null
+
     try {
       // deconstruct body and take info from the form
-      const { fullname, children, animalPreference, housingSize } = req.body;
+      const { fullname, children, animalPreference, housingSize } = req.body
 
       // TODO update user, add shelter update
-      const updatedUser = await Adopter.findByIdAndUpdate(
+      updatedUser = await Adopter.findByIdAndUpdate(
         user._id,
         { fullname, children, animalPreference, housingSize },
         { new: true }
       );
       // update the cookie
-      req.session.loggedInUser = updatedUser;
-    } catch (error) {
-      console.error(error);
+      req.session.loggedInUser = updatedUser
+
+    } catch (e) {
+
+        const error = { type: "DB_ERR", message: e}
+
+        switch (user.usertype) {
+            case "Adopter":
+              res.render("users/adopters/edit-profile", { error, currentUser: updatedUser })
+              break;
+            case "Shelter":
+              res.render("users/shelters/edit-profile", { error, currentUser: updatedUser })
+              break;
+            default:
+              res.render("users/admin/control-panel", { error, currentUser: updatedUser })
+          }
+
     } finally {
       // redirect back to the profile
       res.redirect("/users/profile");
@@ -83,3 +98,4 @@ router
   });
 
 module.exports = router;
+

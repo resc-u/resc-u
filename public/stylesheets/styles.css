@@ -64,22 +64,32 @@ h1 {
     background-color: #fff;
 }
 
-.message {
+.success {
     border: solid 1px #097969;
     background-color: #DAF7A6;
 }
 
-.error_message {
+.error {
     border: solid 1px brown;
     background-color: #ffcccb;
 }
 
-.message,
-.error_message {
+.success,
+.error {
     border-radius: 10px;
     margin: 0 auto 20px;
     padding: 20px 40px;
     width: 80%;
+    /*
+    visibility: hidden;
+    transform: translateY(-100px);
+    transition: all 1s 0s;*/
+}
+
+.success.active,
+.error.active {
+    visibility: visible;
+    transform: translateY(0px);
 }
 
 .hello_user {
