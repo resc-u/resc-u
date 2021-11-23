@@ -4,7 +4,7 @@
   
   {{> alertMessages }}
 
-  <form class="form edit-profile-adopter" action="/adopters/{{user.username}}/edit-profile" method="POST">
+  <form class="form edit-profile-adopter" action="/users/{{user.usertype}}/{{user.username}}/profile-edit" method="POST">
 
       <div class="fields">
           <label for="name">Username: </label>

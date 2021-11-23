@@ -1,7 +1,8 @@
 function isNotLoggedIn(req, res, next) {
-  if (req.session.loggedInUser) {
+  const user = req.session.loggedInUser;
+  if (user) {
     console.log("user already logged in");
-    res.redirect("/users/profile");
+    res.redirect(`/users/${user.usertype}/${user.username}`);
   } else {
     console.log("attempting to log in...");
     next();

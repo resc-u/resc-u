@@ -1,60 +1,71 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const User = require("../../models/User.model");
-const Adopter = require("../../models/Adopter.model");
-const Shelter = require("../../models/Shelter.model");
+const User = require("../models/User.model");
+const Adopter = require("../models/Adopter.model");
+const Shelter = require("../models/Shelter.model");
 
-const isNotLoggedIn = require("../../middleware/isNotLoggedIn");
+const isLoggedIn = require("../middleware/isLoggedIn");
+const isNotLoggedIn = require("../middleware/isNotLoggedIn");
+
+const redirectToProfile = (req, res) => {
+  const loggedInUser = req.session.loggedInUser;
+  switch (loggedInUser.usertype) {
+    case "Adopter":
+    case "Shelter":
+      res.redirect(`/users/${loggedInUser.usertype}/${loggedInUser.username}`);
+      break;
+    case undefined:
+      res.send("Admin home page");
+      break;
+    default:
+      res.redirect("/");
+      break;
+  }
+};
 
 /* login */
-router.post("/login", isNotLoggedIn, async (req, res) => {
-  let error = null;
-  let message = "";
+router
+  .route("/login")
+  .get(isLoggedIn, (req, res) => {
+    redirectToProfile(req, res);
+  })
+  .post(isNotLoggedIn, async (req, res) => {
+    let error = null;
+    let message = "";
 
-  try {
-    const { email, password } = req.body;
-    // if one of the fields is missing
-    if (!email || !password)
-      res.render("homepage", {
-        error: { type: "CREDENTIALS_ERROR", message: "Invalid credentials" },
-      });
+    try {
+      const { email, password } = req.body;
+      // if one of the fields is missing
+      if (!email || !password)
+        res.render("homepage", {
+          error: { type: "CREDENTIALS_ERROR", message: "Invalid credentials" },
+        });
 
-    const loggedInUser = await User.findOne({ email });
-    if (!loggedInUser)
-      res.render("homepage", {
-        error: { type: "USER_ERROR", message: "User doesn't exist!" },
-      });
+      const loggedInUser = await User.findOne({ email });
+      if (!loggedInUser)
+        res.render("homepage", {
+          error: { type: "USER_ERROR", message: "User doesn't exist!" },
+        });
 
-    const isPwdCorrect = await bcrypt.compare(password, loggedInUser.password);
+      const isPwdCorrect = await bcrypt.compare(
+        password,
+        loggedInUser.password
+      );
 
-    if (isPwdCorrect) {
-      req.session.loggedInUser = loggedInUser;
-      console.log("LOGGED IN USER =====> ", req.session.loggedInUser);
-      message = "You are logged in!";
-
-      switch (loggedInUser.usertype) {
-        case "Adopter":
-          res.send("Adopter home page");
-          break;
-        case "Shelter":
-          res.send("Shelter home page");
-          break;
-        case undefined:
-          res.send("Admin home page");
-          break;
-        default:
-          res.redirect("/");
-          break;
+      if (isPwdCorrect) {
+        req.session.loggedInUser = loggedInUser;
+        console.log("LOGGED IN USER =====> ", req.session.loggedInUser);
+        message = "You are logged in!";
+        redirectToProfile(req, res);
+      } else {
+        message = "Password is incorrect!";
+        error = { type: "USER_ERROR", message };
+        res.redirect("/");
       }
-    } else {
-      message = "Password is incorrect!";
-      error = { type: "USER_ERROR", message };
-      res.redirect("/");
+    } catch (e) {
+      error = { errType: "DB_ERR", message: e };
     }
-  } catch (e) {
-    error = { errType: "DB_ERR", message: e };
-  }
-});
+  });
 
 /* signup */
 router
