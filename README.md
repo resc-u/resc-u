@@ -40,35 +40,38 @@ User profile:
 
 ## Pages:
 
-| Route                     | Description                                         | Persmissions   |
-| ------------------------- | --------------------------------------------------- | -------------- |
-| GET "/"                   | renders the homepage/login                          | All            |
-| **/auth**                 |                                                     |                |
-| GET "/auth/signup"        | renders the signup form for adopters, & admin       | Adopter, Admin |
-| **/users**                |                                                     |                |
-| GET "/users/profile"      | shows profile page, different for each type of user | All            |
-| GET "/users/profile/edit" | shows form to edit a profile                        | All            |
-| **/shelters**             |                                                     |                |
-| GET "/shelters/animals"   | shows list of animals of this shelter               | All            |
-| **/animals**              |                                                     |                |
-| GET "/animals"            | shows a list of animals up for adoption             | All            |
-| GET "/animals/:id"        | shows an animals individual page                    | All            |
-| GET "/animals/new"        | shows form to add a new animal                      | Shelter, Admin |
-| GET "/animals/edit/:id"   | shows an animals individual page                    | All            |
+| Route                                         | Description                                         | Persmissions   |
+| --------------------------------------------- | --------------------------------------------------- | -------------- |
+| GET "/"                                       | renders the homepage/login                          | All            |
+| **/auth**                                     |                                                     |                |
+| GET "/auth/signup"                            | renders the signup form for adopters, & admin       | Adopter, Admin |
+| **/users**                                    |                                                     |                |
+| GET "/users"                                  | shows shows a list of users                         | All            |
+| GET "/users/:usertype/:username"              | shows profile page, different for each type of user | All            |
+| GET "/users/:usertype/:username/profile-edit" | shows form to edit a profile                        | All            |
+| GET "/:usertype/:username/delete-user"        | shows a form asking for confirmation                | Adopter, Admin |
+| **/shelters**                                 |                                                     |                |
+| GET "/shelters/animals"                       | shows list of animals of this shelter               | All            |
+| **/animals**                                  |                                                     |                |
+| GET "/animals"                                | shows a list of animals up for adoption             | All            |
+| GET "/animals/:id"                            | shows an animals individual page                    | All            |
+| GET "/animals/new"                            | shows form to add a new animal                      | Shelter, Admin |
+| GET "/animals/edit/:id"                       | shows an animals individual page                    | All            |
 
 ## CRUD Routes:
 
-| Route                      | Description                                                                    | Persmissions   |
-| -------------------------- | ------------------------------------------------------------------------------ | -------------- |
-| **/auth**                  |                                                                                |                |
-| POST "/auth/signup"        | creates a new user passes email, username, password. Redirects to edit profile | All            |
-| **/users**                 |                                                                                |                |
-| GET "/users/delete/:id"    | deletes a user                                                                 | Adopter, Admin |
-| POST "/users/profile/edit" | edits an adopters' or shelters' profile info                                   | Adopter, Admin |
-| **/animals**               |                                                                                |                |
-| POST "/animals/new"        | creates a new animal                                                           | Shelter, Admin |
-| POST "/animals/edit/:id"   | updates an existing animal                                                     | Shelter, Admin |
-| GET "/animals/delete/:id"  | deletes an animal                                                              | Shelter, Admin |
+| Route                                          | Description                                                                    | Persmissions   |
+| ---------------------------------------------- | ------------------------------------------------------------------------------ | -------------- |
+| **/auth**                                      |                                                                                |                |
+| POST "/auth/login"                             | signs you in, and redirects to your profile page                               | All            |
+| POST "/auth/signup"                            | creates a new user passes email, username, password. Redirects to edit profile | All            |
+| **/users**                                     |                                                                                |                |
+| POST "/:usertype/:username/delete-user"        | deletes a user                                                                 | Adopter, Admin |
+| POST "/users/:usertype/:username/profile-edit" | edits an adopters' or shelters' profile info                                   | Adopter, Admin |
+| **/animals**                                   |                                                                                |                |
+| POST "/animals/new"                            | creates a new animal                                                           | Shelter, Admin |
+| POST "/animals/edit/:id"                       | updates an existing animal                                                     | Shelter, Admin |
+| GET "/animals/delete/:id"                      | deletes an animal                                                              | Shelter, Admin |
 
 ## Models
 
