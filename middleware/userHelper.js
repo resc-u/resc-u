@@ -13,10 +13,10 @@ module.exports = {
   isNotLoggedIn: function(req, res, next) {
     const user = req.session.loggedInUser;
     if (user) {
-      console.log("user already logged in");
+      req.flash('error', 'You are alrady logged in')
       res.redirect(`/users/${user.usertype}/${user.username}`);
     } else {
-      console.log("attempting to log in...");
+      console.log("Attempting to log in...");
       next();
     }
   }

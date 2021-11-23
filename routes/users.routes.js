@@ -14,7 +14,7 @@ router.route("/").get(async (req, res) => {
     currentUser = req.session.loggedInUser
     listUsers = await User.find();
   } catch (e) {
-    res.render("users/list", { error: { type: "DB_ERR", message: e, currentUser }})
+    req.flash('error', e)
   } finally {
     res.render("users/list", { users: listUsers, currentUser });
   }
@@ -51,7 +51,8 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
         break;
     }
 } catch (e) {
-  res.render("homepage", { error: { type: "DB_ERR", message: e }})
+  req.flash('error', e)
+  res.render("homepage")
 }});
 
 /* profile edit */
@@ -68,7 +69,6 @@ router
         break;
       case "shelter":
       case "Shelter":
-        console.log(user);
         res.render("users/shelters/edit-profile", { user, currentUser: user });
         break;
       default:
@@ -108,17 +108,17 @@ router
 
     } catch (e) {
 
-        let error = { type: "DB_ERR", message: e}
+        req.flash('error', e)
 
         switch (user.usertype) {
             case "Adopter":
-              res.render("users/adopters/edit-profile", { error, currentUser: user })
+              res.render("users/adopters/edit-profile", { currentUser: user })
               break;
             case "Shelter":
-              res.render("users/shelters/edit-profile", { error, currentUser: user })
+              res.render("users/shelters/edit-profile", { currentUser: user })
               break;
             default:
-              res.render("users/admin/control-panel", { error, currentUser: user })
+              res.render("users/admin/control-panel", { currentUser: user })
           }
 
     } finally {
@@ -138,8 +138,8 @@ router
   .post(async (req, res) => {
     try {
       await User.findOneAndDelete({ username: req.params.username });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      req.flash('error', e)
     } finally {
       req.session.destroy((err) => {
         if (err) res.redirect("/");
