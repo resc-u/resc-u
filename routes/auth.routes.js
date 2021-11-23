@@ -34,15 +34,13 @@ router
       const { email, password } = req.body;
       // if one of the fields is missing
       if (!email || !password)
-        res.render("homepage", {
-          error: { type: "CREDENTIALS_ERROR", message: "Invalid credentials" },
-        });
+        req.flash('error', 'Invalid credentials')
+        res.render("homepage")
 
       const loggedInUser = await User.findOne({ email });
       if (!loggedInUser)
-        res.render("homepage", {
-          error: { type: "USER_ERROR", message: "User doesn't exist!" },
-        });
+        req.flash('error', "User doesn't exist!")
+        res.render("homepage")
 
       const isPwdCorrect = await bcrypt.compare(
         password,
@@ -59,8 +57,8 @@ router
       }
       
     } catch (e) {
-      req.flash('error', e, false)
-      res.render("homepage", { error: { type: "USER_ERROR", message: e }})
+      req.flash('error', e)
+      res.render("homepage")
     }
   });
 
@@ -75,14 +73,11 @@ router
     try {
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
+        req.flash('error', 'All fields are required!')
         res.render("auth/signup-form", {
           username,
           email,
-          role,
-          error: {
-            type: "CREDENTIALS_ERROR",
-            message: "All fields are required!",
-          },
+          role
         });
       }
 
@@ -90,6 +85,7 @@ router
 
       // correct signup
       if (!user) {
+
         // encryption
         const salt = bcrypt.genSaltSync(4);
         const hashedPwd = bcrypt.hashSync(password, salt);
@@ -100,19 +96,22 @@ router
         } else if (role === "shelter") {
           await Shelter.create({ username, email, role, password: hashedPwd });
         }
+
         // redirect to home/login
+        req.flash('error', 'All fields are required!')
         res.redirect("/");
       } else {
         // user already exists
+        req.flash('error', 'This user already exists')
         res.render("auth/signup-form", {
-          username,
+          username, 
           email,
-          role,
-          error: { type: "USER_ERROR", message: "This user already exists!" },
+          role
         });
       }
     } catch (e) {
-      res.render("auth/signup", { error: { type: "USER_ERROR", message: e }})
+      req.flash('error', e)
+      res.render("auth/signup")
     } 
   });
 
