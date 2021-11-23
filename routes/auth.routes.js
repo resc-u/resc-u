@@ -23,18 +23,18 @@ router.post("/login", async (req, res) => {
     const isPwdCorrect = await bcrypt.compare(password, loggedInUser.password);
 
     if (isPwdCorrect) {
-      // set loggedInUser in session
       req.session.loggedInUser = loggedInUser
-      req.flash('infoMessage', 'You are logged in!', false)
+      
+      req.flash('info', 'You are logged in!')
       res.redirect("/users/profile");
 
     } else {
-      console.log("HERE")
-      req.flash('errorMessage', 'Password is incorrect!', false)
+
+      req.flash('error', 'Password is incorrect!')
       res.redirect("/");
     }
   } catch (e) {
-    req.flash('errorMessage', e, false)
+    req.flash('error', e, false)
     res.render("homepage", { error: { type: "USER_ERROR", message: e }})
   }
 });

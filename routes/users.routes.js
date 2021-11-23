@@ -21,9 +21,7 @@ router.route("/").get(async (req, res) => {
 });
 
 router.get("/profile", isLoggedIn, async (req, res) => {
-    
-    console.log("HEEEEEY, session====> ", req.session.loggedInUser.username)
-    
+        
     try {
        
         // get user info from cookie
@@ -86,17 +84,17 @@ router
 
         switch (user.usertype) {
             case "Adopter":
-              res.render("users/adopters/edit-profile", { error, currentUser: updatedUser })
+              res.render("users/adopters/edit-profile", { error, currentUser: user })
               break;
             case "Shelter":
-              res.render("users/shelters/edit-profile", { error, currentUser: updatedUser })
+              res.render("users/shelters/edit-profile", { error, currentUser: user })
               break;
             default:
-              res.render("users/admin/control-panel", { error, currentUser: updatedUser })
+              res.render("users/admin/control-panel", { error, currentUser: user })
           }
 
     } finally {
-      // redirect back to the profile
+      req.flash('info', 'Saves successfully saved!')
       res.redirect("/users/profile");
     }
   });
