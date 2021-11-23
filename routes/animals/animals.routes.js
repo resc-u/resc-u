@@ -1,10 +1,10 @@
 const router = require("express").Router();
-const User = require("../models/User.model");
-const Adopter = require("../models/Adopter.model");
-const Animal = require("../models/Animal.model.js");
+const User = require("../../models/User.model");
+const Adopter = require("../../models/Adopter.model");
+const Animal = require("../../models/Animal.model.js");
 
 // ********* require fileUploader in order to use it *********
-const fileUploader = require("../config/cloudinary.config");
+const fileUploader = require("../../config/cloudinary.config");
 
 router.get("/", (req, res) => {
   Animal.find()

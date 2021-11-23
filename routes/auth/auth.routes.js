@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/User.model");
-const Adopter = require("../models/Adopter.model");
-const Shelter = require("../models/Shelter.model");
+const User = require("../../models/User.model");
+const Adopter = require("../../models/Adopter.model");
+const Shelter = require("../../models/Shelter.model");
 
-const isNotLoggedIn = require("../middleware/isNotLoggedIn");
+const isNotLoggedIn = require("../../middleware/isNotLoggedIn");
 
 /* login */
 router.post("/login", isNotLoggedIn, async (req, res) => {
@@ -31,7 +31,21 @@ router.post("/login", isNotLoggedIn, async (req, res) => {
       req.session.loggedInUser = loggedInUser;
       console.log("LOGGED IN USER =====> ", req.session.loggedInUser);
       message = "You are logged in!";
-      res.redirect("/users/profile");
+
+      switch (loggedInUser.usertype) {
+        case "Adopter":
+          res.send("Adopter home page");
+          break;
+        case "Shelter":
+          res.send("Shelter home page");
+          break;
+        case undefined:
+          res.send("Admin home page");
+          break;
+        default:
+          res.redirect("/");
+          break;
+      }
     } else {
       message = "Password is incorrect!";
       error = { type: "USER_ERROR", message };
