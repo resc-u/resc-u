@@ -4,6 +4,8 @@ const Adopter = require("../models/Adopter.model");
 const userHelper = require("../middleware/userHelper");
 const fileUploader = require("../config/cloudinary.config");
 
+const { isLoggedIn, isNotLoggedIn } = require("../middleware/userHelper");
+
 // GET /users ==> list of users
 router.route("/").get(async (req, res) => {
   let listUsers = [];
@@ -18,33 +20,37 @@ router.route("/").get(async (req, res) => {
   }
 });
 
-router.get("/profile", userHelper.isLoggedIn, async (req, res) => {
+router.get("/profile", isLoggedIn, async (req, res) => {
+    
     const user = null
 
     try {
-    // get user info from cookie
-    user = req.session.loggedInUser
 
-    switch (user.usertype) {
-      case "Adopter":
-        res.render("users/adopters/profile", { user, currentUser: user })
-        break;
-      case "Shelter":
-        res.render("users/shelters/profile", { user, currentUser: user })
-        break;
-      default:
-        res.send("you are a GOD!")
-        break;
+        // get user info from cookie
+        user = req.session.loggedInUser
+
+        console.log("current_user", user)
+
+        switch (user.usertype) {
+        case "Adopter":
+            res.render("users/adopters/profile", { user, currentUser: user })
+            break;
+        case "Shelter":
+            res.render("users/shelters/profile", { user, currentUser: user })
+            break;
+        default:
+            res.send("you are a GOD!")
+            break;
+        }
+    } catch (e) {
+        res.render("homepage", { error: { type: "DB_ERR", message: e, currentUser: user }})
     }
-  } catch (e) {
-    res.render("homepage", { error: { type: "DB_ERR", message: e, currentUser: user }})
-  }
 });
 
 /* profile edit */
 router
   .route("/profile/edit")
-  .get((req, res) => {
+  .get(isLoggedIn, (req, res) => {
     // get user info from cookie
     const user = req.session.loggedInUser
 
@@ -59,7 +65,7 @@ router
         res.render("users/admin/control-panel", { user, currentUser: user })
     }
   })
-  .post(async (req, res) => {
+  .post(isLoggedIn, async (req, res) => {
     const user = req.session.loggedInUser;
     const updatedUser = null
 

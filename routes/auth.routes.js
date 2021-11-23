@@ -4,10 +4,8 @@ const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
 const Shelter = require("../models/Shelter.model");
 
-const { isLoggedIn, isNotLoggedIn } = require("../middleware/userHelper");
-
 /* login */
-router.post("/login", isNotLoggedIn, async (req, res) => {
+router.post("/login", async (req, res) => {
 
   try {
 
@@ -29,6 +27,7 @@ router.post("/login", isNotLoggedIn, async (req, res) => {
       req.flash('info', 'You are logged in!', false)
       res.redirect("/users/profile");
     } else {
+      console.log("HERE")
       req.flash('error', 'Password is incorrect!', false)
       res.redirect("/");
     }
@@ -41,7 +40,7 @@ router.post("/login", isNotLoggedIn, async (req, res) => {
 /* signup */
 router
   .route("/signup")
-  .get(isNotLoggedIn, (req, res) => res.render("auth/signup-form"))
+  .get((req, res) => res.render("auth/signup-form"))
   .post(async (req, res) => {
 
     let newUser = null;
@@ -76,9 +75,7 @@ router
       } else {
         // user already exists
         res.render("auth/signup", {
-          username,
-          email,
-          role,
+          username, email, role,
           error: { type: "USER_ERROR", message: "This user already exists!" },
         });
       }
