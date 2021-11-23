@@ -34,19 +34,14 @@ router
       const { email, password } = req.body;
       // if one of the fields is missing
       if (!email || !password)
-        req.flash('error', 'Invalid credentials')
-        res.render("homepage")
+        res.render("homepage", { messages: {error:  "Invalid credentials" }})
 
       const loggedInUser = await User.findOne({ email });
       
       if (!loggedInUser)
-        req.flash('error', "User doesn't exist!")
-        res.render("homepage")
+        res.render("homepage", { messages: {error:  "User doesn't exist!" }})
 
-      const isPwdCorrect = await bcrypt.compare(
-        password,
-        loggedInUser.password
-      );
+      const isPwdCorrect = await bcrypt.compare(password, loggedInUser.password );
 
       if (isPwdCorrect) {
         req.session.loggedInUser = loggedInUser;
@@ -58,8 +53,8 @@ router
       }
       
     } catch (e) {
-      req.flash('error', e)
-      res.render("homepage")
+      console.log("There's been an error!! ===> ", e)
+      res.render("homepage", { messages: {info: "We are sorry, there has been an error."}} )
     }
   });
 
@@ -75,11 +70,11 @@ router
 
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
-        req.flash('error', 'All fields are required!')
         res.render("auth/signup-form", {
           username,
           email,
-          role
+          role,
+          messages: {error: "All fields are required!"}
         });
       }
 
@@ -108,12 +103,13 @@ router
         res.render("auth/signup-form", {
           username, 
           email,
-          role
+          role,
+          messages: {error: "This user already exists!"}
         });
       }
     } catch (e) {
-      req.flash('error', e)
-      res.render("auth/signup")
+      console.log("There's been an error!! ===> ", e)
+      res.render("auth/signup", { messages: {info: "We are sorry, there has been an error."}} )
     } 
   });
 
