@@ -11,6 +11,9 @@
     <p>Animal Preference: {{user.animalPreference}}</p>
     <p>Size living place: {{user.housingSize}}</p>
 
-    <a href="/users/profile/edit" class="btn">Edit profile</a>
+    {{#if canEdit}}
+        <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
+        <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a>      
+    {{/if}}
 
 </section>

@@ -4,7 +4,7 @@ const Adopter = require("../models/Adopter.model");
 const userHelper = require("../middleware/userHelper");
 const fileUploader = require("../config/cloudinary.config");
 
-const { isLoggedIn, isNotLoggedIn } = require("../middleware/userHelper");
+const { isLoggedIn } = require("../middleware/userHelper");
 
 // GET /users ==> list of users
 router.route("/").get(async (req, res) => {
@@ -20,45 +20,60 @@ router.route("/").get(async (req, res) => {
   }
 });
 
-router.get("/profile", isLoggedIn, async (req, res) => {
-        
-    try {
-       
-        // get user info from cookie
-        const user = req.session.loggedInUser
+/* users profile page */
+router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
+  try {
+    // get user info from cookie
+    const loggedInUser = req.session.loggedInUser;
 
-        switch (user.usertype) {
-            case "Adopter":
-                res.render("users/adopters/profile", { user, currentUser: user })
-                break;
-            case "Shelter":
-                res.render("users/shelters/profile", { user, currentUser: user })
-                break;
-            default:
-                res.send("you are a GOD!")
-                break;
-        }
-    } catch (e) {
-        res.render("homepage", { error: { type: "DB_ERR", message: e }})
+    // find user in the DB
+    const user = await User.findOne({ username: req.params.username });
+
+    let canEdit = false;
+    if (
+      loggedInUser.email === user.email ||
+      loggedInUser.usertype === undefined
+    )
+      canEdit = true;
+
+    // render profile page for that user
+    switch (req.params.usertype) {
+      case "adopter":
+      case "Adopter":
+        res.render("users/adopters/profile", { user, canEdit, currentUser: loggedInUser });
+        break;
+      case "shelter":
+      case "Shelter":
+        res.render("users/shelters/profile", { user, canEdit, currentUser: loggedInUser });
+        break;
+      default:
+        res.send("oops");
+        break;
     }
-});
+} catch (e) {
+  res.render("homepage", { error: { type: "DB_ERR", message: e }})
+}});
 
 /* profile edit */
 router
-  .route("/profile/edit")
-  .get(isLoggedIn, (req, res) => {
+  .route("/:usertype/:username/profile-edit")
+  .get((req, res) => {
     // get user info from cookie
     const user = req.session.loggedInUser
 
-    switch (user.usertype) {
+    switch (req.params.usertype) {
+      case "adopter":
       case "Adopter":
         res.render("users/adopters/edit-profile", { user, currentUser: user })
         break;
+      case "shelter":
       case "Shelter":
-        res.render("users/shelters/edit-profile", { user, currentUser: user })
+        console.log(user);
+        res.render("users/shelters/edit-profile", { user, currentUser: user });
         break;
       default:
-        res.render("users/admin/control-panel", { user, currentUser: user })
+        res.send("oops");
+        break;
     }
   })
   .post(isLoggedIn, async (req, res) => {
@@ -66,15 +81,28 @@ router
     const updatedUser = null
 
     try {
-      // deconstruct body and take info from the form
-      const { fullname, children, animalPreference, housingSize } = req.body
-
-      // TODO update user, add shelter update
-      updatedUser = await Adopter.findByIdAndUpdate(
-        user._id,
-        { fullname, children, animalPreference, housingSize },
-        { new: true }
-      );
+      let updatedUser = null;
+      switch (user.usertype) {
+        case "Adopter":
+          // deconstruct body and take info from the form
+          const { fullname, children, animalPreference, housingSize } =
+            req.body;
+          updatedUser = await Adopter.findByIdAndUpdate(
+            user._id,
+            { fullname, children, animalPreference, housingSize },
+            { new: true }
+          );
+          break;
+        case "Shelter":
+          // deconstruct body and take info from the form
+          const { shelterName } = req.body;
+          updatedUser = await Shelter.findByIdAndUpdate(
+            user._id,
+            { name, address, contact_phone },
+            { new: true }
+          );
+          break;
+      }
       // update the cookie
       req.session.loggedInUser = updatedUser
 
@@ -94,8 +122,29 @@ router
           }
 
     } finally {
-      req.flash('info', 'Saves successfully saved!')
-      res.redirect("/users/profile");
+      // redirect back to the profile
+      req.flash('info', 'Changes successfully saved!')
+      res.redirect(`/users/${user.usertype}/${user.username}`);
+    }
+  });
+
+/* delete user */
+router
+  .route("/:usertype/:username/delete-user")
+  .get((req, res) => {
+    console.log(req.session.loggedInUser);
+    res.render("users/delete-user", { user: req.session.loggedInUser });
+  })
+  .post(async (req, res) => {
+    try {
+      await User.findOneAndDelete({ username: req.params.username });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      req.session.destroy((err) => {
+        if (err) res.redirect("/");
+        else res.redirect("/");
+      });
     }
   });
 

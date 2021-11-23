@@ -11,12 +11,14 @@ module.exports = {
   },
   
   isNotLoggedIn: function(req, res, next) {
-    if (req.session.loggedInUser) {
-      req.flash('error', 'You are already logged in')
-      res.redirect("/users/profile");
+    const user = req.session.loggedInUser;
+    if (user) {
+      console.log("user already logged in");
+      res.redirect(`/users/${user.usertype}/${user.username}`);
     } else {
-      console.log("Attempting to log in...");
+      console.log("attempting to log in...");
       next();
     }
   }
+
 }
