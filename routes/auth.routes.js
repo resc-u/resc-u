@@ -79,7 +79,7 @@ router
     try {
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
-        res.render("auth/signup", {
+        res.render("auth/signup-form", {
           username,
           email,
           role,
@@ -114,11 +114,11 @@ router
             password: hashedPwd,
           });
         }
-        // redirect to profile
-        res.redirect("/users/profile");
+        // redirect to home/login
+        res.redirect("/");
       } else {
         // user already exists
-        res.render("auth/signup", {
+        res.render("auth/signup-form", {
           username,
           email,
           role,
