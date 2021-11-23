@@ -3,6 +3,7 @@ const Shelter = require("../models/Shelter.model");
 
 const animalSchema = new Schema({
   name: { type: String, required: true },
+  description: { type: String },
   type: { type: String, required: true },
   sex: {
     type: String,
@@ -14,7 +15,6 @@ const animalSchema = new Schema({
     enum: ["small", "medium", "large"],
   },
   age: { type: Number },
-  description: { type: String },
   status: {
     type: String,
     enum: ["awaiting adoption", "adopted"],
@@ -22,8 +22,8 @@ const animalSchema = new Schema({
   color: { type: String },
   breed: { type: String },
   dateofentry: { type: Date, default: Date.now },
-  imageUrl: { type: Array },
   kidfriendly: { type: Boolean },
+  imageUrl: { type: Array },
   shelter: { type: Schema.Types.ObjectId, ref: "Shelter" },
 });
 

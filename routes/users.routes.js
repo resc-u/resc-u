@@ -3,6 +3,10 @@ const User = require("../models/User.model");
 const Shelter = require("../models/Shelter.model");
 const Adopter = require("../models/Adopter.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const Animal = require("../models/Animal.model.js");
+
+// ********* require fileUploader in order to use it *********
+const fileUploader = require("../config/cloudinary.config");
 
 // GET /users ==> list of users
 router.route("/").get(async (req, res) => {
