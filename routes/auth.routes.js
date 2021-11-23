@@ -25,23 +25,23 @@ const redirectToProfile = (req, res) => {
 /* login */
 router
   .route("/login")
-  .get(isLoggedIn, (req, res) => {
+  .get(isNotLoggedIn, (req, res) => {
     redirectToProfile(req, res);
   })
   .post(isNotLoggedIn, async (req, res) => {
+
     try {
       const { email, password } = req.body;
       // if one of the fields is missing
-      if (!email || !password) {
-        req.flash("error", "Invalid credentials");
-        res.redirect("/");
-      }
+      if (!email || !password)
+        req.flash('error', 'Invalid credentials')
+        res.render("homepage")
 
       const loggedInUser = await User.findOne({ email });
-      if (!loggedInUser) {
-        req.flash("error", "User doesn't exist!");
-        res.render("homepage", { email });
-      }
+      
+      if (!loggedInUser)
+        req.flash('error', "User doesn't exist!")
+        res.render("homepage")
 
       const isPwdCorrect = await bcrypt.compare(
         password,
@@ -50,15 +50,16 @@ router
 
       if (isPwdCorrect) {
         req.session.loggedInUser = loggedInUser;
-        req.flash("info", "You are logged in!");
+        req.flash('info', 'You are logged in!')
         redirectToProfile(req, res);
       } else {
-        req.flash("error", "Password is incorrect!");
-        res.render("homepage", { email });
+        req.flash('error', 'Password is incorrect!')
+        res.redirect("/");
       }
+      
     } catch (e) {
-      req.flash("error", e);
-      res.redirect("/");
+      req.flash('error', e)
+      res.render("homepage")
     }
   });
 
@@ -67,16 +68,18 @@ router
   .route("/signup")
   .get((req, res) => res.render("auth/signup-form"))
   .post(async (req, res) => {
+
     const { username, email, password, role } = req.body;
 
     try {
+
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
-        req.flash("error", "All fields are required!");
+        req.flash('error', 'All fields are required!')
         res.render("auth/signup-form", {
           username,
           email,
-          role,
+          role
         });
       }
 
@@ -84,32 +87,34 @@ router
 
       // correct signup
       if (!user) {
+
         // encryption
         const salt = bcrypt.genSaltSync(4);
         const hashedPwd = bcrypt.hashSync(password, salt);
 
         if (role === "adopter") {
           await Adopter.create({ username, email, role, password: hashedPwd });
+
         } else if (role === "shelter") {
           await Shelter.create({ username, email, role, password: hashedPwd });
         }
 
         // redirect to home/login
-        req.flash("error", "All fields are required!");
+        req.flash('info', 'Thank you for signing up!')
         res.redirect("/");
       } else {
         // user already exists
-        req.flash("error", "This user already exists");
+        req.flash('error', 'This user already exists')
         res.render("auth/signup-form", {
-          username,
+          username, 
           email,
-          role,
+          role
         });
       }
     } catch (e) {
-      req.flash("error", e);
-      res.render("auth/signup-form");
-    }
+      req.flash('error', e)
+      res.render("auth/signup")
+    } 
   });
 
 /* logout */
