@@ -38,10 +38,9 @@ router
       }
 
       const loggedInUser = await User.findOne({ email });
-      console.log(loggedInUser);
       if (!loggedInUser) {
         req.flash("error", "User doesn't exist!");
-        res.redirect("/");
+        res.render("homepage", { email });
       }
 
       const isPwdCorrect = await bcrypt.compare(
@@ -55,7 +54,7 @@ router
         redirectToProfile(req, res);
       } else {
         req.flash("error", "Password is incorrect!");
-        res.redirect("/");
+        res.render("homepage", { email });
       }
     } catch (e) {
       req.flash("error", e);
