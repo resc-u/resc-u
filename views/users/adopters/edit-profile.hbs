@@ -1,10 +1,8 @@
 <section class="section_edit_profile adopter">
 
   <h1>Edit profile adopter</h1>
-  
-  {{> alertMessages }}
 
-  <form class="form edit-profile-adopter" action="/users/profile/edit/adopter/{{user.id}}" method="POST">
+  <form class="form edit-profile-adopter" action="/users/{{user.usertype}}/{{user.username}}/profile-edit" method="POST">
 
       <div class="fields">
           <label for="name">Username: </label>

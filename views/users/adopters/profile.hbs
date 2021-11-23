@@ -1,9 +1,7 @@
 
 <section class="section_profile">
-
+  
     <h1>My Profile </h1>
-
-    {{> alertMessages }}
 
     <h3>Showing adopter's profile</h3>
 
@@ -13,6 +11,9 @@
     <p>Animal Preference: {{user.animalPreference}}</p>
     <p>Size living place: {{user.housingSize}}</p>
 
-    <a href="/users/profile/edit/adopter/{{user.id}}" class="btn">Edit profile</a>
+    {{#if canEdit}}
+        <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
+        <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a>      
+    {{/if}}
 
 </section>

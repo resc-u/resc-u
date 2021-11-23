@@ -64,28 +64,11 @@ h1 {
     background-color: #fff;
 }
 
-.message {
-    border: solid 1px #097969;
-    background-color: #DAF7A6;
-}
-
-.error_message {
-    border: solid 1px brown;
-    background-color: #ffcccb;
-}
-
-.message,
-.error_message {
-    border-radius: 10px;
-    margin: 0 auto 20px;
-    padding: 20px 40px;
-    width: 80%;
-}
 
 .hello_user {
     text-align: center;
     position: absolute;
-    top: 70px;
+    top: 160px;
     left: 20px;
     font-size: 16px;
 }
@@ -98,6 +81,34 @@ section {
     padding: 40px;
 }
 
+/* ====== Flash messages ======== */
+
+.flash {
+    border-radius: 10px;
+    margin: 0 auto 20px;
+    padding: 20px 40px;
+    width: 80%;
+    /*
+    visibility: hidden;
+    transform: translateY(-100px);
+    transition: all 3s 0s;*/
+}
+
+.success.active,
+.error.active {
+    visibility: visible;
+    transform: translateY(0px);
+}
+
+.info {
+    border: solid 1px #097969;
+    background-color: #DAF7A6;
+}
+
+.error {
+    border: solid 1px brown;
+    background-color: #ffcccb;
+}
 
 /* ====== Menu ======== */
 .menu {

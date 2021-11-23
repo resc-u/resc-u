@@ -1,18 +1,26 @@
-
 <section class="section_login">
-  
-  {{> alertMessages }}
 
-  <form class="form login" action="/" method="POST">
+  <form class="form login" action="/auth/login" method="POST">
 
     <div class="fields">
       <label for="email">Email: </label>
-      <input type="text" name="email" required placeholder="enter your email"/>
+      <input
+        value="{{email}}"
+        type="text"
+        name="email"
+        required
+        placeholder="enter your email"
+      />
     </div>
 
     <div class="fields">
       <label for="password">Password:</label>
-      <input type="password" name="password" required placeholder="enter your password"/>
+      <input
+        type="password"
+        name="password"
+        required
+        placeholder="enter your password"
+      />
     </div>
 
     <button type="submit" class="btn">Log in</button>
@@ -20,7 +28,7 @@
 
   <div class="signup_now">
     <p>Aren't you a future adopter yet? Sign up now!</p>
-    <a href="/signup" class="btn">Sign up</a>
+    <a href="/auth/signup" class="btn">Sign up</a>
   </div>
 
 </section>
