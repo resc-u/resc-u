@@ -1,0 +1,20 @@
+
+
+{{ infoMessage }}
+{{ errorMessage }}
+
+{{#if infoMessage }}
+
+    <div class="flash info">
+    <!--<button type="button" class="close">×</button>-->
+    <span> {{ info.message }} </span>
+    </div>
+
+{{else if errorMessage }}
+
+    <div class="flash error">
+    <!--<button type="button" class="close">×</button>-->
+    <span> {{ fail.message }} </span>
+    </div>
+
+{{/if}}

@@ -29,4 +29,12 @@ module.exports = app;
 
 const sheltersRouter = require("./routes/shelters.routes");
 app.use("/shelters", sheltersRouter);
+
+
+// alert messages handler
+app.use(function(err, req, res, next) {
+    app.locals.infoMessage = req.flash('infoMessage')
+    app.locals.errorMessage = req.flash('errorMessage')
+  });
+
 module.exports = app;

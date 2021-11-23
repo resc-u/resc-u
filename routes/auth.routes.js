@@ -4,6 +4,8 @@ const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
 const Shelter = require("../models/Shelter.model");
 
+const { isLoggedIn, isNotLoggedIn } = require("../middleware/userHelper");
+
 /* login */
 router.post("/login", async (req, res) => {
 
@@ -22,17 +24,17 @@ router.post("/login", async (req, res) => {
 
     if (isPwdCorrect) {
       // set loggedInUser in session
-      req.session.loggedInUser = loggedInUser;
-
-      req.flash('info', 'You are logged in!', false)
+      req.session.loggedInUser = loggedInUser
+      req.flash('infoMessage', 'You are logged in!', false)
       res.redirect("/users/profile");
+
     } else {
       console.log("HERE")
-      req.flash('error', 'Password is incorrect!', false)
+      req.flash('errorMessage', 'Password is incorrect!', false)
       res.redirect("/");
     }
   } catch (e) {
-    req.flash('error', e, false)
+    req.flash('errorMessage', e, false)
     res.render("homepage", { error: { type: "USER_ERROR", message: e }})
   }
 });
@@ -69,6 +71,9 @@ router
         } else if (role === "shelter") {
           newUser = await Shelter.create({ username, email, role, password: hashedPwd });
         }
+
+        // where is newUser used ???
+
         // redirect to profile
         res.redirect("/users/profile");
 

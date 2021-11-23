@@ -6,7 +6,6 @@ module.exports = {
       next();
     } else {
       req.flash('error', 'Please, log in first!', false)
-      //console.log("please log in first");
       res.redirect("/");
     }
   },

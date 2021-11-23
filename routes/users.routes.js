@@ -22,28 +22,26 @@ router.route("/").get(async (req, res) => {
 
 router.get("/profile", isLoggedIn, async (req, res) => {
     
-    const user = null
-
+    console.log("HEEEEEY, session====> ", req.session.loggedInUser.username)
+    
     try {
-
+       
         // get user info from cookie
-        user = req.session.loggedInUser
-
-        console.log("current_user", user)
+        const user = req.session.loggedInUser
 
         switch (user.usertype) {
-        case "Adopter":
-            res.render("users/adopters/profile", { user, currentUser: user })
-            break;
-        case "Shelter":
-            res.render("users/shelters/profile", { user, currentUser: user })
-            break;
-        default:
-            res.send("you are a GOD!")
-            break;
+            case "Adopter":
+                res.render("users/adopters/profile", { user, currentUser: user })
+                break;
+            case "Shelter":
+                res.render("users/shelters/profile", { user, currentUser: user })
+                break;
+            default:
+                res.send("you are a GOD!")
+                break;
         }
     } catch (e) {
-        res.render("homepage", { error: { type: "DB_ERR", message: e, currentUser: user }})
+        res.render("homepage", { error: { type: "DB_ERR", message: e }})
     }
 });
 
@@ -84,7 +82,7 @@ router
 
     } catch (e) {
 
-        const error = { type: "DB_ERR", message: e}
+        let error = { type: "DB_ERR", message: e}
 
         switch (user.usertype) {
             case "Adopter":
