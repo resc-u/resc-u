@@ -4,8 +4,7 @@ const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
 const Shelter = require("../models/Shelter.model");
 
-const isLoggedIn = require("../middleware/isLoggedIn");
-const isNotLoggedIn = require("../middleware/isNotLoggedIn");
+const { isLoggedIn, isNotLoggedIn } = require("../middleware/userHelper");
 
 const redirectToProfile = (req, res) => {
   const loggedInUser = req.session.loggedInUser;
@@ -30,8 +29,6 @@ router
     redirectToProfile(req, res);
   })
   .post(isNotLoggedIn, async (req, res) => {
-    let error = null;
-    let message = "";
 
     try {
       const { email, password } = req.body;
@@ -54,26 +51,25 @@ router
 
       if (isPwdCorrect) {
         req.session.loggedInUser = loggedInUser;
-        console.log("LOGGED IN USER =====> ", req.session.loggedInUser);
-        message = "You are logged in!";
+        req.flash('info', 'You are logged in!')
         redirectToProfile(req, res);
       } else {
-        message = "Password is incorrect!";
-        error = { type: "USER_ERROR", message };
+        req.flash('error', 'Password is incorrect!')
         res.redirect("/");
       }
+      
     } catch (e) {
-      error = { errType: "DB_ERR", message: e };
+      req.flash('error', e, false)
+      res.render("homepage", { error: { type: "USER_ERROR", message: e }})
     }
   });
 
 /* signup */
 router
   .route("/signup")
-  .get(isNotLoggedIn, (req, res) => res.render("auth/signup-form"))
+  .get((req, res) => res.render("auth/signup-form"))
   .post(async (req, res) => {
-    let error = null;
-    let newUser = null;
+
     const { username, email, password, role } = req.body;
 
     try {
@@ -99,20 +95,10 @@ router
         const hashedPwd = bcrypt.hashSync(password, salt);
 
         if (role === "adopter") {
-          newUser = await Adopter.create({
-            username,
-            email,
-            role,
-            password: hashedPwd,
-          });
+          await Adopter.create({ username, email, role, password: hashedPwd });
+
         } else if (role === "shelter") {
-          console.log("here");
-          newUser = await Shelter.create({
-            username,
-            email,
-            role,
-            password: hashedPwd,
-          });
+          await Shelter.create({ username, email, role, password: hashedPwd });
         }
         // redirect to home/login
         res.redirect("/");
@@ -126,8 +112,8 @@ router
         });
       }
     } catch (e) {
-      error = { errType: "DB_ERR", message: e };
-    }
+      res.render("auth/signup", { error: { type: "USER_ERROR", message: e }})
+    } 
   });
 
 /* logout */

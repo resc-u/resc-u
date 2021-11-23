@@ -1,24 +1,22 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
-const Shelter = require("../models/Shelter.model");
 const Adopter = require("../models/Adopter.model");
-const isLoggedIn = require("../middleware/isLoggedIn");
-const Animal = require("../models/Animal.model.js");
-
-// ********* require fileUploader in order to use it *********
+const userHelper = require("../middleware/userHelper");
 const fileUploader = require("../config/cloudinary.config");
+
+const { isLoggedIn } = require("../middleware/userHelper");
 
 // GET /users ==> list of users
 router.route("/").get(async (req, res) => {
   let listUsers = [];
-  let error = null;
 
   try {
+    currentUser = req.session.loggedInUser
     listUsers = await User.find();
   } catch (e) {
-    error = { errType: "DB_ERR", message: e };
+    res.render("users/list", { error: { type: "DB_ERR", message: e, currentUser }})
   } finally {
-    res.render("users/list", { users: listUsers, error });
+    res.render("users/list", { users: listUsers, currentUser });
   }
 });
 
@@ -42,45 +40,46 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
     switch (req.params.usertype) {
       case "adopter":
       case "Adopter":
-        res.render("users/adopters/profile", { user, canEdit });
+        res.render("users/adopters/profile", { user, canEdit, currentUser: loggedInUser });
         break;
       case "shelter":
       case "Shelter":
-        res.render("users/shelters/profile", { user, canEdit });
+        res.render("users/shelters/profile", { user, canEdit, currentUser: loggedInUser });
         break;
       default:
         res.send("oops");
         break;
     }
-  } catch (error) {
-    console.error(error);
-  }
-});
+} catch (e) {
+  res.render("homepage", { error: { type: "DB_ERR", message: e }})
+}});
 
 /* profile edit */
 router
   .route("/:usertype/:username/profile-edit")
   .get((req, res) => {
     // get user info from cookie
-    const user = req.session.loggedInUser;
+    const user = req.session.loggedInUser
 
     switch (req.params.usertype) {
       case "adopter":
       case "Adopter":
-        res.render("users/adopters/edit-profile", { user });
+        res.render("users/adopters/edit-profile", { user, currentUser: user })
         break;
       case "shelter":
       case "Shelter":
         console.log(user);
-        res.render("users/shelters/edit-profile", { user });
+        res.render("users/shelters/edit-profile", { user, currentUser: user });
         break;
       default:
         res.send("oops");
         break;
     }
   })
-  .post(async (req, res) => {
+  .post(isLoggedIn, async (req, res) => {
     const user = req.session.loggedInUser;
+    const updatedUser = null
+
     try {
       let updatedUser = null;
       switch (user.usertype) {
@@ -105,11 +104,26 @@ router
           break;
       }
       // update the cookie
-      req.session.loggedInUser = updatedUser;
-    } catch (error) {
-      console.error(error);
+      req.session.loggedInUser = updatedUser
+
+    } catch (e) {
+
+        let error = { type: "DB_ERR", message: e}
+
+        switch (user.usertype) {
+            case "Adopter":
+              res.render("users/adopters/edit-profile", { error, currentUser: user })
+              break;
+            case "Shelter":
+              res.render("users/shelters/edit-profile", { error, currentUser: user })
+              break;
+            default:
+              res.render("users/admin/control-panel", { error, currentUser: user })
+          }
+
     } finally {
       // redirect back to the profile
+      req.flash('info', 'Changes successfully saved!')
       res.redirect(`/users/${user.usertype}/${user.username}`);
     }
   });
@@ -135,3 +149,4 @@ router
   });
 
 module.exports = router;
+
