@@ -22,19 +22,34 @@ router.route("/").get(async (req, res) => {
   }
 });
 
-router.get("/profile", isLoggedIn, async (req, res) => {
+/* users profile page */
+router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
   try {
     // get user info from cookie
-    const user = req.session.loggedInUser;
-    switch (user.usertype) {
+    const loggedInUser = req.session.loggedInUser;
+
+    // find user in the DB
+    const user = await User.findOne({ username: req.params.username });
+
+    let canEdit = false;
+    if (
+      loggedInUser.email === user.email ||
+      loggedInUser.usertype === undefined
+    )
+      canEdit = true;
+
+    // render profile page for that user
+    switch (req.params.usertype) {
+      case "adopter":
       case "Adopter":
-        res.render("users/adopters/profile", { user });
+        res.render("users/adopters/profile", { user, canEdit });
         break;
+      case "shelter":
       case "Shelter":
-        res.render("users/shelters/profile", { user });
+        res.render("users/shelters/profile", { user, canEdit });
         break;
       default:
-        res.send("you are a GOD!");
+        res.send("oops");
         break;
     }
   } catch (error) {
@@ -44,41 +59,78 @@ router.get("/profile", isLoggedIn, async (req, res) => {
 
 /* profile edit */
 router
-  .route("/profile/edit")
+  .route("/:usertype/:username/profile-edit")
   .get((req, res) => {
     // get user info from cookie
     const user = req.session.loggedInUser;
 
-    switch (user.usertype) {
+    switch (req.params.usertype) {
+      case "adopter":
       case "Adopter":
         res.render("users/adopters/edit-profile", { user });
         break;
+      case "shelter":
       case "Shelter":
+        console.log(user);
         res.render("users/shelters/edit-profile", { user });
         break;
       default:
-        res.render("users/admin/control-panel", { user });
+        res.send("oops");
+        break;
     }
   })
   .post(async (req, res) => {
     const user = req.session.loggedInUser;
     try {
-      // deconstruct body and take info from the form
-      const { fullname, children, animalPreference, housingSize } = req.body;
-
-      // TODO update user, add shelter update
-      const updatedUser = await Adopter.findByIdAndUpdate(
-        user._id,
-        { fullname, children, animalPreference, housingSize },
-        { new: true }
-      );
+      let updatedUser = null;
+      switch (user.usertype) {
+        case "Adopter":
+          // deconstruct body and take info from the form
+          const { fullname, children, animalPreference, housingSize } =
+            req.body;
+          updatedUser = await Adopter.findByIdAndUpdate(
+            user._id,
+            { fullname, children, animalPreference, housingSize },
+            { new: true }
+          );
+          break;
+        case "Shelter":
+          // deconstruct body and take info from the form
+          const { shelterName } = req.body;
+          updatedUser = await Shelter.findByIdAndUpdate(
+            user._id,
+            { name, address, contact_phone },
+            { new: true }
+          );
+          break;
+      }
       // update the cookie
       req.session.loggedInUser = updatedUser;
     } catch (error) {
       console.error(error);
     } finally {
       // redirect back to the profile
-      res.redirect("/users/profile");
+      res.redirect(`/users/${user.usertype}/${user.username}`);
+    }
+  });
+
+/* delete user */
+router
+  .route("/:usertype/:username/delete-user")
+  .get((req, res) => {
+    console.log(req.session.loggedInUser);
+    res.render("users/delete-user", { user: req.session.loggedInUser });
+  })
+  .post(async (req, res) => {
+    try {
+      await User.findOneAndDelete({ username: req.params.username });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      req.session.destroy((err) => {
+        if (err) res.redirect("/");
+        else res.redirect("/");
+      });
     }
   });
 

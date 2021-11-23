@@ -4,43 +4,68 @@ const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
 const Shelter = require("../models/Shelter.model");
 
+const isLoggedIn = require("../middleware/isLoggedIn");
 const isNotLoggedIn = require("../middleware/isNotLoggedIn");
 
-/* login */
-router.post("/login", isNotLoggedIn, async (req, res) => {
-  let error = null;
-  let message = "";
-
-  try {
-    const { email, password } = req.body;
-    // if one of the fields is missing
-    if (!email || !password)
-      res.render("homepage", {
-        error: { type: "CREDENTIALS_ERROR", message: "Invalid credentials" },
-      });
-
-    const loggedInUser = await User.findOne({ email });
-    if (!loggedInUser)
-      res.render("homepage", {
-        error: { type: "USER_ERROR", message: "User doesn't exist!" },
-      });
-
-    const isPwdCorrect = await bcrypt.compare(password, loggedInUser.password);
-
-    if (isPwdCorrect) {
-      req.session.loggedInUser = loggedInUser;
-      console.log("LOGGED IN USER =====> ", req.session.loggedInUser);
-      message = "You are logged in!";
-      res.redirect("/users/profile");
-    } else {
-      message = "Password is incorrect!";
-      error = { type: "USER_ERROR", message };
+const redirectToProfile = (req, res) => {
+  const loggedInUser = req.session.loggedInUser;
+  switch (loggedInUser.usertype) {
+    case "Adopter":
+    case "Shelter":
+      res.redirect(`/users/${loggedInUser.usertype}/${loggedInUser.username}`);
+      break;
+    case undefined:
+      res.send("Admin home page");
+      break;
+    default:
       res.redirect("/");
-    }
-  } catch (e) {
-    error = { errType: "DB_ERR", message: e };
+      break;
   }
-});
+};
+
+/* login */
+router
+  .route("/login")
+  .get(isLoggedIn, (req, res) => {
+    redirectToProfile(req, res);
+  })
+  .post(isNotLoggedIn, async (req, res) => {
+    let error = null;
+    let message = "";
+
+    try {
+      const { email, password } = req.body;
+      // if one of the fields is missing
+      if (!email || !password)
+        res.render("homepage", {
+          error: { type: "CREDENTIALS_ERROR", message: "Invalid credentials" },
+        });
+
+      const loggedInUser = await User.findOne({ email });
+      if (!loggedInUser)
+        res.render("homepage", {
+          error: { type: "USER_ERROR", message: "User doesn't exist!" },
+        });
+
+      const isPwdCorrect = await bcrypt.compare(
+        password,
+        loggedInUser.password
+      );
+
+      if (isPwdCorrect) {
+        req.session.loggedInUser = loggedInUser;
+        console.log("LOGGED IN USER =====> ", req.session.loggedInUser);
+        message = "You are logged in!";
+        redirectToProfile(req, res);
+      } else {
+        message = "Password is incorrect!";
+        error = { type: "USER_ERROR", message };
+        res.redirect("/");
+      }
+    } catch (e) {
+      error = { errType: "DB_ERR", message: e };
+    }
+  });
 
 /* signup */
 router
@@ -54,7 +79,7 @@ router
     try {
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
-        res.render("auth/signup", {
+        res.render("auth/signup-form", {
           username,
           email,
           role,
@@ -89,11 +114,11 @@ router
             password: hashedPwd,
           });
         }
-        // redirect to profile
-        res.redirect("/users/profile");
+        // redirect to home/login
+        res.redirect("/");
       } else {
         // user already exists
-        res.render("auth/signup", {
+        res.render("auth/signup-form", {
           username,
           email,
           role,

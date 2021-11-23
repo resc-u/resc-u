@@ -8,11 +8,15 @@
     <p>Showing shelter's profile</p>
 
     <p> TO DO </p>
+    <h2>{{user.username}}</h2>
 
-    <a href="/users/profile/edit" class="btn">Edit profile</a>
+    {{#if canEdit}}
+        <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
+        <a href="/animals/new" class="btn">Add an Animal</a>
+        <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a>      
+    {{/if}}
 
 
-    <a href="/animals/new" class="btn">Add an Animal</a>
 
 
     <a href="/shelters/animals" class="btn"> List of animals from this Shelter </a>
