@@ -1,6 +1,12 @@
 const router = require("express").Router();
 const User = require("../models/User.model")
 const Adopter = require("../models/Adopter.model")
+const Animal = require("../models/Animal.model.js")
+
+
+// ********* require fileUploader in order to use it *********
+const fileUploader = require('../config/cloudinary.config');
+
 
 // GET /users ==> list of users
 router
@@ -102,5 +108,8 @@ router.get('/profile/:role/:id', async (req, res) => {
     }
 
  })  
+
+
+
 
 module.exports = router;
