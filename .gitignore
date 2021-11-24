@@ -3,7 +3,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,windows
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,windows
 
-node_modules
 
 ### macOS ###
 # General
@@ -83,3 +82,5 @@ $RECYCLE.BIN/
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
+package-lock.json
+node_modules
