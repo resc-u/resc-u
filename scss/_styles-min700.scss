@@ -66,4 +66,20 @@
     }
 
 
+    section.animals-list {
+        .animals-grid {
+
+            .animal-in-list {
+                width: 200px;
+                margin: 30px;
+            }
+        }        
+    }
+
+    .filters {
+        max-width: 500px;
+        margin: 30px auto;
+    }
+
+
 }

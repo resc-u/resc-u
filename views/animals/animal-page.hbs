@@ -21,10 +21,20 @@
       <p> Color {{animal.color}}</p>
 
       <p> Date of Entry: {{animal.dateofentry }}</p>
-      <p> Kid Friendly: 
-          {{animal.kidfriendly}}
+      <p> Kid Friendly?
+          {{#if animal.kidfriendly}}
+            Yes
+          {{else}} 
+            No   
+          {{/if}}
       </p>
-      <p> Shelter ID: {{animal.shelter}}</p>
+      <p> Shelter: 
+        {{#if animal.shelter.name}}
+          {{animal.shelter.name}}
+        {{else}}
+          {{animal.shelter.username}}
+        {{/if}}
+      </p>
     </div>
 
     <div class="animal-pictures">
