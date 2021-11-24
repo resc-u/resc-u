@@ -1,29 +1,30 @@
-<h1>Animal's page</h1>
-<hr>
-<div class="row">
-    <div class="col-md-4 mb-5">
-      <div class="card" style="width: 18rem;">
 
-        <img src="{{imageUrl.[0].path}}" class="card-img-top" alt="{{name}}">
-        <img src="{{imageUrl.[1].path}}" class="card-img-top" alt="{{name}}">
-        <img src="{{imageUrl.[2].path}}" class="card-img-top" alt="{{name}}">
-        
-        <div class="card-body">
-          <h5 class="card-title"> Name: {{name}}</h5>
-          <p class="card-text"> Description: {{description}}</p>
-          <p class="card-text"> Type: {{type}}</p>
-          <p class="card-text"> Sex: {{sex}}</p>
-          <p class="card-text"> Size: {{size}}</p>
-          <p class="card-text"> Age: {{age}}</p>
-          <p class="card-text"> Status: {{status}}</p>
-          <p class="card-text"> Color {{color}}</p>
-          <p class="card-text"> Date of Entry: {{dateofentry}}</p>
-          <p class="card-text"> Kid Friendly: {{kidfriendly}}</p>
-          <p class="card-text"> Shelter ID: {{shelter}}</p>
+<section class="animal">
 
-        </div>
-      </div>
+    <div class="animal-main-picture">
+      <img src="{{imageUrl.[0].path}}" class="card-img-top" alt="{{name}}">
+      <p class="name-animal"> {{name}}</p>
     </div>
 
-  <hr />
-</div>
+    <div>
+      <p> I'm a {{type}}</p>
+      <p> {{sex}}</p>
+      <p> {{size}} Kg</p>
+      <p> {{age}} years</p>
+      <p> I'm {{status}}</p>
+      <p> Color {{color}}</p>
+      <p> Date of Entry: {{dateofentry}}</p>
+      <p> Kid Friendly: 
+          {{kidfriendly}}
+      </p>
+      <p> Shelter ID: {{shelter}}</p>
+    </div>
+
+    <div class="animal-pictures">
+      <img src="{{imageUrl.[1].path}}" class="card-img-top" alt="{{name}}">
+      <img src="{{imageUrl.[2].path}}" class="card-img-top" alt="{{name}}">
+    </div>
+
+    <p class="animal-description"> Description: {{description}}</p>
+  
+</section>

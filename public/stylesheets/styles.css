@@ -1186,6 +1186,24 @@ section {
   margin-top: 20px;
 }
 
+/* ====== Animal page ======== */
+.animal {
+  width: 100%;
+}
+.animal-main-picture {
+  width: 160px;
+  margin: 20px auto;
+}
+.animal-main-picture img {
+  width: 100%;
+  border-radius: 50%;
+}
+.animal-main-picture .name-animal {
+  font-weight: bold;
+  text-align: center;
+  font-size: 18px;
+}
+
 /* ====== Footer ======== */
 footer {
   position: fixed;

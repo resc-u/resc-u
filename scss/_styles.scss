@@ -257,6 +257,32 @@ section {
 
 
 
+/* ====== Animal page ======== */
+
+.animal {
+    width: 100%;
+
+    &-main-picture {
+        width: 160px;
+        margin: 20px auto;
+        img {
+            width: 100%;
+            border-radius: 50%;
+        }
+        .name-animal {
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+    }
+
+
+
+}
+
+
+
+
 
 /* ====== Footer ======== */
 footer {
