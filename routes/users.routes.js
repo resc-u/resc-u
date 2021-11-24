@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
-const Shelter = require("../models/Adopter.model");
+const Shelter = require("../models/Shelter.model");
 const userHelper = require("../middleware/userHelper");
 const fileUploader = require("../config/cloudinary.config");
 
@@ -80,11 +80,17 @@ router
     switch (req.params.usertype) {
       case "adopter":
       case "Adopter":
-        res.render("users/adopters/edit-profile", { user: currentUser, currentUser });
+        res.render("users/adopters/edit-profile", {
+          user: currentUser,
+          currentUser,
+        });
         break;
       case "shelter":
       case "Shelter":
-        res.render("users/shelters/edit-profile", { user: currentUser, currentUser });
+        res.render("users/shelters/edit-profile", {
+          user: currentUser,
+          currentUser,
+        });
         break;
       default:
         res.send("oops");
@@ -96,11 +102,11 @@ router
     let updatedUser = null;
 
     try {
-
       switch (currentUser.usertype) {
         case "Adopter":
           // deconstruct body and take info from the form
-          const { fullname, children, animalPreference, housingSize } = req.body
+          const { fullname, children, animalPreference, housingSize } =
+            req.body;
           updatedUser = await Adopter.findByIdAndUpdate(
             currentUser._id,
             { fullname, children, animalPreference, housingSize },
@@ -115,38 +121,31 @@ router
             { name, address, contact_phone, contact_email },
             { new: true }
           );
-
-          //console.log("USER ID ===>", currentUser._id)
-          //console.log("updatedUser 1 ========>", updatedUser)
-          
           break;
       }
       // update the cookie
       req.session.loggedInUser = updatedUser;
-
     } catch (e) {
       console.log("There's been an error!! ===> ", e);
 
-      let route = "";
+      let view = "";
       switch (currentUser.usertype) {
         case "Adopter":
-          route = "users/adopters/edit-profile";
+          view = "users/adopters/edit-profile";
           break;
         case "Shelter":
-          route = "users/shelters/edit-profile";
+          view = "users/shelters/edit-profile";
           break;
         default:
-          route = "users/admin/control-panel";
+          view = "users/admin/control-panel";
       }
 
-      res.render(route, {
+      res.render(view, {
         currentUser,
         user: currentUser,
         messages: { error: "We are sorry, there has been an error." },
-      })
-
+      });
     } finally {
-
       //console.log("========> PROFILE SHELTER SAVED")
       //console.log("currentUser 2 ========>", currentUser)
       //console.log(`/users/${currentUser.usertype}/${currentUser.username}`)

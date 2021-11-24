@@ -10,35 +10,44 @@ router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
 
   try {
+    // all animals from DB
     let animalsList = await Animal.find();
 
-    /* const animalsList = [];
-    if (req.query.type) {
-      console.log("qTYPE", req.query.type);
-      const { type } = req.query;
-      animalsList = await Animal.find({ type: type });
-    } else {
-      animalsList = await Animal.find();
-    } */
-
+    // populate animalTypes with all the different types of animals
     const animalTypes = [];
-
     animalsList
       .map((animal) => animal.type)
       .forEach((type) => {
         if (animalTypes.includes(type) === false) animalTypes.push(type);
       });
-    console.log(animalsList);
-    if (req.query.type)
+
+    // create checkboxes objet
+    const typeCheckBoxes = [];
+    animalTypes.forEach((type) =>
+      typeCheckBoxes.push({
+        name: type,
+        checked: false,
+      })
+    );
+
+    /* FILTERS */
+    // by type
+    if (req.query.type) {
+      // filter animals
       animalsList = animalsList.filter((animal) =>
         req.query.type.includes(animal.type)
       );
-
-    console.log(animalsList);
+      // handle checkboxes
+      typeCheckBoxes.forEach((type) => {
+        if (req.query.type.includes(type.name)) {
+          type.checked = true;
+        }
+      });
+    }
 
     res.render("animals/animals-list.hbs", {
       animals: animalsList,
-      types: animalTypes,
+      types: typeCheckBoxes,
       currentUser,
     });
   } catch (err) {

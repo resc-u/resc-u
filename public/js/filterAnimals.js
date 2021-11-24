@@ -1,9 +1,10 @@
 console.log("filteranimals loaded");
 
 const animalFilterForm = document.querySelector("#animalFilter");
-// const animalSelect = document.querySelector("#animalSelect");
-// console.log(animalSelect);
+const typeCheckbox = document.querySelector(".typeCheckbox");
 
-/* animalFilterForm.addEventListener("change", (event) => {
+console.log(animalFilterForm);
+
+animalFilterForm.addEventListener("change", (event) => {
   animalFilterForm.submit();
-}); */
+});

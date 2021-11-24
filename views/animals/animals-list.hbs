@@ -2,38 +2,18 @@
 
   <h1>Our animals</h1>
 
-  {{!   <form action="/animals" method="get" id="animalFilter">
-
-    <div class="filters">
-      <div class="animals-filter">
-        <input type="checkbox" name="type" value="dog" autocomplete="" />
-        <label>Dogs</label>
-      </div>
-
-      <div class="animals-filter">
-        <input type="checkbox" name="type" value="cat" autocomplete="" />
-        <label>Cats</label>
-      </div>
-
-      <div class="animals-filter">
-        <input type="checkbox" name="type" value="turtle" autocomplete="" />
-        <label>Turtles</label>
-      </div>
-
-      <button class="btn secondary" type="submit">Search</button>
-    </div>
-  </form> }}
 <form action="/animals" method="get" id="animalFilter">
-
   <div class="filters">
 
     {{#each types}}
-
       <div class="animals-filter">
-        <input type="checkbox" name="type" value="{{this}}" checked />
-        <label>{{this}}</label>
+        {{#if checked}}
+        <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" checked />
+          {{else}}
+        <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}"  />
+        {{/if}}
+        <label>{{name}}</label>
       </div>
-
     {{/each}}
 
     <button class="btn secondary" type="submit">Search</button>
