@@ -1,7 +1,7 @@
 <header>
 
     {{#if currentUser}}
-
+        
         <img src="../../../images/menu.png" class="menu_icon" id="menu_icon" />
          
         {{>navBar}}
@@ -10,6 +10,13 @@
             <a href="/auth/logout" class="logout">Log out</a> 
             <h3 class="hello_user">Hello {{ currentUser.username }}!</h3>
             <img class="default-avatar" src="../../../images/default-avatar.png">
+        </div>
+
+    {{else}}
+        
+        <div class="page-title">
+            <h1>Resc-u</h1>
+            <p>Adopt an animal. Rescue yourself.</p>
         </div>
 
     {{/if}}

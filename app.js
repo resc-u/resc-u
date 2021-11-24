@@ -10,6 +10,9 @@ require("./db");
 // middleware
 require("./config")(app);
 
+// register helpers for hbs
+require("./middleware/hbs");
+
 // sessions
 require("./config/session.config")(app);
 app.use(flash());

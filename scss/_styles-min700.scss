@@ -46,9 +46,8 @@
     .homepage {
 
         .wrapper-boxes-homepage {
-            display: flex;
-            justify-content: space-evenly;
-
+            flex-direction: row;
+            
             .login-form {
                 margin-right: 50px;
                 max-width: 500px;
@@ -76,10 +75,44 @@
 
 
     .animal {
+        width: 90%;
+        max-width: 1000px;
+
+        .big-white-wrapper {
+            background-color: rgba($color: #fff, $alpha: 0.7);
+            padding: 150px 20px 40px 40px;
+        
+            .animal-details-top {
+                display: flex;
+                justify-content: space-between;
     
-        &-details {
-            width: 50%;
+                .animal-details {
+                    width: 50%;
+                }
+            
+                .animal-pictures {
+                    margin: 0px;
+                    text-align: center;
+                    max-width: 300px;
+            
+                    img {
+                        border-radius: 5px;
+                    }
+                    .main {
+                        width: 90%;
+                        max-width: 300px;
+                    }
+                    .small {
+                        width: 70px;
+                        cursor: pointer;
+                    }
+                }
+            }
         }
+
+
+
+
 
     }
 
@@ -91,7 +124,7 @@
                 margin: 30px;
                 
                 .heart-icon {
-                    right: 20px;
+                    right: 0px;
                 }
 
                 img {
