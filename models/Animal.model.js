@@ -4,7 +4,11 @@ const Shelter = require("../models/Shelter.model");
 const animalSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, trim: true },
-  type: { type: String, required: true },
+  type: {
+    type: String,
+    enum: ["dog", "cat", "turtle", "fish", "exoticAnimal", "other"],
+    required: true,
+  },
   sex: {
     type: String,
     required: true,
