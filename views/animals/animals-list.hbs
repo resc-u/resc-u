@@ -1,14 +1,17 @@
 <h1>Animals List</h1>
 <hr />
-<form action="/animals" method="post">
-  <label for="typeOfAnimal">Select animal:</label>
-  <select name="typeOfAnimal">
-    <option value="Dog">Dog</option>
-    <option value="Cat">Cat</option>
-  </select>
+<form action="/animals" method="get" id="animalFilter">
+
+  <p>Dogs</p>
+  <input type="checkbox" name="type" value="dog" autocomplete="" />
+
+  <p>Cats</p>
+  <input type="checkbox" name="type" value="cat" />
+
+  <button type="submit">Search</button>
 </form>
 <div class="row">
-  {{#each animalslist}}
+  {{#each animals}}
     <div class="col-md-4 mb-5">
       <div class="card" style="width: 18rem;">
 
@@ -28,4 +31,5 @@
   {{/each}}
 
   <hr />
+  <script src="js/filterAnimals.js"></script>
 </div>

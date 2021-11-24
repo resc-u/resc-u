@@ -6,22 +6,30 @@ const Animal = require("../models/Animal.model.js");
 // ********* require fileUploader in order to use it *********
 const fileUploader = require("../config/cloudinary.config");
 
+router.get("/", async (req, res) => {
+  let animalsList = [];
+  try {
+    if (req.query.type) {
+      console.log("qTYPE", req.query.type);
+      const { type } = req.query;
+      animalsList = await Animal.find({ type: type });
+    } else {
+      animalsList = await Animal.find();
+    }
+    console.log("animals ====>", animalsList);
 
-
-router.get("/", (req, res) => {
-  Animal.find()
-    .then((animalsFromDB) => {
-      res.render("animals/animals-list.hbs", { animalslist: animalsFromDB });
-    })
-    .catch((err) =>
-      console.log(`Error while getting the animals from the DB: ${err}`)
-    );
+    res.render("animals/animals-list.hbs", { animals: animalsList });
+  } catch (err) {
+    console.log(`Error while getting the animals from the DB: ${err}`);
+  }
 });
 
-router.route("/new").get((req, res) => {
+router
+  .route("/new")
+  .get((req, res) => {
     res.render("animals/new-animal.hbs");
-})
-.post( fileUploader.array("animal-image[]", 3), (req, res) => {
+  })
+  .post(fileUploader.array("animal-image[]", 3), (req, res) => {
     const {
       name,
       description,
@@ -35,7 +43,7 @@ router.route("/new").get((req, res) => {
       dateofentry,
       kidfriendly,
     } = req.body;
-  
+
     Animal.create({
       name,
       description,
@@ -61,24 +69,28 @@ router.route("/new").get((req, res) => {
       );
   });
 
-
 router.get("/:id", (req, res) => {
-    Animal.findById(req.params.id, function (err, foundbyid){
-        if (err) { return console.log(err)}
-        res.render("animals/animal-page.hbs", foundbyid)
-    })
-
-})
+  Animal.findById(req.params.id, function (err, foundbyid) {
+    if (err) {
+      return console.log(err);
+    }
+    res.render("animals/animal-page.hbs", foundbyid);
+  });
+});
 
 router.get("/edit/:id", (req, res) => {
-    let id = req.params.id
-    Animal.findById(id, function (err, foundbyid){
-        if (err) { return console.log(err)}
-        res.render("animals/animal-edit.hbs", foundbyid)
-    })
+  let id = req.params.id;
+  Animal.findById(id, function (err, foundbyid) {
+    if (err) {
+      return console.log(err);
+    }
+    res.render("animals/animal-edit.hbs", foundbyid);
+  });
 });
-router.post("/edit/:id", fileUploader.array("animal-image[]", 3), (req, res) => {
-      
+router.post(
+  "/edit/:id",
+  fileUploader.array("animal-image[]", 3),
+  (req, res) => {
     const {
       name,
       description,
@@ -93,9 +105,9 @@ router.post("/edit/:id", fileUploader.array("animal-image[]", 3), (req, res) => 
       kidfriendly,
     } = req.body;
 
- let id = req.params.id
+    let id = req.params.id;
 
-    Animal.findOneAndUpdate  (id, {
+    Animal.findOneAndUpdate(id, {
       name,
       description,
       type,
@@ -108,34 +120,27 @@ router.post("/edit/:id", fileUploader.array("animal-image[]", 3), (req, res) => 
       dateofentry,
       kidfriendly,
       imageUrl: req.files,
-     // shelter: req.session.loggedInUser._id,
-}).then((newlyUpdatedAnimalFromDB) => {
-   
+      // shelter: req.session.loggedInUser._id,
+    })
+      .then((newlyUpdatedAnimalFromDB) => {
+        res.redirect("/shelters/animals");
+      })
+      .catch((error) =>
+        console.log(`Error while updating an animal: ${error}`)
+      );
+  }
+);
+
+router.get("/delete/:id", async (req, res) => {
+  let id = req.params.id;
+
+  try {
+    await Animal.findByIdAndDelete(id);
+
     res.redirect("/shelters/animals");
-  })
-  .catch((error) =>
-    console.log(`Error while updating an animal: ${error}`)
-  );
-
-} )
-
-router.get("/delete/:id", async(req, res) => {
-
-    let id = req.params.id
-    
-    try {
-
-   await Animal.findByIdAndDelete( id ) 
-    
-    res.redirect("/shelters/animals")
-    
-    } 
-    
-    catch(e) { 
-        return console.log(e)
-    }
-    
-})
-
+  } catch (e) {
+    return console.log(e);
+  }
+});
 
 module.exports = router;
