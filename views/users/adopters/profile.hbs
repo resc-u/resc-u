@@ -6,13 +6,36 @@
     <div class="profile-preferences ">
         <p class="title-box">My preferences</p>
 
-        <div class="white-box">
+        <div class="white-box preferences">
             
-            <p>Username: {{ user.username }}</p>
-            <p>Fullname: {{user.fullname}} </p>
-            <p>Children: {{user.children}} </p>
-            <p>Animal Preference: {{user.animalPreference}}</p>
-            <p>Size living place: {{user.housingSize}}</p>
+            <p class="pref">
+                <span>Username: </span>
+                {{ user.username }}
+            </p>
+
+            <p class="pref">
+                <span>Fullname: </span>
+                {{user.fullname}} 
+            </p>
+
+            <p class="pref">
+                <span>Living with kids? </span>
+                {{#if user.children}}
+                    Yes
+                {{else}}
+                    No
+                {{/if}}
+            </p>
+
+            <p class="pref">
+                <span>Animal Preference: </span>
+                {{user.animalPreference}}
+            </p>
+
+            <p class="pref">
+                <span>Size living place: </span>
+                {{user.housingSize}}
+            </p>
 
         </div>
 

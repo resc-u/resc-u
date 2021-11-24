@@ -170,6 +170,25 @@ nav.menu {
 
 }
 
+.group-links {
+    display: flex;
+
+    a {
+        color: $color-green-dark;
+        border: solid 2px $color-green-dark;
+        background-color: $color-green-light;
+        margin: 10px auto;
+        font-size: 13px !important;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: all 0.3 0s;
+
+        &:hover {
+            background-color: $color-green-medium;
+        }
+    }
+}
+
 .group-btn {
     display: flex;
 }
@@ -230,8 +249,8 @@ section {
 }
 
 .info {
-    border: solid 1px #097969;
-    background-color: #DAF7A6;
+    border: solid 2px $color-green-dark;
+    background-color: $color-green-light;
 }
 
 .error {
@@ -278,7 +297,27 @@ section {
     border-radius: 30px;
     margin-top: 20px;
 }
+.profile-preferences {
 
+    .white-box.preferences {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        height: 300px;
+
+        .pref {
+            display: flex;
+            width: 100%;
+        }
+    
+        span {
+            font-weight: bold;
+            width: 50%;
+            display: block;
+        }
+    }
+    
+}
 
 /* ====== Animal page ======== */
 

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
+const Shelter = require("../models/Adopter.model");
 const userHelper = require("../middleware/userHelper");
 const fileUploader = require("../config/cloudinary.config");
 
@@ -74,16 +75,16 @@ router
   .route("/:usertype/:username/profile-edit")
   .get((req, res) => {
     // get user info from cookie
-    const user = req.session.loggedInUser;
+    const currentUser = req.session.loggedInUser;
 
     switch (req.params.usertype) {
       case "adopter":
       case "Adopter":
-        res.render("users/adopters/edit-profile", { user, currentUser: user });
+        res.render("users/adopters/edit-profile", { user: currentUser, currentUser });
         break;
       case "shelter":
       case "Shelter":
-        res.render("users/shelters/edit-profile", { user, currentUser: user });
+        res.render("users/shelters/edit-profile", { user: currentUser, currentUser });
         break;
       default:
         res.send("oops");
@@ -91,40 +92,43 @@ router
     }
   })
   .post(isLoggedIn, async (req, res) => {
-    const user = req.session.loggedInUser;
-    const updatedUser = null;
+    const currentUser = req.session.loggedInUser;
+    let updatedUser = null;
 
     try {
-      let updatedUser = null;
-      switch (user.usertype) {
+
+      switch (currentUser.usertype) {
         case "Adopter":
           // deconstruct body and take info from the form
-          const { fullname, children, animalPreference, housingSize } =
-            req.body;
+          const { fullname, children, animalPreference, housingSize } = req.body
           updatedUser = await Adopter.findByIdAndUpdate(
-            user._id,
+            currentUser._id,
             { fullname, children, animalPreference, housingSize },
             { new: true }
           );
           break;
         case "Shelter":
           // deconstruct body and take info from the form
-          const { shelterName } = req.body;
+          const { name, address, contact_phone, contact_email } = req.body;
           updatedUser = await Shelter.findByIdAndUpdate(
-            user._id,
-            { name, address, contact_phone },
+            currentUser._id,
+            { name, address, contact_phone, contact_email },
             { new: true }
           );
+
+          //console.log("USER ID ===>", currentUser._id)
+          //console.log("updatedUser 1 ========>", updatedUser)
+          
           break;
       }
       // update the cookie
       req.session.loggedInUser = updatedUser;
+
     } catch (e) {
       console.log("There's been an error!! ===> ", e);
 
       let route = "";
-
-      switch (user.usertype) {
+      switch (currentUser.usertype) {
         case "Adopter":
           route = "users/adopters/edit-profile";
           break;
@@ -136,12 +140,19 @@ router
       }
 
       res.render(route, {
-        currentUser: user,
+        currentUser,
+        user: currentUser,
         messages: { error: "We are sorry, there has been an error." },
-      });
+      })
+
     } finally {
+
+      //console.log("========> PROFILE SHELTER SAVED")
+      //console.log("currentUser 2 ========>", currentUser)
+      //console.log(`/users/${currentUser.usertype}/${currentUser.username}`)
+
       req.flash("info", "Changes successfully saved!");
-      res.redirect(`/users/${user.usertype}/${user.username}`);
+      res.redirect(`/users/${updatedUser.usertype}/${updatedUser.username}`);
     }
   });
 

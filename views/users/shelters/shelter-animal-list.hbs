@@ -1,40 +1,38 @@
-<h1>This Shelter's animals</h1>
-<hr>
-<div class="row">
-{{#each animalslist}}
-    <div class="col-md-4 mb-5">
-      <div class="card" style="width: 18rem;">
-        
-        <div class="card-body">
+<section class="animals-list">
 
-        <h5 class="card-title"> Name: {{name}}</h5>
+  <h1>Animals from {{ user.name }} shelter</h1>
 
-        <img src="{{imageUrl.[0].path}}" class="card-img-top" alt="{{name}}">
-        <img src="{{imageUrl.[1].path}}" class="card-img-top" alt="{{name}}">
-        <img src="{{imageUrl.[2].path}}" class="card-img-top" alt="{{name}}">
-        
-          <p class="card-text"> Description: {{description}}</p>
-          <p class="card-text"> Type: {{type}}</p>
-          <p class="card-text"> Sex: {{sex}}</p>
-          <p class="card-text"> Size: {{size}}</p>
-          <p class="card-text"> Age: {{age}}</p>
-          <p class="card-text"> Status: {{status}}</p>
-          <p class="card-text"> Color {{color}}</p>
-          <p class="card-text"> Date of Entry: {{dateofentry}}</p>
-          <p class="card-text"> Kid Friendly: {{kidfriendly}}</p>
-         <!-- <p class="card-text"> Shelter ID: {{shelter}}</p> -->
+  <div class="animals-grid">
 
+    {{#each animalslist}}
+
+      <div class="animal-in-list">
+
+        <a href="/animals/{{this._id}}">
+          
+          <div class="main-pic-wrapper">
+            <img src="{{imageUrl.0.path}}" alt="animal picture" />
+          </div>
+
+          <div class="animal-info">
+            <p> <span class="animal-name">{{name}}</span>, {{age}} years</p>
+            <p>I'm {{status}}</p>
+          </div>
+        </a>
+
+        <div class="group-links">
+          <a href="/animals/edit/{{this._id}}">Edit info</a>
+          <a href="/animals/delete/{{this._id}}">Delete</a>
         </div>
-        <a href="/animals/edit/{{this._id}}" class="btn">Edit info about: {{name}}</a>
-        
-        <a href="/animals/delete/{{this._id}}" class="btn">Delete: {{name}}</a>
 
-
-        <hr>
       </div>
-    </div>
-  {{else}}
-    <p>There are no animals from this Shelter</p>
-  {{/each}}
 
-</div>
+    {{else}}
+
+      <p>There are no animals in this Shelter yet!</p>
+
+    {{/each}}
+
+  </div>
+
+</section>
