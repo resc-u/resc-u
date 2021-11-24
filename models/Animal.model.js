@@ -3,7 +3,7 @@ const Shelter = require("../models/Shelter.model");
 
 const animalSchema = new Schema({
   name: { type: String, required: true },
-  description: { type: String },
+  description: { type: String, trim: true },
   type: { type: String, required: true },
   sex: {
     type: String,

@@ -1,19 +1,29 @@
 <h1>Animals List</h1>
-<hr>
+<hr />
+<form action="/animals" method="get" id="animalFilter">
+
+  <p>Dogs</p>
+  <input type="checkbox" name="type" value="dog" autocomplete="" />
+
+  <p>Cats</p>
+  <input type="checkbox" name="type" value="cat" />
+
+  <button type="submit">Search</button>
+</form>
 <div class="row">
-{{#each animalslist}}
+  {{#each animals}}
     <div class="col-md-4 mb-5">
       <div class="card" style="width: 18rem;">
 
-        <img src="{{imageUrl.[0].path}}" class="card-img-top" alt="{{name}}">
-       
+        <img src="{{imageUrl.0.path}}" class="card-img-top" alt="{{name}}" />
+
         <div class="card-body">
           <h5 class="card-title"> Name: {{name}}</h5>
           <p class="card-text"> Type: {{type}}</p>
           <p class="card-text"> Status: {{status}}</p>
         </div>
-        <a href="/animals/{{this._id}}"> Learn more about:  {{name}}</a>
-      <hr>
+        <a href="/animals/{{this._id}}"> Learn more about: {{name}}</a>
+        <hr />
       </div>
     </div>
   {{else}}
@@ -21,4 +31,5 @@
   {{/each}}
 
   <hr />
+  <script src="js/filterAnimals.js"></script>
 </div>
