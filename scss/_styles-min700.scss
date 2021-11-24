@@ -29,7 +29,6 @@
         background-color: unset;
         border: unset;
         width: unset;
-        //padding: 20px 30px;
         height: 80px;   // like header
 
 
@@ -48,13 +47,12 @@
         width: 50%;
     }
 
-    .edit-profile-adopter.white-box {
+
+    // center section when page is bigger
+    .edit-profile-adopter.white-box,
+    .section_new_animal {
         width: 600px;
         margin: 0 auto;
-
-        .btn {
-            margin: 20px auto;
-        }
     }
 
 

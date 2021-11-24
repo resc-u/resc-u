@@ -990,7 +990,7 @@ h1 {
   background-repeat: no-repeat;
   background-size: cover;
   width: 100%;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 130px);
   background-position: center;
 }
 
@@ -1041,7 +1041,7 @@ nav.menu {
   border: solid 2px #CCB88D;
   padding: 20px 30px;
   width: 100vw;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 50px);
 }
 nav.menu a {
   cursor: pointer;
@@ -1078,21 +1078,19 @@ nav.menu .close_menu {
   display: flex;
   align-items: center;
   margin: 20px 0px;
+  width: 100%;
 }
 .form label {
   width: 150px;
   display: block;
 }
-.form input, .form select {
+.form input, .form select, .form textarea {
   border-radius: 6px;
   border: solid 1px #ccc;
   width: 60%;
   padding: 10px;
   font-family: inherit;
-}
-.form select {
-  width: 220px;
-  /* needs a little more width */
+  background-color: white;
 }
 .form input[type=radio] {
   width: 50px;
@@ -1112,10 +1110,10 @@ nav.menu .close_menu {
   cursor: pointer;
   text-decoration: none;
   font-weight: normal;
-  margin: 30px 30px 0 0;
   display: block;
   transition: all 0.5s 0s;
   font-size: 14px;
+  margin: 20px auto;
 }
 .btn:hover {
   background-color: #CCB88D;
@@ -1193,12 +1191,14 @@ footer {
   position: fixed;
   bottom: 0;
   left: 0;
-  padding: 16px 30px;
   text-align: center;
   background-color: #79663D;
   color: white;
   width: 100vw;
-  height: 60px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media all and (min-width: 700px) {
@@ -1240,12 +1240,10 @@ footer {
     width: 50%;
   }
 
-  .edit-profile-adopter.white-box {
+  .edit-profile-adopter.white-box,
+.section_new_animal {
     width: 600px;
     margin: 0 auto;
-  }
-  .edit-profile-adopter.white-box .btn {
-    margin: 20px auto;
   }
 }
 
