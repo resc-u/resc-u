@@ -54,7 +54,7 @@ router
       
     } catch (e) {
       console.log("There's been an error!! ===> ", e)
-      res.render("homepage", { messages: {info: "We are sorry, there has been an error."}} )
+      res.render("homepage", { messages: {error: "We are sorry, there has been an error."}} )
     }
   });
 
@@ -109,7 +109,7 @@ router
       }
     } catch (e) {
       console.log("There's been an error!! ===> ", e)
-      res.render("auth/signup", { messages: {info: "We are sorry, there has been an error."}} )
+      res.render("auth/signup", { messages: {error: "We are sorry, there has been an error."}} )
     } 
   });
 

@@ -6,12 +6,14 @@ hbs.registerHelper('ifIn', function(elem, list, options) {
         return options.fn(this)       // true
     }
     return options.inverse(this)      // false
-
 });
 
-hbs.registerHelper("formatDate", function(datetime, format) {
-    console.log("======>", datetime)
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
 
+
+hbs.registerHelper("formatDate", function(datetime) {
     let newDate = new Date(datetime)
-    return newDate.toLocaleDateString("en-US")
+    return newDate.toLocaleDateString("en-GB")
   });

@@ -9,7 +9,7 @@ body {
     background-color: $color-main-bg;
     line-height: 1.7em;
     letter-spacing: 0.02em;
-    padding-bottom: 60px;
+    padding-bottom: 50px;
 }
 
 h1 {
@@ -20,36 +20,49 @@ h1 {
     font-size: 24px;
 }
 
+.bold {
+    font-weight: bold;
+}
 /* ====== Header ======== */
 
 header {
-        
-    background: $color-gradient-dark;
-    background: -moz-linear-gradient(270deg, $color-gradient-dark 0%, $color-gradient-light 100%);
-    background: -webkit-linear-gradient(270deg, color-gradient-dark 0%, $color-gradient-light 100%);
-    background: linear-gradient(0deg, color-gradient-dark 0%, $color-gradient-light 100%);  
-
+    
+    background-color: $color-pink-medium;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     height: 80px;
 
+    .page-title {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: space-evenly;
+        width: 100%;
+        height: 80px;
+
+        h1 {
+            margin: 0;
+        }
+    }
+
     .menu_icon {
         width: 36px;
         cursor: pointer;
     }
 
-    .logout {
-        color: $color-green-dark;
-        width: max-content;
+    a {
+        text-decoration: none;
+        color: black;
     }
-
+    
     .hello-user-wrapper {
 
         display: flex;
         align-items: center;
         height: 100%;
+        color: black;
         
         .hello_user {
             font-weight: bold;
@@ -119,8 +132,15 @@ nav.menu {
     width: 100%;
     height: calc(100vh - 130px);
     background-position: center;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
 
     .wrapper-boxes-homepage {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
 
         .signup_now {
             background-color: unset;
@@ -132,6 +152,26 @@ nav.menu {
 }
 
 
+/* ====== Login and Signup ======== */
+
+.section_signup {
+    margin: 50px auto;
+    width: 100%;
+}
+
+.signup_now,
+.login_now {
+    text-align: center;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.section_signup .subtitle {
+    text-align: center;
+}
 
 
 /* ====== Forms ======== */
@@ -225,14 +265,6 @@ nav.menu {
     }
 }
 
-.hello_user {
-    color: $color-green-dark;
-}
-
-main {
-    //margin-top: 70px;
-}
-
 section {
     padding: 20px;
 }
@@ -243,7 +275,7 @@ section {
     border-radius: 10px;
     margin: 0 auto 20px;
     padding: 20px 40px;
-    width: 80%;
+    width: 400px;
     text-align: center;
     transition: all 3s 0s;
 }
@@ -259,27 +291,6 @@ section {
 }
 
 
-/* ====== Login and Signup ======== */
-
-.section_signup {
-    margin: 50px auto;
-    width: 100%;
-}
-
-.signup_now,
-.login_now {
-    text-align: center;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.section_signup .subtitle {
-    text-align: center;
-}
-
 /* ====== Profiles ======== */
 
 .section_profile {
@@ -288,6 +299,8 @@ section {
 
 .title-box {
     font-weight: bold;
+    font-size: 20px;
+    margin-left: 20px;
 }
 
 .white-box {
@@ -322,7 +335,7 @@ section {
 /* ====== Animal page ======== */
 
 .animal {
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
 
     &-main-picture {
@@ -333,6 +346,9 @@ section {
         img {
             width: 100%;
             border-radius: 50%;
+            object-fit: cover;
+            width: 160px;
+            height: 160px;
         }
         .name-animal {
             font-weight: bold;
@@ -341,31 +357,58 @@ section {
         }
     }
 
-    &-details {
+    .big-white-wrapper {
+        border: solid 4px white;
+        background-color: rgba($color: #fff, $alpha: 0.7);
+        padding: 120px 20px 20px 20px;
+        border-radius: 30px;
+        margin-top: -130px;
         width: 100%;
+    
+        .animal-details-top {
+            .animal-details {
+                width: 100%;
+            }
+        
+            .animal-pictures {
+                margin: 30px auto;
+                text-align: center;
+                max-width: 300px;
+        
+                img {
+                    border-radius: 5px;
+                    transition: all 0.4s 0s;
+                }
+                .pic-animal-big {
+                    width: 90%;
+                    max-width: 300px;
+                }
+                .pic-animal-small {
+                    width: 70px;
+                    cursor: pointer;
+                }
+                .disabled {
+                    opacity: 0.3;
+                    cursor: unset;
+                }
+            }
+
+            .animal-description {
+                margin-top: 30px;
+            }
+        }
     }
 
-    &-pictures {
-        margin: 30px auto;
-        text-align: center;
-
-        img {
-            border-radius: 5px;
-        }
-        .main {
-            width: 90%;
-            max-width: 300px;
-        }
-        .small {
-            width: 70px;
-        }
+    .group-btn {
+        margin-top: 30px;
     }
+
 }
 
 .heart-icon {
     position: absolute;
-    bottom: 50px;
-    right: 10px;
+    bottom: 52px;
+    right: -10px;
     cursor: pointer;
 
     path {
@@ -408,8 +451,8 @@ section.animals-list {
             text-align: center;
 
             .heart-icon {
-                bottom: 80px;
-                right: 20%;
+                bottom: 68px;
+                right: 16%;
             }
 
             a {
@@ -444,8 +487,8 @@ section.animals-list {
 }
 
 .filters {
-    border: solid 2px $color-pink-medium;
-    background-color: $color-pink-light;
+    border: solid 2px $color-green-medium;
+    background-color: $color-yellow-light;
     padding: 30px 20px;
     display: flex;
     align-items: center;
@@ -470,7 +513,7 @@ section.animals-list {
             appearance: none;
 
             // add ours:
-            background-color: $color-pink-light;
+            background-color: $color-green-light;
             border: 1px solid #cacece;
             padding: 9px;
             border-radius: 3px;
@@ -478,7 +521,7 @@ section.animals-list {
             position: relative;
 
             display: block;
-            border: solid 1px $color-pink-dark;
+            border: solid 1px $color-green-dark;
             width: 20px;
             height: 20px;
             margin-right: 10px;
@@ -486,7 +529,7 @@ section.animals-list {
         }
         
         input[type="checkbox"]:checked {
-            background-color: $color-pink-medium;
+            background-color: $color-green-medium;
             color: #99a1a7;
 
             &::before {
@@ -495,7 +538,7 @@ section.animals-list {
                 top: 50%;
                 height: 50%;
                 width: 3px;
-                background-color: $color-pink-dark;
+                background-color: $color-green-dark;
                 content: "";
                 transform: translateX(10px) rotate(-45deg);
                 transform-origin: left bottom;
@@ -507,7 +550,7 @@ section.animals-list {
                 bottom: 0;
                 height: 3px;
                 width: 100%;
-                background-color: $color-pink-dark;
+                background-color: $color-green-dark;
                 content: "";
                 transform: translateX(10px) rotate(-45deg);
                 transform-origin: left bottom;

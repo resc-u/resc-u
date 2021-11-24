@@ -5,6 +5,7 @@ const loadAnimations = () => {
     let closeMenu = document.getElementById("close_menu")
     let navMenu = document.querySelector("nav.menu")
     let flash = document.querySelector("flash")
+    let imagesAnimal = document.querySelectorAll('img.pic-animal-small')
     
     const isVisible = (element) => {
         console.log("HOLAAAA")
@@ -29,6 +30,33 @@ const loadAnimations = () => {
             navMenu.classList.remove("open")
         })
     }
+
+    if (imagesAnimal && imagesAnimal.length > 0) {
+
+        imagesAnimal.forEach( (pic) => {
+            pic.addEventListener('click', () => {
+
+                console.log("src fomr img clicked", pic.src)
+                console.log("I clicked one")
+
+                let imgContainer = document.getElementById('show-picture')
+                let element = document.createElement('img')
+                element.setAttribute("class", "pic-animal-big")
+                element.setAttribute("src", pic.src)
+                imgContainer.innerHTML = ""
+                imgContainer.append(element)
+
+                // disable the one 
+                let smallImages = document.querySelectorAll('.pic-animal-small')
+                smallImages.forEach( (smallPic) => {
+                    if (pic.src === smallPic.src) smallPic.classList.add('disabled')
+                    else smallPic.classList.remove('disabled')
+                })
+
+            })
+        })
+    }
+
 
     if (flash && isVisible(flash)) {
         alert("hey, un flash!")

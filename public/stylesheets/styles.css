@@ -60,7 +60,7 @@ body {
   background-color: #FFF1E6;
   line-height: 1.7em;
   letter-spacing: 0.02em;
-  padding-bottom: 60px;
+  padding-bottom: 50px;
 }
 
 h1 {
@@ -71,30 +71,43 @@ h1 {
   font-size: 24px;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 /* ====== Header ======== */
 header {
-  background: #FEDCC6;
-  background: -moz-linear-gradient(270deg, #FEDCC6 0%, #F8EBE2 100%);
-  background: -webkit-linear-gradient(270deg, color-gradient-dark 0%, #F8EBE2 100%);
-  background: linear-gradient(0deg, color-gradient-dark 0%, #F8EBE2 100%);
+  background-color: #F6B5BB;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   height: 80px;
 }
+header .page-title {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 80px;
+}
+header .page-title h1 {
+  margin: 0;
+}
 header .menu_icon {
   width: 36px;
   cursor: pointer;
 }
-header .logout {
-  color: #79663D;
-  width: max-content;
+header a {
+  text-decoration: none;
+  color: black;
 }
 header .hello-user-wrapper {
   display: flex;
   align-items: center;
   height: 100%;
+  color: black;
 }
 header .hello-user-wrapper .hello_user {
   font-weight: bold;
@@ -153,10 +166,39 @@ nav.menu .close_menu {
   width: 100%;
   height: calc(100vh - 130px);
   background-position: center;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.homepage .wrapper-boxes-homepage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 .homepage .wrapper-boxes-homepage .signup_now {
   background-color: unset;
   border: unset;
+}
+
+/* ====== Login and Signup ======== */
+.section_signup {
+  margin: 50px auto;
+  width: 100%;
+}
+
+.signup_now,
+.login_now {
+  text-align: center;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.section_signup .subtitle {
+  text-align: center;
 }
 
 /* ====== Forms ======== */
@@ -238,10 +280,6 @@ nav.menu .close_menu {
   background-color: #FDEFF0;
 }
 
-.hello_user {
-  color: #79663D;
-}
-
 section {
   padding: 20px;
 }
@@ -251,7 +289,7 @@ section {
   border-radius: 10px;
   margin: 0 auto 20px;
   padding: 20px 40px;
-  width: 80%;
+  width: 400px;
   text-align: center;
   transition: all 3s 0s;
 }
@@ -266,26 +304,6 @@ section {
   background-color: #ffcccb;
 }
 
-/* ====== Login and Signup ======== */
-.section_signup {
-  margin: 50px auto;
-  width: 100%;
-}
-
-.signup_now,
-.login_now {
-  text-align: center;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.section_signup .subtitle {
-  text-align: center;
-}
-
 /* ====== Profiles ======== */
 .section_profile {
   margin-top: 20px;
@@ -293,6 +311,8 @@ section {
 
 .title-box {
   font-weight: bold;
+  font-size: 20px;
+  margin-left: 20px;
 }
 
 .white-box {
@@ -321,7 +341,7 @@ section {
 
 /* ====== Animal page ======== */
 .animal {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
 }
 .animal-main-picture {
@@ -332,34 +352,58 @@ section {
 .animal-main-picture img {
   width: 100%;
   border-radius: 50%;
+  object-fit: cover;
+  width: 160px;
+  height: 160px;
 }
 .animal-main-picture .name-animal {
   font-weight: bold;
   text-align: center;
   font-size: 18px;
 }
-.animal-details {
+.animal .big-white-wrapper {
+  border: solid 4px white;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 120px 20px 20px 20px;
+  border-radius: 30px;
+  margin-top: -130px;
   width: 100%;
 }
-.animal-pictures {
+.animal .big-white-wrapper .animal-details-top .animal-details {
+  width: 100%;
+}
+.animal .big-white-wrapper .animal-details-top .animal-pictures {
   margin: 30px auto;
   text-align: center;
+  max-width: 300px;
 }
-.animal-pictures img {
+.animal .big-white-wrapper .animal-details-top .animal-pictures img {
   border-radius: 5px;
+  transition: all 0.4s 0s;
 }
-.animal-pictures .main {
+.animal .big-white-wrapper .animal-details-top .animal-pictures .pic-animal-big {
   width: 90%;
   max-width: 300px;
 }
-.animal-pictures .small {
+.animal .big-white-wrapper .animal-details-top .animal-pictures .pic-animal-small {
   width: 70px;
+  cursor: pointer;
+}
+.animal .big-white-wrapper .animal-details-top .animal-pictures .disabled {
+  opacity: 0.3;
+  cursor: unset;
+}
+.animal .big-white-wrapper .animal-details-top .animal-description {
+  margin-top: 30px;
+}
+.animal .group-btn {
+  margin-top: 30px;
 }
 
 .heart-icon {
   position: absolute;
-  bottom: 50px;
-  right: 10px;
+  bottom: 52px;
+  right: -10px;
   cursor: pointer;
 }
 .heart-icon path {
@@ -391,8 +435,8 @@ section.animals-list .animals-grid .animal-in-list {
   text-align: center;
 }
 section.animals-list .animals-grid .animal-in-list .heart-icon {
-  bottom: 80px;
-  right: 20%;
+  bottom: 68px;
+  right: 16%;
 }
 section.animals-list .animals-grid .animal-in-list a {
   text-decoration: none;
@@ -418,8 +462,8 @@ section.animals-list .animals-grid .animal-in-list .animal-info .animal-name {
 }
 
 .filters {
-  border: solid 2px #F6B5BB;
-  background-color: #FDEFF0;
+  border: solid 2px #CCB88D;
+  background-color: #FFF2DA;
   padding: 30px 20px;
   display: flex;
   align-items: center;
@@ -439,20 +483,20 @@ section.animals-list .animals-grid .animal-in-list .animal-info .animal-name {
 .filters .animals-filter input[type=checkbox] {
   -webkit-appearance: none;
   appearance: none;
-  background-color: #FDEFF0;
+  background-color: #ECDDBD;
   border: 1px solid #cacece;
   padding: 9px;
   border-radius: 3px;
   display: inline-block;
   position: relative;
   display: block;
-  border: solid 1px #AB4851;
+  border: solid 1px #79663D;
   width: 20px;
   height: 20px;
   margin-right: 10px;
 }
 .filters .animals-filter input[type=checkbox]:checked {
-  background-color: #F6B5BB;
+  background-color: #CCB88D;
   color: #99a1a7;
 }
 .filters .animals-filter input[type=checkbox]:checked::before {
@@ -461,7 +505,7 @@ section.animals-list .animals-grid .animal-in-list .animal-info .animal-name {
   top: 50%;
   height: 50%;
   width: 3px;
-  background-color: #AB4851;
+  background-color: #79663D;
   content: "";
   transform: translateX(10px) rotate(-45deg);
   transform-origin: left bottom;
@@ -472,7 +516,7 @@ section.animals-list .animals-grid .animal-in-list .animal-info .animal-name {
   bottom: 0;
   height: 3px;
   width: 100%;
-  background-color: #AB4851;
+  background-color: #79663D;
   content: "";
   transform: translateX(10px) rotate(-45deg);
   transform-origin: left bottom;
@@ -529,8 +573,7 @@ footer {
   }
 
   .homepage .wrapper-boxes-homepage {
-    display: flex;
-    justify-content: space-evenly;
+    flex-direction: row;
   }
   .homepage .wrapper-boxes-homepage .login-form {
     margin-right: 50px;
@@ -551,8 +594,36 @@ footer {
     margin: 0 auto;
   }
 
-  .animal-details {
+  .animal {
+    width: 90%;
+    max-width: 1000px;
+  }
+  .animal .big-white-wrapper {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 150px 20px 40px 40px;
+  }
+  .animal .big-white-wrapper .animal-details-top {
+    display: flex;
+    justify-content: space-between;
+  }
+  .animal .big-white-wrapper .animal-details-top .animal-details {
     width: 50%;
+  }
+  .animal .big-white-wrapper .animal-details-top .animal-pictures {
+    margin: 0px;
+    text-align: center;
+    max-width: 300px;
+  }
+  .animal .big-white-wrapper .animal-details-top .animal-pictures img {
+    border-radius: 5px;
+  }
+  .animal .big-white-wrapper .animal-details-top .animal-pictures .main {
+    width: 90%;
+    max-width: 300px;
+  }
+  .animal .big-white-wrapper .animal-details-top .animal-pictures .small {
+    width: 70px;
+    cursor: pointer;
   }
 
   section.animals-list .animals-grid .animal-in-list {
@@ -560,7 +631,7 @@ footer {
     margin: 30px;
   }
   section.animals-list .animals-grid .animal-in-list .heart-icon {
-    right: 20px;
+    right: 0px;
   }
   section.animals-list .animals-grid .animal-in-list img {
     object-fit: cover;
