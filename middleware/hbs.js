@@ -8,3 +8,10 @@ hbs.registerHelper('ifIn', function(elem, list, options) {
     return options.inverse(this)      // false
 
 });
+
+hbs.registerHelper("formatDate", function(datetime, format) {
+    console.log("======>", datetime)
+
+    let newDate = new Date(datetime)
+    return newDate.toLocaleDateString("en-US")
+  });

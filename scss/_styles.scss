@@ -9,10 +9,12 @@ body {
     background-color: $color-main-bg;
     line-height: 1.7em;
     letter-spacing: 0.02em;
+    padding-bottom: 60px;
 }
 
 h1 {
     margin-left: 50px;
+    margin: 40px 0 20px 0;
     text-align: center;
     font-weight: bold;
     font-size: 24px;
@@ -23,7 +25,7 @@ h1 {
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 130px);
     background-position: center;
 }
 
@@ -51,14 +53,42 @@ header {
         color: $color-green-dark;
         width: max-content;
     }
+
+    .hello-user-wrapper {
+
+        display: flex;
+        align-items: center;
+        height: 100%;
+        
+        .hello_user {
+            font-weight: bold;
+            margin: 0 20px;
+        }
+
+        .default-avatar {
+            height: 96%;
+        }
+    }
 }
 
 nav.menu {
     display: none;
-    opacity: 0;
-    justify-content: space-between;
+    transform: translateX(-120%);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
-    transform: translateX(-200px);
+
+    position: absolute;
+    top: 0px;
+    transition: all 0.5s 0s ease-out;
+    background-color: $color-green-light;
+    border: solid 2px $color-green-medium;
+    padding: 20px 30px;
+    width: 100vw;
+    height: calc(100vh - 50px);
+
 
     a {
         cursor: pointer;
@@ -66,6 +96,7 @@ nav.menu {
         color: black;
         padding: 8px 0;
         margin-left: 20px;
+        font-size: 20px;
 
         &:hover {
             color: $color-green-dark;
@@ -75,8 +106,15 @@ nav.menu {
 
     &.open {
         display: flex;
-        opacity: 1;
-        transform: translateX(0px);
+        transform: translateX(-20px);
+    }
+
+    .close_menu {
+        width: 30px;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        left: 20px;
     }
 }
 
@@ -93,6 +131,7 @@ nav.menu {
         display: flex;
         align-items: center;
         margin: 20px 0px;
+        width: 100%;
     }
 
     label {
@@ -101,16 +140,13 @@ nav.menu {
     }
 
     
-    input, select {
+    input, select, textarea {
         border-radius: 6px;
         border: solid 1px #ccc;
         width: 60%;
         padding: 10px;
         font-family: inherit;
-    }
-
-    select {
-        width: 220px;   /* needs a little more width */
+        background-color: white;
     }
     
     input[type=radio] {
@@ -119,6 +155,9 @@ nav.menu {
 
 }
 
+.group-btn {
+    display: flex;
+}
 
 .btn {
     background-color: $color-green-dark;
@@ -130,15 +169,27 @@ nav.menu {
     cursor: pointer;
     text-decoration: none;
     font-weight: normal;
-    margin-top: 30px;
     display: block;
     transition: all 0.5s 0s;
+    font-size: 14px;
+    margin: 20px auto;
+
 
     &:hover {
-        background-color:$color-green-medium;
+        background-color: $color-green-medium;
+        border: solid 1px $color-green-dark;
     }
 }
 
+.btn.secondary {
+    background-color: $color-pink-medium;
+    border: solid 1px$color-pink-dark;
+    color: black;
+
+    &:hover {
+        background-color: $color-pink-light;
+    }
+}
 
 .hello_user {
     color: $color-green-dark;
@@ -217,15 +268,83 @@ section {
 
 
 
+/* ====== Animal page ======== */
+
+.animal {
+    width: 90%;
+    margin: 0 auto;
+
+    &-main-picture {
+        width: 160px;
+        margin: 20px auto;
+        position: relative;
+
+        img {
+            width: 100%;
+            border-radius: 50%;
+        }
+        .name-animal {
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .heart-icon {
+            position: absolute;
+            bottom: 50px;
+            right: 10px;
+            path {
+                fill: $color-pink-dark;
+                transition: all 1s 0s;
+                width: 40px;
+
+                &:hover {
+                    fill: $color-pink-light;
+                }
+            }
+            
+        }
+    }
+
+    &-details {
+        width: 100%;
+    }
+
+    &-pictures {
+        margin: 30px auto;
+        text-align: center;
+
+        img {
+            border-radius: 5px;
+        }
+        .main {
+            width: 90%;
+            max-width: 300px;
+        }
+        .small {
+            width: 70px;
+        }
+    }
+
+
+
+}
+
+
+
+
 
 /* ====== Footer ======== */
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    padding: 16px 30px;
     text-align: center;
     background-color: $color-green-dark;
     color: white;
     width: 100vw;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

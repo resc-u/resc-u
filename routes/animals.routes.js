@@ -79,12 +79,13 @@ router
 router.get("/:id", (req, res) => {
   const currentUser = req.session.loggedInUser;
 
-  Animal.findById(req.params.id, function (err, foundbyid) {
-    if (err) {
-      return console.log(err);
-    }
-    res.render("animals/animal-page.hbs", { foundbyid, currentUser });
-  });
+  Animal.findById(req.params.id)  
+    .then( (animal) => {
+      res.render("animals/animal-page.hbs", { animal, currentUser })
+    })
+    .catch( (e) =>{
+      console.log(`Error while creating a new animal: ${e}`)
+    })
 });
 
 router.get("/edit/:id", (req, res) => {
