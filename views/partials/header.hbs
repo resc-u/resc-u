@@ -1,0 +1,14 @@
+<header>
+
+    {{#if currentUser}}
+
+        <img src="../../images/menu.png" class="menu_icon" id="menu_icon" />
+         
+        {{>navBar}}
+
+        <h3 class="hello_user">Hello {{ currentUser.username }}!</h3>
+
+        <a href="/auth/logout" class="logout">Log out</a>
+    {{/if}}
+
+</header>
