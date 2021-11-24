@@ -1,8 +1,10 @@
-<section class="section_profile">
+<h1>Shelter {{user.name}}'s profile</h1>
+
+<section class="section_profile shelter">
 
     <div class="profile-preferences ">
 
-        <p class="title-box">Shelter {{user.name}}'s profile</p>
+        <p class="title-box">Information</p>
 
         <div class="white-box preferences">
 
@@ -34,14 +36,15 @@
             </div>
             <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a> 
         {{/if}}
+    </div>
 
+    <div class="animals-shelter">
         <div class="shelter-list-animals">
-            <h1> List of Animals of {{user.name}} </h1>
+            <p class="title-box">List of animals</p>
             {{>shelterAnimals this=animalslist}}
-
         </div>
 
-        <a href="/shelters/animals/{{user.id}}" class="btn"> All shelter's animals</a>
+        <a href="/shelters/animals/{{user.id}}" class="btn shelter-list-animals"> All shelter's animals</a>
 
     </div>
 

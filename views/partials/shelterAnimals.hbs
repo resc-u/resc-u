@@ -1,29 +1,31 @@
+<div class="animals-grid">
 
-{{#each animalslist}}
+    {{#each animalslist}}
 
-    <div class="animal-in-list">
+        <div class="animal-in-list">
 
-    <a href="/animals/{{this._id}}">
-        
-        <div class="main-pic-wrapper">
-        <img src="{{imageUrl.0.path}}" alt="animal picture" />
+        <a href="/animals/{{_id}}">
+            
+            <div class="main-pic-wrapper">
+            <img src="{{imageUrl.0.path}}" alt="animal picture" />
+            </div>
+
+            <div class="animal-info">
+            <p> <span class="animal-name">{{name}}</span>, {{age}} years</p>
+            <p>I'm {{status}}</p>
+            </div>
+        </a>
+
+        <div class="group-links">
+            <a href="/animals/edit/{{_id}}">Edit info</a>
+            <a href="/animals/delete/{{_id}}">Delete</a>
         </div>
 
-        <div class="animal-info">
-        <p> <span class="animal-name">{{name}}</span>, {{age}} years</p>
-        <p>I'm {{status}}</p>
         </div>
-    </a>
 
-    <div class="group-links">
-        <a href="/animals/edit/{{this._id}}">Edit info</a>
-        <a href="/animals/delete/{{this._id}}">Delete</a>
-    </div>
+    {{else}}
 
-    </div>
+        <p>There are no animals in this Shelter yet!</p>
 
-{{else}}
-
-    <p>There are no animals in this Shelter yet!</p>
-
-{{/each}}
+    {{/each}}
+</div>

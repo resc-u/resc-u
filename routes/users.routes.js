@@ -2,6 +2,8 @@ const router = require("express").Router();
 const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
 const Shelter = require("../models/Shelter.model");
+const Animal = require("../models/Animal.model");
+
 const userHelper = require("../middleware/userHelper");
 const fileUploader = require("../config/cloudinary.config");
 
@@ -52,9 +54,11 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
         break;
       case "shelter":
       case "Shelter":
+        let animalslist = await Animal.find({ shelter: user.id })
         res.render("users/shelters/profile", {
           user,
           canEdit,
+          animalslist,
           currentUser: loggedInUser,
         });
         break;

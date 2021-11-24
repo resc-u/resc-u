@@ -312,7 +312,7 @@ section {
 .title-box {
   font-weight: bold;
   font-size: 20px;
-  margin-left: 20px;
+  margin: 0 0 30px 20px;
 }
 
 .white-box {
@@ -423,27 +423,27 @@ section {
 }
 
 /* ====== Animals list ======== */
-section.animals-list .animals-grid {
+.animals-grid {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
-section.animals-list .animals-grid .animal-in-list {
+.animals-grid .animal-in-list {
   width: 45%;
-  margin: 10px;
+  margin: 0 10px 10px 10px;
   position: relative;
   text-align: center;
 }
-section.animals-list .animals-grid .animal-in-list .heart-icon {
+.animals-grid .animal-in-list .heart-icon {
   bottom: 68px;
   right: 16%;
 }
-section.animals-list .animals-grid .animal-in-list a {
+.animals-grid .animal-in-list a {
   text-decoration: none;
   color: black;
   font-size: 15px;
 }
-section.animals-list .animals-grid .animal-in-list img {
+.animals-grid .animal-in-list img {
   width: 100%;
   border-radius: 10px;
   transition: all 0.2s 0s;
@@ -451,13 +451,13 @@ section.animals-list .animals-grid .animal-in-list img {
   width: 160px;
   height: 160px;
 }
-section.animals-list .animals-grid .animal-in-list img:hover {
+.animals-grid .animal-in-list img:hover {
   box-shadow: 0px 3px 10px #CCB88D;
 }
-section.animals-list .animals-grid .animal-in-list .animal-info {
+.animals-grid .animal-in-list .animal-info {
   text-align: center;
 }
-section.animals-list .animals-grid .animal-in-list .animal-info .animal-name {
+.animals-grid .animal-in-list .animal-info .animal-name {
   font-weight: bold;
 }
 
@@ -522,6 +522,22 @@ section.animals-list .animals-grid .animal-in-list .animal-info .animal-name {
   transform-origin: left bottom;
 }
 
+/* ====== Shelters ======== */
+.section_profile.shelter {
+  display: flex;
+  flex-direction: column;
+}
+.section_profile.shelter .animals-shelter .title-box {
+  text-align: center;
+}
+.section_profile.shelter .shelter-list-animals {
+  display: none;
+}
+.section_profile.shelter .btn.shelter-list-animals {
+  display: block;
+  margin-top: 40px;
+}
+
 /* ====== Footer ======== */
 footer {
   position: fixed;
@@ -537,7 +553,7 @@ footer {
   justify-content: center;
 }
 
-@media all and (min-width: 700px) {
+@media all and (min-width: 750px) {
   header {
     display: flex;
     justify-content: space-between;
@@ -626,14 +642,14 @@ footer {
     cursor: pointer;
   }
 
-  section.animals-list .animals-grid .animal-in-list {
+  .animals-grid .animal-in-list {
     width: 200px;
-    margin: 30px;
+    margin: 0 30px 30px 30px;
   }
-  section.animals-list .animals-grid .animal-in-list .heart-icon {
+  .animals-grid .animal-in-list .heart-icon {
     right: 0px;
   }
-  section.animals-list .animals-grid .animal-in-list img {
+  .animals-grid .animal-in-list img {
     object-fit: cover;
     width: 220px;
     height: 220px;
@@ -642,6 +658,42 @@ footer {
   .filters {
     max-width: 500px;
     margin: 30px auto;
+  }
+
+  .section_profile.shelter {
+    flex-direction: row;
+  }
+  .section_profile.shelter .animals-shelter {
+    width: 70%;
+  }
+  .section_profile.shelter .btn.shelter-list-animals {
+    display: none;
+  }
+  .section_profile.shelter .shelter-list-animals {
+    display: block;
+  }
+  .section_profile.shelter .animals-grid .animal-in-list {
+    width: 45%;
+    margin: 0 10px 10px 10px;
+  }
+  .section_profile.shelter .animals-grid .animal-in-list img {
+    object-fit: cover;
+    width: 160px;
+    height: 160px;
+  }
+}
+@media all and (min-width: 1100px) {
+  .section_profile.shelter .animals-shelter {
+    width: 80%;
+  }
+  .section_profile.shelter .animals-grid .animal-in-list {
+    width: 200px;
+    margin: 0 30px 30px 30px;
+  }
+  .section_profile.shelter .animals-grid .animal-in-list img {
+    object-fit: cover;
+    width: 230px;
+    height: 230px;
   }
 }
 
