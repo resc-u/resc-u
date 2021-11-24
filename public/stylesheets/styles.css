@@ -1117,6 +1117,16 @@ nav.menu .close_menu {
 }
 .btn:hover {
   background-color: #CCB88D;
+  border: solid 1px #79663D;
+}
+
+.btn.secondary {
+  background-color: #F6B5BB;
+  border: solid 1px #AB4851;
+  color: black;
+}
+.btn.secondary:hover {
+  background-color: #FDEFF0;
 }
 
 .hello_user {
@@ -1188,11 +1198,13 @@ section {
 
 /* ====== Animal page ======== */
 .animal {
-  width: 100%;
+  width: 90%;
+  margin: 0 auto;
 }
 .animal-main-picture {
   width: 160px;
   margin: 20px auto;
+  position: relative;
 }
 .animal-main-picture img {
   width: 100%;
@@ -1202,6 +1214,36 @@ section {
   font-weight: bold;
   text-align: center;
   font-size: 18px;
+}
+.animal-main-picture .heart-icon {
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+}
+.animal-main-picture .heart-icon path {
+  fill: #AB4851;
+  transition: all 1s 0s;
+  width: 40px;
+}
+.animal-main-picture .heart-icon path:hover {
+  fill: #FDEFF0;
+}
+.animal-details {
+  width: 100%;
+}
+.animal-pictures {
+  margin: 30px auto;
+  text-align: center;
+}
+.animal-pictures img {
+  border-radius: 5px;
+}
+.animal-pictures .main {
+  width: 90%;
+  max-width: 300px;
+}
+.animal-pictures .small {
+  width: 70px;
 }
 
 /* ====== Footer ======== */
@@ -1262,6 +1304,10 @@ footer {
 .section_new_animal {
     width: 600px;
     margin: 0 auto;
+  }
+
+  .animal-details {
+    width: 50%;
   }
 }
 

@@ -2,29 +2,47 @@
 <section class="animal">
 
     <div class="animal-main-picture">
-      <img src="{{imageUrl.[0].path}}" class="card-img-top" alt="{{name}}">
-      <p class="name-animal"> {{name}}</p>
+      <img src="{{animal.imageUrl.[0].path}}" class="card-img-top" alt="{{animal.name}}">
+      <p class="name-animal"> {{animal.name}}</p>
+
+      <!-- SVG for heart icon -->
+      <svg class="heart-icon" width="28" height="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.938 23c-1.802-2.11-4.205-4.07-7.209-5.88C.796 13.548-.48 6.268 2.674 3.1 5.978-.215 9.733.84 13.938 6.268 17.543.538 21.298-.517 25.202 3.1c2.66 2.464 3.154 9.045-4.055 14.02A59.68 59.68 0 0 0 13.938 23Z" stroke="#000" fill="none" fill-rule="evenodd" stroke-linejoin="round"/>
+      </svg>
+
     </div>
 
-    <div>
-      <p> I'm a {{type}}</p>
-      <p> {{sex}}</p>
-      <p> {{size}} Kg</p>
-      <p> {{age}} years</p>
-      <p> I'm {{status}}</p>
-      <p> Color {{color}}</p>
-      <p> Date of Entry: {{dateofentry}}</p>
+    <div class="animal-details">
+      <p> I'm a {{animal.type}}</p>
+      <p> {{animal.sex}}</p>
+      <p> {{animal.size}} Kg</p>
+      <p> {{animal.age}} years</p>
+      <p> I'm {{animal.status}}</p>
+      <p> Color {{animal.color}}</p>
+
+      <p> Date of Entry: {{animal.dateofentry }}</p>
       <p> Kid Friendly: 
-          {{kidfriendly}}
+          {{animal.kidfriendly}}
       </p>
-      <p> Shelter ID: {{shelter}}</p>
+      <p> Shelter ID: {{animal.shelter}}</p>
     </div>
 
     <div class="animal-pictures">
-      <img src="{{imageUrl.[1].path}}" class="card-img-top" alt="{{name}}">
-      <img src="{{imageUrl.[2].path}}" class="card-img-top" alt="{{name}}">
+      
+      <img class="main" src="{{animal.imageUrl.[1].path}}" class="card-img-top" alt="{{animal.name}}">
+      <img class="small" src="{{animal.imageUrl.[2].path}}" class="card-img-top" alt="{{animal.name}}">
+      <img class="small" src="{{animal.imageUrl.[0].path}}" class="card-img-top" alt="{{animal.name}}">
     </div>
 
-    <p class="animal-description"> Description: {{description}}</p>
+    <p class="animal-description"> {{animal.description}}</p>
+
+    <div class="shelter-deatils">
+
+    </div>
+
+    <div class="group-btn">
+        <a href="#" class="btn secondary">Adoption details</a>
+        <a href="#" class="btn">Delete User</a>      
+    </div>
   
 </section>

@@ -176,7 +176,18 @@ nav.menu {
 
 
     &:hover {
-        background-color:$color-green-medium;
+        background-color: $color-green-medium;
+        border: solid 1px $color-green-dark;
+    }
+}
+
+.btn.secondary {
+    background-color: $color-pink-medium;
+    border: solid 1px$color-pink-dark;
+    color: black;
+
+    &:hover {
+        background-color: $color-pink-light;
     }
 }
 
@@ -260,11 +271,14 @@ section {
 /* ====== Animal page ======== */
 
 .animal {
-    width: 100%;
+    width: 90%;
+    margin: 0 auto;
 
     &-main-picture {
         width: 160px;
         margin: 20px auto;
+        position: relative;
+
         img {
             width: 100%;
             border-radius: 50%;
@@ -273,6 +287,42 @@ section {
             font-weight: bold;
             text-align: center;
             font-size: 18px;
+        }
+
+        .heart-icon {
+            position: absolute;
+            bottom: 50px;
+            right: 10px;
+            path {
+                fill: $color-pink-dark;
+                transition: all 1s 0s;
+                width: 40px;
+
+                &:hover {
+                    fill: $color-pink-light;
+                }
+            }
+            
+        }
+    }
+
+    &-details {
+        width: 100%;
+    }
+
+    &-pictures {
+        margin: 30px auto;
+        text-align: center;
+
+        img {
+            border-radius: 5px;
+        }
+        .main {
+            width: 90%;
+            max-width: 300px;
+        }
+        .small {
+            width: 70px;
         }
     }
 
