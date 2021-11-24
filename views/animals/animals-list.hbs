@@ -1,35 +1,50 @@
-<h1>Animals List</h1>
-<hr />
-<form action="/animals" method="get" id="animalFilter">
+<section class="animals-list">
 
-  <p>Dogs</p>
-  <input type="checkbox" name="type" value="dog" autocomplete="" />
+  <h1>Our animals</h1>
 
-  <p>Cats</p>
-  <input type="checkbox" name="type" value="cat" />
+  <form action="/animals" method="get" id="animalFilter">
 
-  <button type="submit">Search</button>
-</form>
-<div class="row">
-  {{#each animals}}
-    <div class="col-md-4 mb-5">
-      <div class="card" style="width: 18rem;">
-
-        <img src="{{imageUrl.0.path}}" class="card-img-top" alt="{{name}}" />
-
-        <div class="card-body">
-          <h5 class="card-title"> Name: {{name}}</h5>
-          <p class="card-text"> Type: {{type}}</p>
-          <p class="card-text"> Status: {{status}}</p>
-        </div>
-        <a href="/animals/{{this._id}}"> Learn more about: {{name}}</a>
-        <hr />
+    <div class="filters">
+      <div class="animals-filter">
+        <input type="checkbox" name="type" value="dog" autocomplete="" />
+        <label>Dogs</label>
       </div>
-    </div>
-  {{else}}
-    <p>There are no animals to adopt yet!</p>
-  {{/each}}
 
-  <hr />
-  <script src="js/filterAnimals.js"></script>
-</div>
+      <div class="animals-filter">
+        <input type="checkbox" name="type" value="cat" autocomplete="" />
+        <label>Cats</label>
+      </div>
+
+      <button class="btn secondary" type="submit">Search</button>
+    </div>
+  </form>
+
+  <div class="animals-grid">
+
+    {{#each animals}}
+
+      <div class="animal-in-list">
+
+        <a href="/animals/{{this._id}}">
+          
+          <img src="{{imageUrl.0.path}}" alt="animal picture" />
+
+          <div class="animal-info">
+            <p> <span class="animal-name">{{name}}</span>, {{age}} years</p>
+            <p>I'm {{status}}</p>
+          </div>
+
+        </a>
+
+      </div>
+
+    {{else}}
+
+      <p>There are no animals to adopt yet!</p>
+
+    {{/each}}
+
+    <script src="js/filterAnimals.js"></script>
+  </div>
+
+</section>
