@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Martel+Sans:wght@300;800&display=swap');
+
+body {
+    font-family: 'Martel Sans', sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    background-color: $color-main-bg;
+    line-height: 1.7em;
+    letter-spacing: 0.02em;
+}
+
+h1 {
+    margin-left: 50px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.homepage {
+    background-image: url('../images/two-dogs.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: calc(100vh - 140px);
+    background-position: center;
+}
+
+/* ====== Header ======== */
+
+header {
+        
+    background: $color-gradient-dark;
+    background: -moz-linear-gradient(270deg, $color-gradient-dark 0%, $color-gradient-light 100%);
+    background: -webkit-linear-gradient(270deg, color-gradient-dark 0%, $color-gradient-light 100%);
+    background: linear-gradient(0deg, color-gradient-dark 0%, $color-gradient-light 100%);  
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 80px;
+
+    .menu_icon {
+        width: 36px;
+        cursor: pointer;
+    }
+
+    .logout {
+        color: $color-green-dark;
+        width: max-content;
+    }
+}
+
+nav.menu {
+    display: none;
+    opacity: 0;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateX(-200px);
+
+    a {
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        padding: 8px 0;
+        margin-left: 20px;
+
+        &:hover {
+            color: $color-green-dark;
+            border-bottom: solid 1px $color-green-dark;
+        }
+    }
+
+    &.open {
+        display: flex;
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+
+/* ====== Forms ======== */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    .fields {
+        display: flex;
+        align-items: center;
+        margin: 20px 0px;
+    }
+
+    label {
+        width: 150px;
+        display: block;
+    }
+
+    
+    input, select {
+        border-radius: 6px;
+        border: solid 1px #ccc;
+        width: 60%;
+        padding: 10px;
+        font-family: inherit;
+    }
+
+    select {
+        width: 220px;   /* needs a little more width */
+    }
+    
+    input[type=radio] {
+        width: 50px;
+    }
+
+}
+
+
+.btn {
+    background-color: $color-green-dark;
+    border: solid 1px white;
+    color: white;
+    width: max-content;
+    padding: 10px 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: normal;
+    margin-top: 30px;
+    display: block;
+    transition: all 0.5s 0s;
+
+    &:hover {
+        background-color:$color-green-medium;
+    }
+}
+
+
+.hello_user {
+    color: $color-green-dark;
+    //position: absolute;
+    //right: 20px;
+}
+
+main {
+    //margin-top: 70px;
+}
+
+section {
+    padding: 20px;
+}
+
+/* ====== Flash messages ======== */
+
+.flash {
+    border-radius: 10px;
+    margin: 0 auto 20px;
+    padding: 20px 40px;
+    width: 80%;
+    text-align: center;
+    transition: all 3s 0s;
+}
+
+.info {
+    border: solid 1px #097969;
+    background-color: #DAF7A6;
+}
+
+.error {
+    border: solid 1px brown;
+    background-color: #ffcccb;
+}
+
+
+/* ====== Login and Signup ======== */
+.section_login,
+.section_signup {
+    width: max-content;
+    margin: 50px auto;
+    width: 100%;
+}
+.signup_now,
+.login_now {
+    text-align: center;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.section_signup .subtitle {
+    text-align: center;
+}
+
+/* ====== Profiles ======== */
+
+.section_profile {
+    margin-top: 20px;
+}
+
+.title-box {
+    font-weight: bold;
+}
+
+.white-box {
+    border: solid 3px white;
+    background-color: rgba($color: #fff, $alpha: 0.6);
+    padding: 20px;
+    border-radius: 30px;
+    margin-top: 20px;
+}
+
+
+
+
+/* ====== Footer ======== */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 16px 30px;
+    text-align: center;
+    background-color: $color-green-dark;
+    color: white;
+    width: 100vw;
+}

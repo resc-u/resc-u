@@ -32,6 +32,7 @@
     "morgan": "^1",
     "multer": "^1",
     "multer-storage-cloudinary": "^4",
+    "sass": "^1.43.4",
     "serve-favicon": "^2"
   },
   "devDependencies": {
