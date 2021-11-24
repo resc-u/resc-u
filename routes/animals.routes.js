@@ -78,6 +78,7 @@ router.get("/:id", (req, res) => {
   const currentUser = req.session.loggedInUser;
 
   Animal.findById(req.params.id)
+    .populate("shelter")
     .then((animal) => {
       res.render("animals/animal-page.hbs", { animal, currentUser });
     })

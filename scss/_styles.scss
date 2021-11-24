@@ -74,6 +74,7 @@ header {
 nav.menu {
     display: none;
     transform: translateX(-120%);
+    z-index: 3;
 
     display: flex;
     flex-direction: column;
@@ -193,8 +194,6 @@ nav.menu {
 
 .hello_user {
     color: $color-green-dark;
-    //position: absolute;
-    //right: 20px;
 }
 
 main {
@@ -267,7 +266,6 @@ section {
 }
 
 
-
 /* ====== Animal page ======== */
 
 .animal {
@@ -325,10 +323,117 @@ section {
             width: 70px;
         }
     }
-
-
-
 }
+
+
+/* ====== Animals list ======== */
+
+section.animals-list {
+
+    .animals-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .animal-in-list {
+            width: 45%;
+            margin: 10px;
+            
+            a {
+                text-decoration: none;
+                color: black;
+                font-size: 15px;
+            }
+            
+            img {
+                width: 100%;
+                border-radius: 10px;
+            }
+
+            .animal-info {
+                text-align: center;
+                .animal-name {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.filters {
+    border: solid 2px $color-pink-medium;
+    background-color: $color-pink-light;
+    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin: 30px auto;
+
+    .btn {
+        margin: 0px;
+    }
+
+    .animals-filter {
+        display: flex;
+
+        label {
+            margin-right: 20px;
+        }
+
+        input[type="checkbox"] {
+            //remove default styles:
+            -webkit-appearance: none;
+            appearance: none;
+
+            // add ours:
+            background-color: $color-pink-light;
+            border: 1px solid #cacece;
+            padding: 9px;
+            border-radius: 3px;
+            display: inline-block;
+            position: relative;
+
+            display: block;
+            border: solid 1px $color-pink-dark;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+
+        }
+        
+        input[type="checkbox"]:checked {
+            background-color: $color-pink-medium;
+            color: #99a1a7;
+
+            &::before {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                height: 50%;
+                width: 3px;
+                background-color: $color-pink-dark;
+                content: "";
+                transform: translateX(10px) rotate(-45deg);
+                transform-origin: left bottom;
+            }
+            
+            &::after {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                height: 3px;
+                width: 100%;
+                background-color: $color-pink-dark;
+                content: "";
+                transform: translateX(10px) rotate(-45deg);
+                transform-origin: left bottom;
+            }
+        }
+        
+    }
+}
+
 
 
 
