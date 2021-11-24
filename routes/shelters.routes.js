@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
 router.get("/animals", (req, res) => {
   Animal.find({ shelter: req.session.loggedInUser._id })
     .then((animalsFromDB) => {
-      res.render("shelters/shelter-animal-list.hbs", {
+      res.render("users/shelters/shelter-animal-list.hbs", {
         animalslist: animalsFromDB,
       });
     })
