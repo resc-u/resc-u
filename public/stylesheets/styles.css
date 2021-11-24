@@ -71,15 +71,6 @@ h1 {
   font-size: 24px;
 }
 
-.homepage {
-  background-image: url("../images/two-dogs.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: calc(100vh - 130px);
-  background-position: center;
-}
-
 /* ====== Header ======== */
 header {
   background: #FEDCC6;
@@ -152,6 +143,20 @@ nav.menu .close_menu {
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+/* ====== Homepage ======== */
+.homepage {
+  background-image: url("../images/two-dogs.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: calc(100vh - 130px);
+  background-position: center;
+}
+.homepage .wrapper-boxes-homepage .signup_now {
+  background-color: unset;
+  border: unset;
 }
 
 /* ====== Forms ======== */
@@ -245,9 +250,7 @@ section {
 }
 
 /* ====== Login and Signup ======== */
-.section_login,
 .section_signup {
-  width: max-content;
   margin: 50px auto;
   width: 100%;
 }
@@ -302,19 +305,6 @@ section {
   text-align: center;
   font-size: 18px;
 }
-.animal-main-picture .heart-icon {
-  position: absolute;
-  bottom: 50px;
-  right: 10px;
-}
-.animal-main-picture .heart-icon path {
-  fill: #AB4851;
-  transition: all 1s 0s;
-  width: 40px;
-}
-.animal-main-picture .heart-icon path:hover {
-  fill: #FDEFF0;
-}
 .animal-details {
   width: 100%;
 }
@@ -333,6 +323,28 @@ section {
   width: 70px;
 }
 
+.heart-icon {
+  position: absolute;
+  bottom: 50px;
+  right: 10px;
+  cursor: pointer;
+}
+.heart-icon path {
+  transition: all 1s 0s;
+}
+.heart-icon.fav path {
+  fill: #AB4851;
+}
+.heart-icon.fav path:hover {
+  fill: #FDEFF0;
+}
+.heart-icon.notfav path {
+  fill: #FDEFF0;
+}
+.heart-icon.notfav path:hover {
+  fill: #AB4851;
+}
+
 /* ====== Animals list ======== */
 section.animals-list .animals-grid {
   display: flex;
@@ -342,6 +354,12 @@ section.animals-list .animals-grid {
 section.animals-list .animals-grid .animal-in-list {
   width: 45%;
   margin: 10px;
+  position: relative;
+  text-align: center;
+}
+section.animals-list .animals-grid .animal-in-list .heart-icon {
+  bottom: 80px;
+  right: 20%;
 }
 section.animals-list .animals-grid .animal-in-list a {
   text-decoration: none;
@@ -351,6 +369,13 @@ section.animals-list .animals-grid .animal-in-list a {
 section.animals-list .animals-grid .animal-in-list img {
   width: 100%;
   border-radius: 10px;
+  transition: all 0.2s 0s;
+  object-fit: cover;
+  width: 160px;
+  height: 160px;
+}
+section.animals-list .animals-grid .animal-in-list img:hover {
+  box-shadow: 0px 3px 10px #CCB88D;
 }
 section.animals-list .animals-grid .animal-in-list .animal-info {
   text-align: center;
@@ -470,6 +495,19 @@ footer {
     display: none;
   }
 
+  .homepage .wrapper-boxes-homepage {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .homepage .wrapper-boxes-homepage .login-form {
+    margin-right: 50px;
+    max-width: 500px;
+  }
+  .homepage .wrapper-boxes-homepage .signup_now {
+    border: solid 3px white;
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
   .profile-preferences {
     width: 50%;
   }
@@ -487,6 +525,14 @@ footer {
   section.animals-list .animals-grid .animal-in-list {
     width: 200px;
     margin: 30px;
+  }
+  section.animals-list .animals-grid .animal-in-list .heart-icon {
+    right: 20px;
+  }
+  section.animals-list .animals-grid .animal-in-list img {
+    object-fit: cover;
+    width: 220px;
+    height: 220px;
   }
 
   .filters {
