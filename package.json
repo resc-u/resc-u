@@ -1,5 +1,9 @@
 {
   "name": "resc-u",
+  "engines": {
+    "node": "16",
+    "npm": "8"
+  },
   "version": "1.0.0",
   "description": "Adopt an animal. Rescue yourself.",
   "scripts": {
