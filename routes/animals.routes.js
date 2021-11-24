@@ -7,6 +7,8 @@ const Animal = require("../models/Animal.model.js");
 const fileUploader = require("../config/cloudinary.config");
 
 router.get("/", async (req, res) => {
+  const currentUser = req.session.loggedInUser;
+
   let animalsList = [];
   try {
     if (req.query.type) {
@@ -18,7 +20,10 @@ router.get("/", async (req, res) => {
     }
     console.log("animals ====>", animalsList);
 
-    res.render("animals/animals-list.hbs", { animals: animalsList });
+    res.render("animals/animals-list.hbs", {
+      animals: animalsList,
+      currentUser,
+    });
   } catch (err) {
     console.log(`Error while getting the animals from the DB: ${err}`);
   }
@@ -27,7 +32,9 @@ router.get("/", async (req, res) => {
 router
   .route("/new")
   .get((req, res) => {
-    res.render("animals/new-animal.hbs");
+    const currentUser = req.session.loggedInUser;
+
+    res.render("animals/new-animal.hbs", { currentUser });
   })
   .post(fileUploader.array("animal-image[]", 3), (req, res) => {
     const {
@@ -70,21 +77,25 @@ router
   });
 
 router.get("/:id", (req, res) => {
+  const currentUser = req.session.loggedInUser;
+
   Animal.findById(req.params.id, function (err, foundbyid) {
     if (err) {
       return console.log(err);
     }
-    res.render("animals/animal-page.hbs", foundbyid);
+    res.render("animals/animal-page.hbs", { foundbyid, currentUser });
   });
 });
 
 router.get("/edit/:id", (req, res) => {
+  const currentUser = req.session.loggedInUser;
+
   let id = req.params.id;
   Animal.findById(id, function (err, foundbyid) {
     if (err) {
       return console.log(err);
     }
-    res.render("animals/animal-edit.hbs", foundbyid);
+    res.render("animals/animal-edit.hbs", { foundbyid, currentUser });
   });
 });
 router.post(
