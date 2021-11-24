@@ -9,19 +9,36 @@ const fileUploader = require("../config/cloudinary.config");
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
 
-  let animalsList = [];
   try {
+    let animalsList = await Animal.find();
+
+    /* const animalsList = [];
     if (req.query.type) {
       console.log("qTYPE", req.query.type);
       const { type } = req.query;
       animalsList = await Animal.find({ type: type });
     } else {
       animalsList = await Animal.find();
-    }
-    console.log("animals ====>", animalsList);
+    } */
+
+    const animalTypes = [];
+
+    animalsList
+      .map((animal) => animal.type)
+      .forEach((type) => {
+        if (animalTypes.includes(type) === false) animalTypes.push(type);
+      });
+    console.log(animalsList);
+    if (req.query.type)
+      animalsList = animalsList.filter((animal) =>
+        req.query.type.includes(animal.type)
+      );
+
+    console.log(animalsList);
 
     res.render("animals/animals-list.hbs", {
       animals: animalsList,
+      types: animalTypes,
       currentUser,
     });
   } catch (err) {
