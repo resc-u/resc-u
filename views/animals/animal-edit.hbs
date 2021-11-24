@@ -6,7 +6,6 @@
       class="form edit an animal"
       action="/animals/edit/{{animal._id}}"
       method="post"
-      enctype="multipart/form-data"
     >
 
       <div class="form-group">
@@ -122,16 +121,6 @@
           <option value="false"> No! </option>
         </select>
 
-      </div>
-      <div class="form-group">
-        <label>Images:
-          <input
-            type="file"
-            name="animal-image[]"
-            multiple
-            class="form-control-file"
-          />
-        </label>
       </div>
 
       <button type="Submit" class="btn btn-primary">Edit profile of

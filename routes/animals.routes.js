@@ -87,21 +87,20 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.get("/edit/:id", (req, res) => {
-  const currentUser = req.session.loggedInUser;
+router
+  .route("/edit/:id")
+  .get((req, res) => {
+    const currentUser = req.session.loggedInUser;
 
-  let id = req.params.id;
-  Animal.findById(id, function (err, foundbyid) {
-    if (err) {
-      return console.log(err);
-    }
-    res.render("animals/animal-edit.hbs", { animal: foundbyid, currentUser });
-  });
-});
-router.post(
-  "/edit/:id",
-  fileUploader.array("animal-image[]", 3),
-  (req, res) => {
+    let id = req.params.id;
+    Animal.findById(id, function (err, foundbyid) {
+      if (err) {
+        return console.log(err);
+      }
+      res.render("animals/animal-edit.hbs", { animal: foundbyid, currentUser });
+    });
+  })
+  .post((req, res) => {
     const {
       name,
       description,
@@ -130,7 +129,6 @@ router.post(
       breed,
       dateofentry,
       kidfriendly,
-      imageUrl: req.files,
       // shelter: req.session.loggedInUser._id,
     })
       .then((newlyUpdatedAnimalFromDB) => {
@@ -139,8 +137,7 @@ router.post(
       .catch((error) =>
         console.log(`Error while updating an animal: ${error}`)
       );
-  }
-);
+  });
 
 router.get("/delete/:id", async (req, res) => {
   let id = req.params.id;
