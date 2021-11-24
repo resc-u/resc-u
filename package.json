@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Adopt an animal. Rescue yourself.",
   "main": "index.js",
-  "scripts": {
+  "scripts": "node server.js",
+    "start": "
     "dev": "nodemon --ext js,hbs,css,html server.js"
   },
   "repository": {
