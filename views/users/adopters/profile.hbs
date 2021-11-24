@@ -3,21 +3,25 @@
 
 <section class="section_profile">
 
-    <p class="title-box">My preferences</p>
+    <div class="profile-preferences ">
+        <p class="title-box">My preferences</p>
 
-    <div class="white-box">
-        
-        <p>Username: {{ user.username }}</p>
-        <p>Fullname: {{user.fullname}} </p>
-        <p>Children: {{user.children}} </p>
-        <p>Animal Preference: {{user.animalPreference}}</p>
-        <p>Size living place: {{user.housingSize}}</p>
+        <div class="white-box">
+            
+            <p>Username: {{ user.username }}</p>
+            <p>Fullname: {{user.fullname}} </p>
+            <p>Children: {{user.children}} </p>
+            <p>Animal Preference: {{user.animalPreference}}</p>
+            <p>Size living place: {{user.housingSize}}</p>
 
+        </div>
+
+        {{#if canEdit}}
+            <div class="group-btn">
+                <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
+                <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a>      
+            </div>
+        {{/if}}
     </div>
-
-    {{#if canEdit}}
-        <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
-        <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a>      
-    {{/if}}
 
 </section>
