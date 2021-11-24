@@ -11,11 +11,13 @@ router.route("/").get(async (req, res) => {
   let listUsers = [];
 
   try {
-    currentUser = req.session.loggedInUser
+    currentUser = req.session.loggedInUser;
     listUsers = await User.find();
   } catch (e) {
-    console.log("There's been an error!! ===> ", e)
-    res.render("homepage", { messages: {info: "We are sorry, there has been an error."}} )
+    console.log("There's been an error!! ===> ", e);
+    res.render("homepage", {
+      messages: { info: "We are sorry, there has been an error." },
+    });
   } finally {
     res.render("users/list", { users: listUsers, currentUser });
   }
@@ -41,32 +43,43 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
     switch (req.params.usertype) {
       case "adopter":
       case "Adopter":
-        res.render("users/adopters/profile", { user, canEdit, currentUser: loggedInUser });
+        res.render("users/adopters/profile", {
+          user,
+          canEdit,
+          currentUser: loggedInUser,
+        });
         break;
       case "shelter":
       case "Shelter":
-        res.render("users/shelters/profile", { user, canEdit, currentUser: loggedInUser });
+        res.render("users/shelters/profile", {
+          user,
+          canEdit,
+          currentUser: loggedInUser,
+        });
         break;
       default:
         res.send("oops");
         break;
     }
-} catch (e) {
-  console.log("There's been an error!! ===> ", e)
-  res.render("homepage", { messages: {info: "We are sorry, there has been an error."}} )
-}});
+  } catch (e) {
+    console.log("There's been an error!! ===> ", e);
+    res.render("homepage", {
+      messages: { info: "We are sorry, there has been an error." },
+    });
+  }
+});
 
 /* profile edit */
 router
   .route("/:usertype/:username/profile-edit")
   .get((req, res) => {
     // get user info from cookie
-    const user = req.session.loggedInUser
+    const user = req.session.loggedInUser;
 
     switch (req.params.usertype) {
       case "adopter":
       case "Adopter":
-        res.render("users/adopters/edit-profile", { user, currentUser: user })
+        res.render("users/adopters/edit-profile", { user, currentUser: user });
         break;
       case "shelter":
       case "Shelter":
@@ -79,7 +92,7 @@ router
   })
   .post(isLoggedIn, async (req, res) => {
     const user = req.session.loggedInUser;
-    const updatedUser = null
+    const updatedUser = null;
 
     try {
       let updatedUser = null;
@@ -105,30 +118,29 @@ router
           break;
       }
       // update the cookie
-      req.session.loggedInUser = updatedUser
-
+      req.session.loggedInUser = updatedUser;
     } catch (e) {
+      console.log("There's been an error!! ===> ", e);
 
-        console.log("There's been an error!! ===> ", e)
+      let route = "";
 
-        let route = ""
-        
-        switch (user.usertype) {
-            case "Adopter":
-              route = "users/adopters/edit-profile"
-              break;
-            case "Shelter":
-              route = "users/shelters/edit-profile" 
-              break;
-            default:
-              route = "users/admin/control-panel"
-          }
+      switch (user.usertype) {
+        case "Adopter":
+          route = "users/adopters/edit-profile";
+          break;
+        case "Shelter":
+          route = "users/shelters/edit-profile";
+          break;
+        default:
+          route = "users/admin/control-panel";
+      }
 
-          res.render(route, { currentUser: user, messages: { info: "We are sorry, there has been an error." }})
-
+      res.render(route, {
+        currentUser: user,
+        messages: { error: "We are sorry, there has been an error." },
+      });
     } finally {
-
-      req.flash('info', 'Changes successfully saved!')
+      req.flash("info", "Changes successfully saved!");
       res.redirect(`/users/${user.usertype}/${user.username}`);
     }
   });
@@ -144,7 +156,7 @@ router
     try {
       await User.findOneAndDelete({ username: req.params.username });
     } catch (e) {
-      console.log("There's been an error!! ===> ", e)
+      console.log("There's been an error!! ===> ", e);
     } finally {
       req.session.destroy((err) => {
         if (err) res.redirect("/");
@@ -154,4 +166,3 @@ router
   });
 
 module.exports = router;
-
