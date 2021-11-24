@@ -1,17 +1,6 @@
 
 <nav class="menu">
-
-    {{#if currentUser}}
-
-        <a href="/users/profile">My profile</a>
+        <a href="/users/{{currentUser.usertype}}/{{currentUser.username}}">My profile</a>
         <a href="/animals">Animals</a>
         <a href="/shelters">Shelters</a>
-        <a href="/auth/logout" class="btn">Log out</a>
-
-    {{else}}
-
-        <a href="/" class="btn">Log in</a>
-    
-    {{/if}}
-
 </nav>

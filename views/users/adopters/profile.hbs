@@ -1,15 +1,19 @@
 
+<h1>My Profile </h1>
+
 <section class="section_profile">
-  
-    <h1>My Profile </h1>
 
-    <h3>Showing adopter's profile</h3>
+    <p class="title-box">My preferences</p>
 
-    <p>Username: {{ user.username }}</p>
-    <p>Fullname: {{user.fullname}} </p>
-    <p>Children: {{user.children}} </p>
-    <p>Animal Preference: {{user.animalPreference}}</p>
-    <p>Size living place: {{user.housingSize}}</p>
+    <div class="white-box">
+        
+        <p>Username: {{ user.username }}</p>
+        <p>Fullname: {{user.fullname}} </p>
+        <p>Children: {{user.children}} </p>
+        <p>Animal Preference: {{user.animalPreference}}</p>
+        <p>Size living place: {{user.housingSize}}</p>
+
+    </div>
 
     {{#if canEdit}}
         <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
