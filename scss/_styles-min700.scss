@@ -43,6 +43,25 @@
         
     }
 
+    .homepage {
+
+        .wrapper-boxes-homepage {
+            display: flex;
+            justify-content: space-evenly;
+
+            .login-form {
+                margin-right: 50px;
+                max-width: 500px;
+            }
+
+            .signup_now {
+                border: solid 3px white;
+                background-color: rgba($color: #fff, $alpha: 0.6);
+            }
+
+        }
+    }
+
     .profile-preferences {
         width: 50%;
     }
@@ -61,10 +80,8 @@
         &-details {
             width: 50%;
         }
-    
 
     }
-
 
     section.animals-list {
         .animals-grid {
@@ -72,7 +89,19 @@
             .animal-in-list {
                 width: 200px;
                 margin: 30px;
+                
+                .heart-icon {
+                    right: 20px;
+                }
+
+                img {
+                    object-fit: cover;
+                    width: 220px;
+                    height: 220px;
+                }
             }
+
+            
         }        
     }
 
