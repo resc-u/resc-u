@@ -1,40 +1,55 @@
-<h1>Edit {{name}}</h1>
-<hr>
+<h1>Edit {{animal.name}}</h1>
+<hr />
 <div class="row">
   <div class="col-md-6">
     <form
       class="form edit an animal"
-      action="/animals/edit/{{id}}"
+      action="/animals/edit/{{animal._id}}"
       method="post"
-      enctype="multipart/form-data"
     >
 
       <div class="form-group">
         <label>Name:
-          <input type="text" name="name" value={{name}} class="form-control" />
+          <input
+            type="text"
+            name="name"
+            value={{animal.name}}
+            class="form-control"
+          />
         </label>
       </div>
       <div class="form-group">
         <label>Description:
-          <textarea name="description"  cols="30" rows="6" class="form-control"> {{description}}
+          <textarea name="description" cols="30" rows="6" class="form-control">
+            {{animal.description}}
           </textarea>
         </label>
       </div>
       <div class="form-group">
         <label>Type:
-          <input type="text" name="type" value={{type}} class="form-control" />
+          <input
+            type="text"
+            name="type"
+            value={{animal.type}}
+            class="form-control"
+          />
         </label>
       </div>
       <div class="form-group">
         <label for="sex">Sex: </label>
-        <select id="sex" name="sex" value={{sex}} class="form-control">
+        <select id="sex" name="sex" value={{animal.sex}} class="form-control">
           <option value="male"> Male </option>
           <option value="female"> Female </option>
         </select>
       </div>
       <div class="form-group">
         <label for="size">Size: </label>
-        <select id="size" name="size" value={{size}} class="form-control">
+        <select
+          id="size"
+          name="size"
+          value={{animal.size}}
+          class="form-control"
+        >
           <option value="small"> Small </option>
           <option value="medium"> Medium </option>
           <option value="large"> Large </option>
@@ -42,24 +57,44 @@
       </div>
       <div class="form-group">
         <label>age:
-          <input type="text" name="age" value={{age}} class="form-control"/> 
+          <input
+            type="text"
+            name="age"
+            value={{animal.age}}
+            class="form-control"
+          />
         </label>
       </div>
       <div class="form-group">
         <label for="status">Status: </label>
-        <select id="status" name="status" value={{status}} class="form-control">
+        <select
+          id="status"
+          name="status"
+          value={{animal.status}}
+          class="form-control"
+        >
           <option value="awaiting adoption"> Awaiting adoption </option>
           <option value="adopted"> Adopted </option>
         </select>
       </div>
       <div class="form-group">
         <label>Color:
-          <input type="text" name="color"  value={{color}} class="form-control" />
+          <input
+            type="text"
+            name="color"
+            value={{animal.color}}
+            class="form-control"
+          />
         </label>
       </div>
       <div class="form-group">
         <label>Breed:
-          <input type="text" name="breed" value={{breed}} class="form-control"/> 
+          <input
+            type="text"
+            name="breed"
+            value={{animal.breed}}
+            class="form-control"
+          />
         </label>
       </div>
       <div class="form-group">
@@ -76,24 +111,20 @@
       </div>
       <div class="form-group">
         <label for="kidfriendly">Kid Friendly: </label>
-        <select id="kidfriendly" name="kidfriendly" value={{kidfriendly}} class="form-control">
+        <select
+          id="kidfriendly"
+          name="kidfriendly"
+          value={{animal.kidfriendly}}
+          class="form-control"
+        >
           <option value="true"> Yes </option>
           <option value="false"> No! </option>
         </select>
 
       </div>
-      <div class="form-group">
-        <label>Images:
-          <input
-            type="file"
-            name="animal-image[]"
-            multiple
-            class="form-control-file"
-          />
-        </label>
-      </div>
 
-      <button type="Submit" class="btn btn-primary">Edit profile of {{name}}</button>
+      <button type="Submit" class="btn btn-primary">Edit profile of
+        {{animal.name}}</button>
 
     </form>
   </div>

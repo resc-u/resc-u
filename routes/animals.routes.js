@@ -67,8 +67,6 @@ router
       shelter: req.session.loggedInUser._id,
     })
       .then((newlyCreatedAnimalFromDB) => {
-        console.log(req.files);
-        console.log(newlyCreatedAnimalFromDB);
         res.redirect("/shelters/animals");
       })
       .catch((error) =>
@@ -79,31 +77,30 @@ router
 router.get("/:id", (req, res) => {
   const currentUser = req.session.loggedInUser;
 
-  Animal.findById(req.params.id)  
-    .populate('shelter')  
-    .then( (animal) => {
-        res.render("animals/animal-page.hbs", { animal, currentUser })
-      })
-      .catch( (e) =>{
-        console.log(`Error while creating a new animal: ${e}`)
-      })
+  Animal.findById(req.params.id)
+    .populate("shelter")
+    .then((animal) => {
+      res.render("animals/animal-page.hbs", { animal, currentUser });
+    })
+    .catch((e) => {
+      console.log(`Error while creating a new animal: ${e}`);
+    });
 });
 
-router.get("/edit/:id", (req, res) => {
-  const currentUser = req.session.loggedInUser;
+router
+  .route("/edit/:id")
+  .get((req, res) => {
+    const currentUser = req.session.loggedInUser;
 
-  let id = req.params.id;
-  Animal.findById(id, function (err, foundbyid) {
-    if (err) {
-      return console.log(err);
-    }
-    res.render("animals/animal-edit.hbs", { foundbyid, currentUser });
-  });
-});
-router.post(
-  "/edit/:id",
-  fileUploader.array("animal-image[]", 3),
-  (req, res) => {
+    let id = req.params.id;
+    Animal.findById(id, function (err, foundbyid) {
+      if (err) {
+        return console.log(err);
+      }
+      res.render("animals/animal-edit.hbs", { animal: foundbyid, currentUser });
+    });
+  })
+  .post((req, res) => {
     const {
       name,
       description,
@@ -132,7 +129,6 @@ router.post(
       breed,
       dateofentry,
       kidfriendly,
-      imageUrl: req.files,
       // shelter: req.session.loggedInUser._id,
     })
       .then((newlyUpdatedAnimalFromDB) => {
@@ -141,8 +137,7 @@ router.post(
       .catch((error) =>
         console.log(`Error while updating an animal: ${error}`)
       );
-  }
-);
+  });
 
 router.get("/delete/:id", async (req, res) => {
   let id = req.params.id;
