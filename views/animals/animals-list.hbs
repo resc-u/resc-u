@@ -1,19 +1,26 @@
 <h1>Animals List</h1>
-<hr>
+<hr />
+<form action="/animals" method="post">
+  <label for="typeOfAnimal">Select animal:</label>
+  <select name="typeOfAnimal">
+    <option value="Dog">Dog</option>
+    <option value="Cat">Cat</option>
+  </select>
+</form>
 <div class="row">
-{{#each animalslist}}
+  {{#each animalslist}}
     <div class="col-md-4 mb-5">
       <div class="card" style="width: 18rem;">
 
-        <img src="{{imageUrl.[0].path}}" class="card-img-top" alt="{{name}}">
-       
+        <img src="{{imageUrl.0.path}}" class="card-img-top" alt="{{name}}" />
+
         <div class="card-body">
           <h5 class="card-title"> Name: {{name}}</h5>
           <p class="card-text"> Type: {{type}}</p>
           <p class="card-text"> Status: {{status}}</p>
         </div>
-        <a href="/animals/{{this._id}}"> Learn more about:  {{name}}</a>
-      <hr>
+        <a href="/animals/{{this._id}}"> Learn more about: {{name}}</a>
+        <hr />
       </div>
     </div>
   {{else}}
