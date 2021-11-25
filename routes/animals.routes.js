@@ -122,23 +122,29 @@ router
     } = req.body;
 
     let id = req.params.id;
+    const shelterId = req.session.loggedInUser._id;
 
-    Animal.findOneAndUpdate(id, {
-      name,
-      description,
-      type,
-      sex,
-      size,
-      age,
-      status,
-      color,
-      breed,
-      dateofentry,
-      kidfriendly,
-      // shelter: req.session.loggedInUser._id,
-    })
+    Animal.findOneAndUpdate(
+      id,
+      {
+        name,
+        description,
+        type,
+        sex,
+        size,
+        age,
+        status,
+        color,
+        breed,
+        dateofentry,
+        kidfriendly,
+        // shelter: req.session.loggedInUser._id,
+      },
+      { new: true }
+    )
       .then((newlyUpdatedAnimalFromDB) => {
-        res.redirect("/shelters/animals");
+        console.log(newlyUpdatedAnimalFromDB);
+        res.redirect(`/shelters/animals/${shelterId}`);
       })
       .catch((error) =>
         console.log(`Error while updating an animal: ${error}`)
@@ -157,54 +163,86 @@ router.get("/delete/:id", async (req, res) => {
   }
 });
 
-
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
-  const {limit = 3, page = 0} = req.query
+  let { limit = 6, page = 0, type } = req.query;
 
-  console.log("=====> query: ", req.query)
-  console.log("=====> limit: ", limit)
-  console.log("=====> page: ", page)
+  // type checkboxes
+  const typeCheckBoxes = [
+    {
+      name: "dog",
+      checked: false,
+    },
+    {
+      name: "cat",
+      checked: false,
+    },
+    {
+      name: "turtle",
+      checked: false,
+    },
+    {
+      name: "fish",
+      checked: false,
+    },
+    {
+      name: "exotic",
+      checked: false,
+    },
+    {
+      name: "other",
+      checked: false,
+    },
+  ];
+
+  // create filter object and update checkboxes
+  const filter = {};
+  if (type) {
+    filter.type = type;
+    typeCheckBoxes.forEach((type) => {
+      if (req.query.type.includes(type.name)) {
+        type.checked = true;
+      }
+    });
+  }
+
+  // pagination
+  const pagination = {
+    limit,
+    prevPage: { number: parseInt(page) - 1, class: "active" },
+    nextPage: { number: parseInt(page) + 1, class: "active" },
+  };
+
+  if (pagination.prevPage.number <= 0) {
+    pagination.prevPage.number = 0;
+    pagination.prevPage.class = "inactive";
+  }
 
   try {
     // all animals from DB
-    let animalsList = await Animal.find().skip(limit*page).limit(limit);
+    const animalsList = await Animal.find(filter)
+      .skip(limit * page)
+      .limit(Number(limit));
 
-    // populate animalTypes with all the different types of animals
-    const animalTypes = [];
-    animalsList
-      .map((animal) => animal.type)
-      .forEach((type) => {
-        if (animalTypes.includes(type) === false) animalTypes.push(type);
-      });
-
-    // create checkboxes objet
-    const typeCheckBoxes = [];
-    animalTypes.forEach((type) =>
-      typeCheckBoxes.push({
-        name: type,
-        checked: false,
-      })
-    );
-
-    /* FILTERS */
-    // by type
-    if (req.query.type) {
-      // filter animals
-      animalsList = animalsList.filter((animal) =>
-        req.query.type.includes(animal.type)
-      );
-      // handle checkboxes
-      typeCheckBoxes.forEach((type) => {
-        if (req.query.type.includes(type.name)) {
-          type.checked = true;
-        }
-      });
+    // calculate total number of pages
+    const animalCount = await Animal.count(filter);
+    pagination.pages = Math.ceil(animalCount / limit);
+    if (page >= pagination.pages || animalsList.length < limit) {
+      pagination.nextPage.number = parseInt(page);
+      pagination.nextPage.class = "inactive";
     }
+
+    console.log("pagination ===>", pagination);
+    console.log("animal count ===>", animalCount);
+
+    // pass current type query to hbs
+    let typeQuery = null;
+    typeof type === "string" ? (typeQuery = [type]) : (typeQuery = type);
 
     res.render("animals/animals-list.hbs", {
       animals: animalsList,
-      pagination: {limit, prevPage: page - 1, nexPage: page + 1},
+      pagination,
+      typeQuery,
       types: typeCheckBoxes,
       currentUser,
     });
