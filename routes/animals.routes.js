@@ -128,18 +128,27 @@ router.get("/delete/:id", async (req, res) => {
   }
 });
 
-
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
-  const {limit = 3, page = 0} = req.query
+  let { limit = 6, page = 0 } = req.query;
 
-  console.log("=====> query: ", req.query)
-  console.log("=====> limit: ", limit)
-  console.log("=====> page: ", page)
+  if (page <= 0) page = 0;
+  console.log("=====> query: ", req.query);
+  const pagination = {
+    limit,
+    prevPage: parseInt(page) - 1,
+    nextPage: parseInt(page) + 1,
+  };
+  if (pagination.prevPage <= 0) pagination.prevPage = 0;
+  console.log("=====> limit: ", limit);
+  console.log("=====> page: ", page);
+  console.log("===>pagination:", pagination);
 
   try {
     // all animals from DB
-    let animalsList = await Animal.find().skip(limit*page).limit(limit);
+    let animalsList = await Animal.find()
+      .skip(limit * page)
+      .limit(limit);
 
     // populate animalTypes with all the different types of animals
     const animalTypes = [];
@@ -162,9 +171,9 @@ router.get("/", async (req, res) => {
     // by type
     if (req.query.type) {
       // filter animals
-      animalsList = animalsList.filter((animal) =>
+      /*  animalsList = animalsList.filter((animal) =>
         req.query.type.includes(animal.type)
-      );
+      ); */
       // handle checkboxes
       typeCheckBoxes.forEach((type) => {
         if (req.query.type.includes(type.name)) {
@@ -175,7 +184,7 @@ router.get("/", async (req, res) => {
 
     res.render("animals/animals-list.hbs", {
       animals: animalsList,
-      pagination: {limit, prevPage: page - 1, nexPage: page + 1},
+      pagination,
       types: typeCheckBoxes,
       currentUser,
     });
