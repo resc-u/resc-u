@@ -11,6 +11,11 @@
 
 <p>number of pages should be: {{pagination.pages}}</p>
 
+<p class="show-filter btn secondary">
+  <span>Filter</span>
+  <span class="arrow-down openCloseFilter"></span>
+</p>
+
 <form action="/animals" method="get" id="animalFilter">
   <div class="filters">
     {{#each types}}

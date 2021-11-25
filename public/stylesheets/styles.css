@@ -491,14 +491,54 @@ section {
   font-weight: bold;
 }
 
-.filters {
-  border: solid 2px #CCB88D;
-  background-color: #FFF2DA;
-  padding: 30px 20px;
+.show-filter {
+  border: solid 2px black;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 50px;
+  width: 170px;
+}
+.show-filter img {
+  height: 20px;
+}
+.show-filter.btn {
+  padding: 20px 16px 20px 20px;
+}
+.show-filter .arrow-down,
+.show-filter .arrow-up {
+  background-repeat: no-repeat;
+  width: 25px;
+  height: 25px;
+  background-size: contain;
+}
+.show-filter .arrow-down {
+  background-image: url("../images/arrow-down.png");
+}
+.show-filter .arrow-up {
+  background-image: url("../images/arrow-up.png");
+}
+
+.filters {
+  border: solid 2px #CCB88D;
+  background-color: #FFF2DA;
+  padding: 30px 20px 0 20px;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
   border-radius: 10px;
+  width: 400px;
+  opacity: 0;
+  max-height: 0;
+  margin: 0px auto;
+  overflow: hidden;
+  transition: all 0.7s 0s;
+}
+.filters.show {
+  opacity: 1;
+  max-height: 300px;
   margin: 30px auto;
 }
 .filters .btn {
@@ -506,6 +546,7 @@ section {
 }
 .filters .animals-filter {
   display: flex;
+  margin-bottom: 20px;
 }
 .filters .animals-filter label {
   margin-right: 20px;
