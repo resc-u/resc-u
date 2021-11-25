@@ -1,9 +1,13 @@
 <section class="animals-list">
 
   <h1>Our animals</h1>
-
-<a href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage}}">Previous</a>
-<a href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage}}">Next</a>
+{{#if typeQuery}}
+  <a href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage}}{{#each typeQuery}}&type={{this}}{{/each}}">Previous</a>
+  <a href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage}}{{#each typeQuery}}&type={{this}}{{/each}}">Next</a>
+{{else}}
+  <a href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage}}">Previous</a>
+  <a href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage}}">Next</a>
+{{/if}}
 
 
 <form action="/animals" method="get" id="animalFilter">
@@ -12,9 +16,9 @@
     {{#each types}}
       <div class="animals-filter">
         {{#if checked}}
-        <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" checked />
-          {{else}}
-        <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}"  />
+          <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" checked />
+        {{else}}
+          <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}"  />
         {{/if}}
         <label>{{name}}</label>
       </div>

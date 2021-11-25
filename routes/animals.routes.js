@@ -137,6 +137,35 @@ router.get("/delete/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
 
+  // type checkboxes
+  const typeCheckBoxes = [
+    {
+      name: "dog",
+      checked: false,
+    },
+    {
+      name: "cat",
+      checked: false,
+    },
+    {
+      name: "turtle",
+      checked: false,
+    },
+    {
+      name: "fish",
+      checked: false,
+    },
+    {
+      name: "exotic",
+      checked: false,
+    },
+    {
+      name: "other",
+      checked: false,
+    },
+  ];
+
+  // pagination
   let { limit = 6, page = 0, type } = req.query;
   const pagination = {
     limit,
@@ -145,13 +174,18 @@ router.get("/", async (req, res) => {
   };
   if (pagination.prevPage <= 0) pagination.prevPage = 0;
 
-  console.log("=====> query: ", req.query);
-  console.log("queryTYPE==>", type);
+  // filters
 
   const filter = {};
-  if (type) filter.type = type;
-
-  console.log(filter);
+  if (type) {
+    filter.type = type;
+    // update checkboxes
+    typeCheckBoxes.forEach((type) => {
+      if (req.query.type.includes(type.name)) {
+        type.checked = true;
+      }
+    });
+  }
 
   try {
     // all animals from DB
@@ -159,41 +193,17 @@ router.get("/", async (req, res) => {
       .skip(limit * page)
       .limit(limit);
 
-    // populate animalTypes with all the different types of animals
-    const animalTypes = [];
-    animalsList
-      .map((animal) => animal.type)
-      .forEach((type) => {
-        if (animalTypes.includes(type) === false) animalTypes.push(type);
-      });
+    // pass current type query to hbs
+    console.log("queryTYPE==>", type);
+    let typeQuery = null;
+    typeof type === "string" ? (typeQuery = [type]) : (typeQuery = type);
 
-    // create checkboxes objet
-    const typeCheckBoxes = [];
-    animalTypes.forEach((type) =>
-      typeCheckBoxes.push({
-        name: type,
-        checked: false,
-      })
-    );
-
-    /* FILTERS */
-    // by type
-    if (req.query.type) {
-      // filter animals
-      /*  animalsList = animalsList.filter((animal) =>
-        req.query.type.includes(animal.type)
-      ); */
-      // handle checkboxes
-      typeCheckBoxes.forEach((type) => {
-        if (req.query.type.includes(type.name)) {
-          type.checked = true;
-        }
-      });
-    }
+    console.log("query going to hbs", typeQuery);
 
     res.render("animals/animals-list.hbs", {
       animals: animalsList,
       pagination,
+      typeQuery,
       types: typeCheckBoxes,
       currentUser,
     });
