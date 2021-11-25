@@ -82,7 +82,7 @@ router
   })
   .post( fileUploader.array("animal-image[]", 3), async(req, res) => {
     const {
-      name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly, imageUrl
+      name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly
     } = req.body;
 
     let animalId = req.params.id;
@@ -94,7 +94,8 @@ router
     try {
       const updatedAnimal = await Animal.findByIdAndUpdate(
         animalId,
-        { name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly, imageUrl },
+        { name, description, type, sex, size, age, status, color, 
+          breed, dateofentry, kidfriendly, imageUrl: req.files },
         { new: true })
 
         console.log("updatedAnimal !! ====>", updatedAnimal)
@@ -102,7 +103,7 @@ router
         res.redirect(`/animals/${animalId}`)
       
     } catch (e) {
-      console.log(`Error while updating an animal: ${error}`)
+      console.log(`Error while updating an animal: ${e}`)
     }
     
   });

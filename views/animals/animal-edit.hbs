@@ -7,7 +7,7 @@
 
       <div class="fields">
           <label>Name:</label>
-          <input type="text" name="name" value={{animal.name}} placeholder="- enter the animal's name -"/>
+          <input type="text" name="name" value="{{animal.name}}" placeholder="- enter the animal's name -"/>
       </div>
 
       <div class="fields">
@@ -19,12 +19,12 @@
 
       <div class="fields">
           <label>Type: <br/><small>(dog, cat, turtle...)</small></label>
-          <input type="text" name="type" value={{animal.type}} placeholder="- which type of animal -"/>
+          <input type="text" name="type" value="{{animal.type}}" placeholder="- which type of animal -"/>
       </div>
 
       <div class="fields">
         <label for="sex">Sex: </label>
-        <select id="sex" name="sex" value={{animal.sex}}>
+        <select id="sex" name="sex" value="{{animal.sex}}">
           <option value="male" {{#ifEquals "male" @root.animal.sex }} selected {{/ifEquals}}> Male </option>
           <option value="female" {{#ifEquals "female" @root.animal.sex }} selected {{/ifEquals}}> Female </option>
         </select>
@@ -32,7 +32,7 @@
 
       <div class="fields">
         <label for="size">Size: </label>
-        <select id="size" name="size" value={{animal.size}}>
+        <select id="size" name="size" value="{{animal.size}}">
           <option value="small" {{#ifEquals "small" @root.animal.size }} selected {{/ifEquals}}> Small </option>
           <option value="medium" {{#ifEquals "medium" @root.animal.size }} selected {{/ifEquals}}> Medium </option>
           <option value="large" {{#ifEquals "large" @root.animal.size }} selected {{/ifEquals}}> Large </option>
@@ -41,12 +41,12 @@
 
       <div class="fields">
           <label>Age in years:</label>
-          <input type="text" name="age" value={{animal.age}} />
+          <input type="text" name="age" value="{{animal.age}}" />
       </div>
 
       <div class="fields">
         <label for="status">Status: </label>
-        <select id="status" name="status" value={{animal.status}}>
+        <select id="status" name="status" value="{{animal.status}}">
           <option value="awaiting adoption" {{#ifEquals "awaiting adoption" @root.animal.status }} selected {{/ifEquals}}> Awaiting adoption </option>
           <option value="adopted" {{#ifEquals "adopted" @root.animal.status }} selected {{/ifEquals}}> Adopted </option>
         </select>
@@ -54,12 +54,12 @@
 
       <div class="fields">
         <label>Color:</label>
-          <input type="text" name="color" value={{animal.color}} />
+          <input type="text" name="color" value="{{animal.color}}" />
       </div>
 
       <div class="fields">
         <label>Breed:</label>
-          <input type="text" name="breed" value={{animal.breed}} />
+          <input type="text" name="breed" value="{{animal.breed}}" />
       </div>
 
       <div class="fields">
@@ -80,7 +80,7 @@
         {{#if animal.imageUrl }}
           {{#each animal.imageUrl}}
 
-            <img class="user-avatar-already-filled" src={{path}} />
+            <img class="user-avatar-already-filled" src="{{path}}" />
 
           {{/each}}
         {{/if}}
