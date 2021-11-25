@@ -66,9 +66,10 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.get("/:id/:fav", async (req, res) => {
+router.get("/:id/:fav/:currentPage", async (req, res) => {
   const currentUser = req.session.loggedInUser;
   const fav = req.params.fav;
+  const currentPage = req.params.currentPage;
 
   try {
     const animal = await Animal.findById(req.params.id).populate("shelter");
@@ -86,7 +87,9 @@ router.get("/:id/:fav", async (req, res) => {
       { new: true }
     );
 
-    res.redirect(`/animals/${animal.id}`);
+    if (currentPage === "animal-page") res.redirect(`/animals/${animal.id}`)
+    else res.redirect("/animals")
+    
   } catch (e) {
     console.log(`Error while adding or removing a favorite animal: ${e}`);
   }
@@ -253,6 +256,7 @@ router.get("/", async (req, res) => {
     // pass current type query to hbs
     let typeQuery = null;
     typeof type === "string" ? (typeQuery = [type]) : (typeQuery = type);
+    pagination.currentPage++
 
     res.render("animals/animals-list.hbs", {
       animals: animalsList,

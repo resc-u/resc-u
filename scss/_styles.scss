@@ -479,8 +479,9 @@ section {
         justify-content: center;
 
         .heart-icon {
-            bottom: 68px;
-            right: 16%;
+            position: relative;
+            bottom: 0;
+            right: 0;
         }
 
         a {
@@ -514,6 +515,11 @@ section {
             text-align: center;
             .animal-name {
                 font-weight: bold;
+            }
+            &-first-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
             }
         }
     }

@@ -64,10 +64,13 @@ const loadAnimations = () => {
                 let animalId = heart.id
 
                 if (heart.classList.contains("notfav")) isFav = true
-                
-                if (isFav) window.location.href = `/animals/${animalId}/addFav`
-                else window.location.href = `/animals/${animalId}/removeFav`
-            
+
+                let currentPage = heart.dataset.currentPage
+                console.log("currentPage: ", currentPage)
+
+                route = isFav ? `/animals/${animalId}/addFav/${currentPage}` : `/animals/${animalId}/removeFav/${currentPage}`
+                window.location.href = route
+    
             })
         })
     }

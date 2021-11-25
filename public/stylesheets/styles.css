@@ -463,8 +463,9 @@ section {
   justify-content: center;
 }
 .animals-grid .animal-in-list .heart-icon {
-  bottom: 68px;
-  right: 16%;
+  position: relative;
+  bottom: 0;
+  right: 0;
 }
 .animals-grid .animal-in-list a {
   text-decoration: none;
@@ -494,6 +495,11 @@ section {
 }
 .animals-grid .animal-in-list .animal-info .animal-name {
   font-weight: bold;
+}
+.animals-grid .animal-in-list .animal-info-first-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .show-filter {

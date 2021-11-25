@@ -23,6 +23,8 @@
           <span>Previous</span>
         </div>
       </a>
+
+      <a>  {{ pagination.currentPage }} of {{ pagination.pages }} </a>
       
       <a class="{{pagination.nextPage.class}}" href="/animals{{pagination.nextPage.query}}">
         <div class="next-page">
@@ -43,25 +45,24 @@
             <div class="main-pic-wrapper">
               <img src="{{imageUrl.0.path}}" alt="animal picture" />
             </div>
-
-            <svg width="36" height="36" viewBox="0 0 30 30"
-              class="heart-icon notfav" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M13.938 23c-1.802-2.11-4.205-4.07-7.209-5.88C.796 13.548-.48 6.268 2.674 3.1 5.978-.215 9.733.84 13.938 6.268 17.543.538 21.298-.517 25.202 3.1c2.66 2.464 3.154 9.045-4.055 14.02A59.68 59.68 0 0 0 13.938 23Z"
-                stroke="#000"
-                fill="none"
-                fill-rule="evenodd"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-
-            <div class="animal-info">
-              <p> <span class="animal-name">{{name}}</span>, {{age}} years</p>
-              <p>I'm {{status}}</p>
-            </div>
-
           </a>
 
+          <div class="animal-info">
+            <p class="animal-info-first-row"> 
+              <span class="animal-name">{{name}},</span> 
+              {{age}} years
+
+              <svg id="{{id}}" 
+                  data-current-page="animals-list"
+                  class="heart-icon {{#ifIn id @root.currentUser.favorites }} fav {{else}} notfav {{/ifIn}}" 
+                  width="36" height="36" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.938 23c-1.802-2.11-4.205-4.07-7.209-5.88C.796 13.548-.48 6.268 2.674 3.1 5.978-.215 9.733.84 13.938 6.268 17.543.538 21.298-.517 25.202 3.1c2.66 2.464 3.154 9.045-4.055 14.02A59.68 59.68 0 0 0 13.938 23Z" stroke="#000" fill="none" fill-rule="evenodd" stroke-linejoin="round"/>
+              </svg>
+
+            </p>
+            <p>I'm {{status}}</p>
+
+          </div>
         </div>
 
       {{else}}
