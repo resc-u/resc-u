@@ -2,7 +2,7 @@
 
   <h1>Edit profile adopter</h1>
 
-  <form class="form edit-profile-adopter white-box" action="/users/{{user.usertype}}/{{user.username}}/profile-edit" method="POST">
+  <form class="form edit-profile-adopter white-box" action="/users/{{user.usertype}}/{{user.username}}/profile-edit" method="POST" enctype="multipart/form-data">
 
       <div class="fields">
           <label for="name">Username: </label>
@@ -44,6 +44,11 @@
             <option value="big appartment">Big appartment</option>
             <option value="house">House</option>
         </select>
+    </div>
+
+    <div class="fields">
+      <label>Image:</label>
+      <input type="file" name="imageUrl"/>
     </div>
 
     <button class="btn" type="submit">Save changes</button>
