@@ -7,6 +7,7 @@ const loadAnimations = () => {
     let flash = document.querySelector("flash")
     let imagesAnimal = document.querySelectorAll('img.pic-animal-small')
     let favHearts = document.querySelectorAll('svg.heart-icon')
+    let showFilter = document.querySelector('.show-filter')
 
     const isVisible = (element) => {
         console.log("HOLAAAA")
@@ -68,6 +69,25 @@ const loadAnimations = () => {
                 else window.location.href = `/animals/${animalId}/removeFav`
             
             })
+        })
+    }
+
+    if (showFilter) {
+        showFilter.addEventListener('click', () => {
+            let arrow = showFilter.querySelector('.openCloseFilter')
+            let filtersDiv = document.querySelector('.filters')
+
+            if (arrow.classList.contains('arrow-down')) {
+                //we want to show the filter 
+                filtersDiv.classList.add('show')  
+                arrow.classList.remove('arrow-down')
+                arrow.classList.add('arrow-up')
+            } else {
+                //we want to open the filter 
+                filtersDiv.classList.remove('show')
+                arrow.classList.add('arrow-down')
+                arrow.classList.remove('arrow-up')
+            }
         })
     }
 
