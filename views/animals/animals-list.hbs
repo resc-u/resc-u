@@ -4,10 +4,21 @@
 
   <p class="show-filter btn secondary">
     <span>Filter</span>
-    <span class="arrow-down openCloseFilter"></span>
+    <span class=
+          "arrow-down
+          {{#each types}}
+                {{#if checked}} arrow-up {{/if}}
+           {{else}}
+              
+           {{/each}}
+          openCloseFilter"></span>
   </p>
 
-  <form action="/animals" method="get" id="animalFilter" class="filters">
+  <form action="/animals" method="get" id="animalFilter" class="filters 
+             {{#each types}}
+                {{#if checked}} show {{/if}}
+             {{/each}} ">
+
       {{#each types}}
         <div class="animals-filter">
             <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" {{#if checked}}checked{{/if}} />

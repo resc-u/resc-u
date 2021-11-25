@@ -249,7 +249,6 @@ router.get("/", async (req, res) => {
       pagination.nextPage.number >= pagination.pages ||
       animalsList.length < limit
     ) {
-      console.log("whiad");
       pagination.nextPage.number = pagination.currentPage;
       pagination.nextPage.class = "inactive";
     }
@@ -261,9 +260,6 @@ router.get("/", async (req, res) => {
       "?" + queryString.join("&") + `&page=${pagination.nextPage.number}`;
     pagination.prevPage.query =
       "?" + queryString.join("&") + `&page=${pagination.prevPage.number}`;
-
-    console.log("pagination ===>", pagination);
-    console.log("q string ===>", queryString);
 
     // pass current type query to hbs
     let typeQuery = null;
