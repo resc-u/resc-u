@@ -2,7 +2,12 @@
 <section class="animal">
 
     <div class="animal-main-picture">
-      <img src="{{animal.imageUrl.[0].path}}" alt="{{animal.name}}">
+
+      {{#if animal.imageUrl.[0].path }}
+        <img src="{{animal.imageUrl.[0].path}}" alt="{{animal.name}}"/>
+      {{else}}
+        <img src="../../images/default-avatar-dog.png" alt="default avatar dog" class="default-avatar-dog"/>
+      {{/if}}
       <p class="name-animal"> {{animal.name}}</p>
       
       {{#if isAdopter}}
@@ -19,7 +24,7 @@
 
       <div class="animal-details-top">
         <div class="animal-details">
-          <p> I'm a {{animal.type}}</p>
+          <p> I'm a {{animal.type}}, {{animal.breed}}</p>
           <p> I'm a {{animal.size}} {{animal.sex}}</p>
           <p> {{animal.age}} years</p>
           <p> I'm {{animal.status}}</p>

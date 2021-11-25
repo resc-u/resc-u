@@ -18,4 +18,23 @@ module.exports = {
       next();
     }
   },
+
+  isShelter: function (req, res, next) {
+    if (req.session.loggedInUser.usertype.toUpperCase() === "SHELTER") {
+      next();
+    } else {
+      req.flash("error", "You must be a shelter to access here.");
+      res.redirect(req.get('referer'));
+    }
+  },
+
+  isAdopter: function (req, res, next) {
+    if (req.session.loggedInUser.usertype.toUpperCase() === "ADOPTER") {
+      next();
+    } else {
+      req.flash("error", "You must be an adopter to access here.");
+      res.redirect(req.get('referer'));
+    }
+  },
+
 };

@@ -14,9 +14,11 @@
                 <a href="/users/{{currentUser.usertype}}/{{currentUser.username}}">
                     <img class="user-avatar" src="{{currentUser.imageUrl}}">
                 </a>
-            {{else}}
-                <img class="default-avatar" src="../../../images/default-avatar.png">
             {{/if}}
+
+            {{#ifEquals "adopter" @root.currentUser.usertype }}
+                <img class="default-avatar" src="../../../images/default-avatar.png">
+            {{/ifEquals}}
             
         </div>
 

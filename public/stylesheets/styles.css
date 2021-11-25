@@ -79,6 +79,10 @@ a {
   text-decoration: none;
 }
 
+small {
+  font-size: 12px;
+}
+
 /* ====== Header ======== */
 header {
   background-color: #F6B5BB;
@@ -227,7 +231,7 @@ nav.menu .close_menu {
   width: 100%;
 }
 .form label {
-  width: 150px;
+  width: 40%;
   display: block;
 }
 .form input, .form select, .form textarea {
@@ -843,6 +847,12 @@ footer {
   .animals-favorite {
     width: 65%;
   }
+
+  .section_edit_profile,
+.section_signup {
+    width: 80%;
+    margin: 20px auto;
+  }
 }
 @media all and (min-width: 1100px) {
   .section_profile {
@@ -886,6 +896,12 @@ footer {
   .animals-list .animals-grid,
 .pagination-links {
     width: 900px;
+  }
+
+  .section_edit_profile,
+.section_signup {
+    width: 800px;
+    margin: 40px auto;
   }
 }
 

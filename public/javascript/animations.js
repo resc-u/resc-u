@@ -66,7 +66,6 @@ const loadAnimations = () => {
                 if (heart.classList.contains("notfav")) isFav = true
 
                 let currentPage = heart.dataset.currentPage
-                console.log("currentPage: ", currentPage)
 
                 route = isFav ? `/animals/${animalId}/addFav/${currentPage}` : `/animals/${animalId}/removeFav/${currentPage}`
                 window.location.href = route

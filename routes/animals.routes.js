@@ -1,82 +1,9 @@
 const router = require("express").Router();
-const User = require("../models/User.model");
 const Adopter = require("../models/Adopter.model");
 const Animal = require("../models/Animal.model.js");
 
 // ********* require fileUploader in order to use it *********
 const fileUploader = require("../config/cloudinary.config");
-
-router
-  .route("/new")
-  .get((req, res) => {
-    const currentUser = req.session.loggedInUser;
-
-    res.render("animals/new-animal.hbs", { currentUser });
-  })
-  .post(fileUploader.array("animal-image[]", 3), (req, res) => {
-    const shelterId = req.session.loggedInUser._id;
-
-    const {
-      name,
-      description,
-      type,
-      sex,
-      size,
-      age,
-      status,
-      color,
-      breed,
-      dateofentry,
-      kidfriendly,
-    } = req.body;
-
-    Animal.create({
-      name,
-      description,
-      type,
-      sex,
-      size,
-      age,
-      status,
-      color,
-      breed,
-      dateofentry,
-      kidfriendly,
-      imageUrl: req.files,
-      shelter: req.session.loggedInUser._id,
-    })
-      .then((newlyCreatedAnimalFromDB) => {
-        res.redirect(`/shelters/animals/${shelterId}`);
-      })
-      .catch((error) =>
-        console.log(`Error while creating a new animal: ${error}`)
-      );
-  });
-
-router.get("/:id", (req, res) => {
-  const currentUser = req.session.loggedInUser;
-  let isMyShelter = false;
-  let isAdopter = false;
-
-
-  Animal.findById(req.params.id)
-    .populate("shelter")
-    .then((animal) => {
-
-      if (currentUser.usertype === "shelter" || currentUser.usertype === "Shelter") {
-        if (animal.shelter.id === currentUser._id) {
-          isMyShelter = true;
-        }
-      } else {
-        isAdopter = true;
-      }
-
-      res.render("animals/animal-page", { animal, currentUser, isMyShelter, isAdopter });
-    })
-    .catch((e) => {
-      console.log(`Error while showing an animal profile: ${e}`);
-    });
-});
 
 router.get("/:id/:fav/:currentPage", async (req, res) => {
   const currentUser = req.session.loggedInUser;
@@ -84,13 +11,17 @@ router.get("/:id/:fav/:currentPage", async (req, res) => {
   const currentPage = req.params.currentPage;
 
   try {
+
     const animal = await Animal.findById(req.params.id).populate("shelter");
     let favorites = currentUser.favorites;
 
-    if (fav === "addFav") favorites.push(animal.id);
-    else if (fav === "removeFav") {
-      let indexAnimal = favorites.indexOf(animal);
-      favorites.splice(indexAnimal);
+    if (fav === "addFav") {
+      favorites.push(animal.id)
+      msg = "Animal added as a favorite!!"
+    } else if (fav === "removeFav") {
+      let indexAnimal = favorites.indexOf(animal)
+      favorites.splice(indexAnimal)
+      msg = "Animal remove from favorites"
     }
 
     await Adopter.findByIdAndUpdate(
@@ -99,13 +30,42 @@ router.get("/:id/:fav/:currentPage", async (req, res) => {
       { new: true }
     );
 
+    req.flash("info", msg);
     if (currentPage === "animal-page") res.redirect(`/animals/${animal.id}`)
-    else res.redirect("/animals")
+    else res.redirect("/animals") 
     
   } catch (e) {
     console.log(`Error while adding or removing a favorite animal: ${e}`);
   }
 });
+
+
+router
+  .route("/new")
+  .get((req, res) => {
+    const currentUser = req.session.loggedInUser;
+    res.render("animals/new-animal", { currentUser });
+  })
+  .post(fileUploader.array("animal-image[]", 3), (req, res) => {
+    const shelterId = req.session.loggedInUser._id;
+
+    const {
+      name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly,
+    } = req.body;
+
+    Animal.create({
+      name, description, type, sex, size, age, status,
+      color, breed, dateofentry,kidfriendly, 
+      imageUrl: req.files,
+      shelter: shelterId
+    })
+      .then((newAnimal) => {
+        res.redirect(`/animals/${newAnimal.id}`);
+      })
+      .catch((error) =>
+        console.log(`Error while creating a new animal: ${error}`)
+      );
+  });
 
 router
   .route("/edit/:id")
@@ -117,68 +77,73 @@ router
       if (err) {
         return console.log(err);
       }
-      res.render("animals/animal-edit.hbs", { animal: foundbyid, currentUser });
+      res.render("animals/animal-edit", { animal: foundbyid, currentUser });
     });
   })
-  .post((req, res) => {
+  .post( fileUploader.array("animal-image[]", 3), async(req, res) => {
     const {
-      name,
-      description,
-      type,
-      sex,
-      size,
-      age,
-      status,
-      color,
-      breed,
-      dateofentry,
-      kidfriendly,
+      name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly, imageUrl
     } = req.body;
 
-    let id = req.params.id;
-    const shelterId = req.session.loggedInUser._id;
+    let animalId = req.params.id;
 
-    Animal.findOneAndUpdate(
-      id,
-      {
-        name,
-        description,
-        type,
-        sex,
-        size,
-        age,
-        status,
-        color,
-        breed,
-        dateofentry,
-        kidfriendly,
-        // shelter: req.session.loggedInUser._id,
-      },
-      { new: true }
-    )
-      .then((newlyUpdatedAnimalFromDB) => {
-        console.log(newlyUpdatedAnimalFromDB);
-        res.redirect(`/shelters/animals/${shelterId}`);
-      })
-      .catch((error) =>
-        console.log(`Error while updating an animal: ${error}`)
-      );
+    console.log("these are my req.body --->", req.body)
+
+    console.log("animal to update: ", animalId)
+
+    try {
+      const updatedAnimal = await Animal.findByIdAndUpdate(
+        animalId,
+        { name, description, type, sex, size, age, status, color, breed, dateofentry, kidfriendly, imageUrl },
+        { new: true })
+
+        console.log("updatedAnimal !! ====>", updatedAnimal)
+
+        res.redirect(`/animals/${animalId}`)
+      
+    } catch (e) {
+      console.log(`Error while updating an animal: ${error}`)
+    }
+    
   });
 
 router.get("/delete/:id", async (req, res) => {
   let id = req.params.id;
+  let shelterId = req.session.loggedInUser._id;
 
   try {
     await Animal.findByIdAndDelete(id);
 
-    res.redirect("/shelters/animals");
+    req.flash("info", "Animal deleted!");
+    res.redirect(`/shelters/animals/${shelterId}`);
   } catch (e) {
     return console.log(e);
   }
 });
 
+router.get("/:id", (req, res) => {
+  const currentUser = req.session.loggedInUser;
+  let isAdopter = (currentUser.usertype.toUpperCase() === "ADOPTER") ? true : false
+  let isMyShelter = false;
+
+  Animal.findById(req.params.id)
+    .populate("shelter")
+    .then((animal) => {
+
+      if (currentUser.usertype.toUpperCase() === "SHELTER" && animal.shelter.id === currentUser._id) 
+          isMyShelter = true
+
+      res.render("animals/animal-page", { animal, currentUser, isMyShelter, isAdopter });
+    })
+    .catch((e) => {
+      console.log(`Error while showing an animal profile: ${e}`);
+    });
+});
+
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
+  let isAdopter = (currentUser.usertype.toUpperCase() === "ADOPTER") ? true : false
+
   let { limit = 6, page = 0, type } = req.query;
   const queryString = [`limit=${limit}`];
 
@@ -266,12 +231,13 @@ router.get("/", async (req, res) => {
     typeof type === "string" ? (typeQuery = [type]) : (typeQuery = type);
     pagination.currentPage++
 
-    res.render("animals/animals-list.hbs", {
+    res.render("animals/animals-list", {
       animals: animalsList,
       pagination,
       typeQuery,
       types: typeCheckBoxes,
       currentUser,
+      isAdopter
     });
   } catch (err) {
     console.log(`Error while getting the animals from the DB: ${err}`);

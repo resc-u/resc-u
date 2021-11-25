@@ -1,129 +1,99 @@
-<h1>Edit {{animal.name}}</h1>
-<hr />
-<div class="row">
-  <div class="col-md-6">
-    <form
-      class="form edit an animal"
-      action="/animals/edit/{{animal._id}}" method="post">
 
-      <div class="form-group">
-        <label>Name:
-          <input
-            type="text"
-            name="name"
-            value={{animal.name}}
-            class="form-control"
-          />
-        </label>
+<section class="section_edit_profile adopter">
+
+  <h1>Edit {{animal.name}}'s details</h1>
+
+  <form class="form edit-animal white-box" action="/animals/edit/{{animal._id}}" method="POST" enctype="multipart/form-data">
+
+      <div class="fields">
+          <label>Name:</label>
+          <input type="text" name="name" value={{animal.name}} placeholder="- enter the animal's name -"/>
       </div>
-      <div class="form-group">
-        <label>Description:
-          <textarea name="description" cols="30" rows="6" class="form-control">
+
+      <div class="fields">
+          <label>Description:</label>
+          <textarea name="description" cols="30" rows="6" value="{{animal.description}}" placeholder="- a short description of the animal -">
             {{animal.description}}
           </textarea>
-        </label>
       </div>
-      <div class="form-group">
-        <label>Type:
-          <input
-            type="text"
-            name="type"
-            value={{animal.type}}
-            class="form-control"
-          />
-        </label>
+
+      <div class="fields">
+          <label>Type: <br/><small>(dog, cat, turtle...)</small></label>
+          <input type="text" name="type" value={{animal.type}} placeholder="- which type of animal -"/>
       </div>
-      <div class="form-group">
+
+      <div class="fields">
         <label for="sex">Sex: </label>
-        <select id="sex" name="sex" value={{animal.sex}} class="form-control">
-          <option value="male"> Male </option>
-          <option value="female"> Female </option>
+        <select id="sex" name="sex" value={{animal.sex}}>
+          <option value="male" {{#ifEquals "male" @root.animal.sex }} selected {{/ifEquals}}> Male </option>
+          <option value="female" {{#ifEquals "female" @root.animal.sex }} selected {{/ifEquals}}> Female </option>
         </select>
       </div>
-      <div class="form-group">
+
+      <div class="fields">
         <label for="size">Size: </label>
-        <select
-          id="size"
-          name="size"
-          value={{animal.size}}
-          class="form-control"
-        >
-          <option value="small"> Small </option>
-          <option value="medium"> Medium </option>
-          <option value="large"> Large </option>
+        <select id="size" name="size" value={{animal.size}}>
+          <option value="small" {{#ifEquals "small" @root.animal.size }} selected {{/ifEquals}}> Small </option>
+          <option value="medium" {{#ifEquals "medium" @root.animal.size }} selected {{/ifEquals}}> Medium </option>
+          <option value="large" {{#ifEquals "large" @root.animal.size }} selected {{/ifEquals}}> Large </option>
         </select>
       </div>
-      <div class="form-group">
-        <label>age:
-          <input
-            type="text"
-            name="age"
-            value={{animal.age}}
-            class="form-control"
-          />
-        </label>
+
+      <div class="fields">
+          <label>Age in years:</label>
+          <input type="text" name="age" value={{animal.age}} />
       </div>
-      <div class="form-group">
+
+      <div class="fields">
         <label for="status">Status: </label>
-        <select
-          id="status"
-          name="status"
-          value={{animal.status}}
-          class="form-control"
-        >
-          <option value="awaiting adoption"> Awaiting adoption </option>
-          <option value="adopted"> Adopted </option>
+        <select id="status" name="status" value={{animal.status}}>
+          <option value="awaiting adoption" {{#ifEquals "awaiting adoption" @root.animal.status }} selected {{/ifEquals}}> Awaiting adoption </option>
+          <option value="adopted" {{#ifEquals "adopted" @root.animal.status }} selected {{/ifEquals}}> Adopted </option>
         </select>
       </div>
-      <div class="form-group">
-        <label>Color:
-          <input
-            type="text"
-            name="color"
-            value={{animal.color}}
-            class="form-control"
-          />
-        </label>
+
+      <div class="fields">
+        <label>Color:</label>
+          <input type="text" name="color" value={{animal.color}} />
       </div>
-      <div class="form-group">
-        <label>Breed:
-          <input
-            type="text"
-            name="breed"
-            value={{animal.breed}}
-            class="form-control"
-          />
-        </label>
+
+      <div class="fields">
+        <label>Breed:</label>
+          <input type="text" name="breed" value={{animal.breed}} />
       </div>
-      <div class="form-group">
+
+      <div class="fields">
         <label for="dateofentry">Date of entry: </label>
-        <input
-          type="date"
-          id="dateofentry"
-          name="dateofentry"
-          class="form-control"
-          value="2021-11-26"
-          min="2021-01-01"
-          max="2021-12-31"
-        />
-      </div>
-      <div class="form-group">
-        <label for="kidfriendly">Kid Friendly: </label>
-        <select
-          id="kidfriendly"
-          name="kidfriendly"
-          value={{animal.kidfriendly}}
-          class="form-control"
-        >
-          <option value="true"> Yes </option>
-          <option value="false"> No! </option>
-        </select>
-
+        <input type="date" id="dateofentry" name="dateofentry" value="{{animal.dateofentry}}" min="01/01/2000" max="" />
       </div>
 
-      <button type="Submit" class="btn btn-primary">Edit profile of
-        {{animal.name}}</button>
+      <div class="fields">
+        <label>Am I kids friendly? </label>
+        <input type="radio" id="yes" name="kidfriendly" value="1" {{#if animal.kidfriendly}} checked {{/if}}> Yes
+        <input type="radio" id="no" name="kidfriendly" value="0" {{#if animal.kidfriendly}} {{else}} checked{{/if}}> Sadly, no
+      </div>
 
-    </form>
-  </div>
-</div>
+
+      <div class="fields">
+        <label>Images:</label>
+
+        {{#if animal.imageUrl }}
+          {{#each animal.imageUrl}}
+
+            <img class="user-avatar-already-filled" src={{path}} />
+
+          {{/each}}
+        {{/if}}
+        
+        <input type="file" name="animal-image[]" multiple />
+
+      </div>
+
+      <button type="Submit" class="btn">Save changes</button>
+  </form>
+
+</section>
+
+
+
+
