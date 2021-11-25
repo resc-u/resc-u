@@ -93,23 +93,29 @@ router
     } = req.body;
 
     let id = req.params.id;
+    const shelterId = req.session.loggedInUser._id;
 
-    Animal.findOneAndUpdate(id, {
-      name,
-      description,
-      type,
-      sex,
-      size,
-      age,
-      status,
-      color,
-      breed,
-      dateofentry,
-      kidfriendly,
-      // shelter: req.session.loggedInUser._id,
-    })
+    Animal.findOneAndUpdate(
+      id,
+      {
+        name,
+        description,
+        type,
+        sex,
+        size,
+        age,
+        status,
+        color,
+        breed,
+        dateofentry,
+        kidfriendly,
+        // shelter: req.session.loggedInUser._id,
+      },
+      { new: true }
+    )
       .then((newlyUpdatedAnimalFromDB) => {
-        res.redirect("/shelters/animals");
+        console.log(newlyUpdatedAnimalFromDB);
+        res.redirect(`/shelters/animals/${shelterId}`);
       })
       .catch((error) =>
         console.log(`Error while updating an animal: ${error}`)
@@ -130,23 +136,26 @@ router.get("/delete/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
-  let { limit = 6, page = 0 } = req.query;
 
-  if (page <= 0) page = 0;
-  console.log("=====> query: ", req.query);
+  let { limit = 6, page = 0, type } = req.query;
   const pagination = {
     limit,
     prevPage: parseInt(page) - 1,
     nextPage: parseInt(page) + 1,
   };
   if (pagination.prevPage <= 0) pagination.prevPage = 0;
-  console.log("=====> limit: ", limit);
-  console.log("=====> page: ", page);
-  console.log("===>pagination:", pagination);
+
+  console.log("=====> query: ", req.query);
+  console.log("queryTYPE==>", type);
+
+  const filter = {};
+  if (type) filter.type = type;
+
+  console.log(filter);
 
   try {
     // all animals from DB
-    let animalsList = await Animal.find()
+    let animalsList = await Animal.find(filter)
       .skip(limit * page)
       .limit(limit);
 
