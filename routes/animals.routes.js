@@ -57,11 +57,40 @@ router.get("/:id", (req, res) => {
   Animal.findById(req.params.id)
     .populate("shelter")
     .then((animal) => {
-      res.render("animals/animal-page.hbs", { animal, currentUser });
+      res.render("animals/animal-page", { animal, currentUser });
     })
     .catch((e) => {
-      console.log(`Error while creating a new animal: ${e}`);
+      console.log(`Error while showing an animal profile: ${e}`);
     });
+});
+
+
+router.get("/:id/:fav", async (req, res) => {
+  
+  const currentUser = req.session.loggedInUser;
+  const fav = req.params.fav
+
+  try {
+    
+    const animal = await Animal.findById(req.params.id).populate("shelter")
+    let favorites = currentUser.favorites
+
+    if (fav === "addFav") favorites.push(animal.id)
+    else if (fav === "removeFav") {
+      let indexAnimal = favorites.indexOf(animal)
+      favorites.splice(indexAnimal)
+    }
+
+    await Adopter.findByIdAndUpdate(
+          currentUser._id, 
+          { favorites: favorites }, 
+          { new: true })
+
+    res.redirect(`/animals/${animal.id}`)
+
+  } catch (e) {
+    console.log(`Error while adding or removing a favorite animal: ${e}`)
+  }
 });
 
 router

@@ -72,6 +72,14 @@ header {
         .default-avatar {
             height: 96%;
         }
+
+        .user-avatar {
+            object-fit: cover;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: solid 2px $color-pink-light;
+        }
     }
 }
 
@@ -295,6 +303,8 @@ section {
 
 .section_profile {
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .title-box {
@@ -331,6 +341,18 @@ section {
     }
     
 }
+
+.animals-favorite {
+   margin-top: 50px;
+
+   .animals-grid {
+        background-color: $color-yellow-light;
+        border: solid 3px $color-yellow-medium;
+        padding: 30px 0px;
+        border-radius: 20px;
+    }
+}
+
 
 /* ====== Animal page ======== */
 

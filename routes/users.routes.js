@@ -33,7 +33,8 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
     const loggedInUser = req.session.loggedInUser;
 
     // find user in the DB
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username })
+                            .populate('favorites');
 
     let canEdit = false;
     if (
@@ -101,7 +102,7 @@ router
         break;
     }
   })
-  .post(isLoggedIn, async (req, res) => {
+  .post( fileUploader.single('imageUrl'), isLoggedIn, async (req, res) => {
     const currentUser = req.session.loggedInUser;
     let updatedUser = null;
 
@@ -113,7 +114,7 @@ router
             req.body;
           updatedUser = await Adopter.findByIdAndUpdate(
             currentUser._id,
-            { fullname, children, animalPreference, housingSize },
+            { fullname, children, animalPreference, housingSize, imageUrl: req.file.path },
             { new: true }
           );
           break;
