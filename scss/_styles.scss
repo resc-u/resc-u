@@ -23,6 +23,9 @@ h1 {
 .bold {
     font-weight: bold;
 }
+a { 
+    text-decoration: none;
+}
 /* ====== Header ======== */
 
 header {
@@ -463,7 +466,7 @@ section {
 .animals-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
 
     .animal-in-list {
         width: 45%;
@@ -515,7 +518,6 @@ section {
         }
     }
 }
-
 
 .show-filter {
     border: solid 2px black;
@@ -638,6 +640,40 @@ section {
     }
 }
 
+.pagination-links {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding: 0px 20px;
+
+    width: 80%;
+    margin: 0 auto 40px;
+
+    .prev-page,
+    .next-page {
+        display: flex;
+        font-weight: bold;
+        width: max-content;
+    
+        img {
+            width: 25px;
+            height: 25px;
+        }
+    
+        span {
+            border-bottom: 0px;
+            padding: 3px 0;
+            margin: 0px 10px;
+            color: $color-green-dark;
+    
+            &:hover {
+                color: $color-green-medium;
+            }
+        }
+    
+    }
+    
+}
 
 /* ====== Shelters ======== */
 

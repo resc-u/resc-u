@@ -1,31 +1,37 @@
 <section class="animals-list">
 
   <h1>Our animals</h1>
-{{#if typeQuery}}
-  <a class="{{pagination.prevPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage.number}}{{#each typeQuery}}&type={{this}}{{/each}}">Previous</a>
-  <a class="{{pagination.nextPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage.number}}{{#each typeQuery}}&type={{this}}{{/each}}">Next</a>
-{{else}}
-  <a class="{{pagination.prevPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage.number}}">Previous</a>
-  <a class="{{pagination.nextPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage.number}}">Next</a>
-{{/if}}
 
-<p>number of pages should be: {{pagination.pages}}</p>
+  <p class="show-filter btn secondary">
+    <span>Filter</span>
+    <span class="arrow-down openCloseFilter"></span>
+  </p>
 
-<p class="show-filter btn secondary">
-  <span>Filter</span>
-  <span class="arrow-down openCloseFilter"></span>
-</p>
+  <form action="/animals" method="get" id="animalFilter" class="filters">
+      {{#each types}}
+        <div class="animals-filter">
+            <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" {{#if checked}}checked{{/if}} />
+            <label>{{name}}</label>
+        </div>
+      {{/each}}
+  </form>
 
-<form action="/animals" method="get" id="animalFilter">
-  <div class="filters">
-    {{#each types}}
-      <div class="animals-filter">
-          <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" {{#if checked}}checked{{/if}} />
-          <label>{{name}}</label>
-      </div>
-    {{/each}}
+  <div class="pagination-links">
+      <a class="{{pagination.prevPage.class}}" href="/animals{{pagination.prevPage.query}}">
+        <div class="prev-page">
+          <img src="../../images/arrow-left.png" />
+          <span>Previous</span>
+        </div>
+      </a>
+      
+      <a class="{{pagination.nextPage.class}}" href="/animals{{pagination.nextPage.query}}">
+        <div class="next-page">
+          <span>Next</span>
+          <img src="../../images/arrow-right.png" />
+        </div>
+      </a>
   </div>
-
+      
     <div class="animals-grid">
 
       {{#each animals}}
