@@ -71,17 +71,14 @@ router.get("/:id/:fav", async (req, res) => {
   const fav = req.params.fav
 
   try {
-
+    
     const animal = await Animal.findById(req.params.id).populate("shelter")
     let favorites = currentUser.favorites
-    let msg = ""
 
-    if (fav === "addFav") {
-      favorites.push(animal.id)
-      msg = "Favorite animal added to profile!"
-    } else if (fav === "removeFav") {
-      favorites.splice(animal.id)
-      msg = "Favorite animal removed from profile!"
+    if (fav === "addFav") favorites.push(animal.id)
+    else if (fav === "removeFav") {
+      let indexAnimal = favorites.indexOf(animal)
+      favorites.splice(indexAnimal)
     }
 
     await Adopter.findByIdAndUpdate(
@@ -89,7 +86,7 @@ router.get("/:id/:fav", async (req, res) => {
           { favorites: favorites }, 
           { new: true })
 
-    res.render("animals/animal-page", { animal, currentUser })
+    res.redirect(`/animals/${animal.id}`)
 
   } catch (e) {
     console.log(`Error while adding or removing a favorite animal: ${e}`)

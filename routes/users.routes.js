@@ -33,7 +33,8 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
     const loggedInUser = req.session.loggedInUser;
 
     // find user in the DB
-    const user = await User.findOne({ username: req.params.username });
+    const user = await User.findOne({ username: req.params.username })
+                            .populate('favorites');
 
     let canEdit = false;
     if (
