@@ -11,7 +11,8 @@ const Adopter = User.discriminator("Adopter",
       housingSize: {
         type: String,
         enum: ["small apartment", "big apartment", "house"]
-      }
+      },
+      favorites: [{ type: Schema.Types.ObjectId, ref: "Animal" }]
     })
 );
 

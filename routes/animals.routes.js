@@ -57,7 +57,42 @@ router.get("/:id", (req, res) => {
   Animal.findById(req.params.id)
     .populate("shelter")
     .then((animal) => {
-      res.render("animals/animal-page.hbs", { animal, currentUser });
+      res.render("animals/animal-page", { animal, currentUser });
+    })
+    .catch((e) => {
+      console.log(`Error while creating a new animal: ${e}`);
+    });
+});
+
+
+router.get("/:id/:fav", async (req, res) => {
+  const currentUser = req.session.loggedInUser;
+  const fav = req.params.fav
+
+  console.log("====>", fav)
+
+  Animal.findById(req.params.id)
+    .populate("shelter")
+    .then((animal) => {
+      
+      let favorites = currentUser.favorites
+      let msg = ""
+
+      if (fav === "addFav") {
+        favorites.push(animal.id)
+        msg = "Favorite animal added to profile!"
+      } else if (fav === "removeFav") {
+        favorites.splice(animal.id)
+        msg = "Favorite animal removed from profile!"
+      }
+
+      console.log("My favorites ====>", favorites)
+
+      Adopter.findByIdAndUpdate(currentUser.id, { favorites: favorites })
+          .then( (user) => console.log(msg))
+          .catch((e) => console.log("Error adding or removing favorite animal: ", e))
+
+      res.render("animals/animal-page", { animal, currentUser });
     })
     .catch((e) => {
       console.log(`Error while creating a new animal: ${e}`);

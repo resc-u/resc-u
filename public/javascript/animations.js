@@ -64,15 +64,15 @@ const loadAnimations = () => {
 
                 if (heart.classList.contains("notfav")) isFav = true
                 
-                if (isFav) window.location.href = `/animals/${animalId}/fav`
-                else window.location.href = `/animals/${animalId}/unfav`
+                if (isFav) window.location.href = `/animals/${animalId}/addFav`
+                else window.location.href = `/animals/${animalId}/removeFav`
             
             })
         })
     }
 
     if (flash && isVisible(flash)) {
-        alert("hey, un flash!")
+        console.log("hey, un flash!")
         
     }
 }
