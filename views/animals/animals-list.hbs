@@ -2,13 +2,14 @@
 
   <h1>Our animals</h1>
 {{#if typeQuery}}
-  <a href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage}}{{#each typeQuery}}&type={{this}}{{/each}}">Previous</a>
-  <a href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage}}{{#each typeQuery}}&type={{this}}{{/each}}">Next</a>
+  <a class="{{pagination.prevPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage.number}}{{#each typeQuery}}&type={{this}}{{/each}}">Previous</a>
+  <a class="{{pagination.nextPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage.number}}{{#each typeQuery}}&type={{this}}{{/each}}">Next</a>
 {{else}}
-  <a href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage}}">Previous</a>
-  <a href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage}}">Next</a>
+  <a class="{{pagination.prevPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.prevPage.number}}">Previous</a>
+  <a class="{{pagination.nextPage.class}}" href="/animals?limit={{pagination.limit}}&page={{pagination.nextPage.number}}">Next</a>
 {{/if}}
 
+<p>number of pages should be: {{pagination.pages}}</p>
 
 <form action="/animals" method="get" id="animalFilter">
   <div class="filters">

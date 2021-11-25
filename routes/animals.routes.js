@@ -177,21 +177,34 @@ router.get("/", async (req, res) => {
     });
   }
 
+  // pagination
+  const pagination = {
+    limit,
+    prevPage: { number: parseInt(page) - 1, class: "active" },
+    nextPage: { number: parseInt(page) + 1, class: "active" },
+  };
+
+  if (pagination.prevPage.number <= 0) {
+    pagination.prevPage.number = 0;
+    pagination.prevPage.class = "inactive";
+  }
+
   try {
     // all animals from DB
-    let animalsList = await Animal.find(filter)
+    const animalsList = await Animal.find(filter)
       .skip(limit * page)
-      .limit(limit);
+      .limit(Number(limit));
 
-    // pagination
-    const pagination = {
-      limit,
-      prevPage: parseInt(page) - 1,
-      nextPage: parseInt(page) + 1,
-    };
-    if (pagination.prevPage <= 0) pagination.prevPage = 0;
     // calculate total number of pages
-    if (animalsList.length <= limit) pagination.nextPage = page;
+    const animalCount = await Animal.count(filter);
+    pagination.pages = Math.ceil(animalCount / limit);
+    if (page >= pagination.pages || animalsList.length < limit) {
+      pagination.nextPage.number = parseInt(page);
+      pagination.nextPage.class = "inactive";
+    }
+
+    console.log("pagination ===>", pagination);
+    console.log("animal count ===>", animalCount);
 
     // pass current type query to hbs
     let typeQuery = null;
