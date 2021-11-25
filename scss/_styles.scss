@@ -349,6 +349,14 @@ section {
     
 }
 
+.user-avatar-already-filled {
+    object-fit: cover;
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    border: solid 2px $color-pink-light;
+}
+
 .animals-favorite {
    margin-top: 50px;
 

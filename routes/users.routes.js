@@ -105,9 +105,13 @@ router
   .post( fileUploader.single('imageUrl'), isLoggedIn, async (req, res) => {
     const currentUser = req.session.loggedInUser;
     let updatedUser = null;
-    let imageUrl = "";
 
-    if (req.file) imageUrl = req.file.path
+    // if user entered an img, we set that as an avatar
+    let imageUrl = (req.file) ? req.file.path : null
+    // if not, we checked if he had already one
+    if (imageUrl === null && currentUser.imageUrl) {
+      imageUrl = currentUser.imageUrl
+    }
 
     try {
       switch (currentUser.usertype) {
