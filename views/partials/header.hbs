@@ -11,7 +11,7 @@
             <h3 class="hello_user">Hello {{ currentUser.username }}!</h3>
 
             {{#if currentUser.imageUrl}}
-                <a href="/users/profile/{{currentUser._id}}">
+                <a href="/users/{{currentUser.usertype}}/{{currentUser.username}}">
                     <img class="user-avatar" src="{{currentUser.imageUrl}}">
                 </a>
             {{else}}

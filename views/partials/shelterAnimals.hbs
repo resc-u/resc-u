@@ -16,10 +16,12 @@
             </div>
         </a>
 
+        {{#if canEdit}}
         <div class="group-links">
             <a href="/animals/edit/{{_id}}">Edit info</a>
             <a href="/animals/delete/{{_id}}">Delete</a>
         </div>
+        {{/if}}
 
         </div>
 
