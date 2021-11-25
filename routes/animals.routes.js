@@ -86,26 +86,30 @@ router
     } = req.body;
 
     let animalId = req.params.id;
-
-    console.log("these are my req.body --->", req.body)
-
-    console.log("animal to update: ", animalId)
-
+    
     try {
+
+      const animal = await Animal.findById(animalId)
+
+      // The previous saved images are in animal.imageUrl as Cloudinary objects
+      let savedImages = animal.imageUrl    
+      
+      // The new ones come in req.files
+      req.files.forEach((pic) => {
+        savedImages.push(pic)
+      })
+
       const updatedAnimal = await Animal.findByIdAndUpdate(
         animalId,
         { name, description, type, sex, size, age, status, color, 
-          breed, dateofentry, kidfriendly, imageUrl: req.files },
+          breed, dateofentry, kidfriendly, imageUrl: savedImages },
         { new: true })
-
-        console.log("updatedAnimal !! ====>", updatedAnimal)
 
         res.redirect(`/animals/${animalId}`)
       
     } catch (e) {
       console.log(`Error while updating an animal: ${e}`)
     }
-    
   });
 
 router.get("/delete/:id", async (req, res) => {

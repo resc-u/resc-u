@@ -158,10 +158,6 @@ router
         messages: { error: "We are sorry, there has been an error." },
       });
     } finally {
-      //console.log("========> PROFILE SHELTER SAVED")
-      //console.log("currentUser 2 ========>", currentUser)
-      //console.log(`/users/${currentUser.usertype}/${currentUser.username}`)
-
       req.flash("info", "Changes successfully saved!");
       res.redirect(`/users/${updatedUser.usertype}/${updatedUser.username}`);
     }
@@ -171,7 +167,6 @@ router
 router
   .route("/:usertype/:username/delete-user")
   .get((req, res) => {
-    console.log(req.session.loggedInUser);
     res.render("users/delete-user", { user: req.session.loggedInUser });
   })
   .post(async (req, res) => {

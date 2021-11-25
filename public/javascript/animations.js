@@ -10,7 +10,6 @@ const loadAnimations = () => {
     let showFilter = document.querySelector('.show-filter')
 
     const isVisible = (element) => {
-        console.log("HOLAAAA")
         
         let rect = element.getBoundingClientRect();
         return (
@@ -94,8 +93,7 @@ const loadAnimations = () => {
     }
 
     if (flash && isVisible(flash)) {
-        console.log("hey, un flash!")
-        
+        //console.log("hey, un flash!")
     }
 }
 
