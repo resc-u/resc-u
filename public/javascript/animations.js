@@ -37,9 +37,6 @@ const loadAnimations = () => {
         imagesAnimal.forEach( (pic) => {
             pic.addEventListener('click', () => {
 
-                console.log("src fomr img clicked", pic.src)
-                console.log("I clicked one")
-
                 let imgContainer = document.getElementById('show-picture')
                 let element = document.createElement('img')
                 element.setAttribute("class", "pic-animal-big")

@@ -6,55 +6,6 @@ const Animal = require("../models/Animal.model.js");
 // ********* require fileUploader in order to use it *********
 const fileUploader = require("../config/cloudinary.config");
 
-router.get("/", async (req, res) => {
-  const currentUser = req.session.loggedInUser;
-
-  try {
-    // all animals from DB
-    let animalsList = await Animal.find();
-
-    // populate animalTypes with all the different types of animals
-    const animalTypes = [];
-    animalsList
-      .map((animal) => animal.type)
-      .forEach((type) => {
-        if (animalTypes.includes(type) === false) animalTypes.push(type);
-      });
-
-    // create checkboxes objet
-    const typeCheckBoxes = [];
-    animalTypes.forEach((type) =>
-      typeCheckBoxes.push({
-        name: type,
-        checked: false,
-      })
-    );
-
-    /* FILTERS */
-    // by type
-    if (req.query.type) {
-      // filter animals
-      animalsList = animalsList.filter((animal) =>
-        req.query.type.includes(animal.type)
-      );
-      // handle checkboxes
-      typeCheckBoxes.forEach((type) => {
-        if (req.query.type.includes(type.name)) {
-          type.checked = true;
-        }
-      });
-    }
-
-    res.render("animals/animals-list.hbs", {
-      animals: animalsList,
-      types: typeCheckBoxes,
-      currentUser,
-    });
-  } catch (err) {
-    console.log(`Error while getting the animals from the DB: ${err}`);
-  }
-});
-
 router
   .route("/new")
   .get((req, res) => {
@@ -174,6 +125,62 @@ router.get("/delete/:id", async (req, res) => {
     res.redirect("/shelters/animals");
   } catch (e) {
     return console.log(e);
+  }
+});
+
+
+router.get("/", async (req, res) => {
+  const currentUser = req.session.loggedInUser;
+  const {limit = 3, page = 0} = req.query
+
+  console.log("=====> query: ", req.query)
+  console.log("=====> limit: ", limit)
+  console.log("=====> page: ", page)
+
+  try {
+    // all animals from DB
+    let animalsList = await Animal.find().skip(limit*page).limit(limit);
+
+    // populate animalTypes with all the different types of animals
+    const animalTypes = [];
+    animalsList
+      .map((animal) => animal.type)
+      .forEach((type) => {
+        if (animalTypes.includes(type) === false) animalTypes.push(type);
+      });
+
+    // create checkboxes objet
+    const typeCheckBoxes = [];
+    animalTypes.forEach((type) =>
+      typeCheckBoxes.push({
+        name: type,
+        checked: false,
+      })
+    );
+
+    /* FILTERS */
+    // by type
+    if (req.query.type) {
+      // filter animals
+      animalsList = animalsList.filter((animal) =>
+        req.query.type.includes(animal.type)
+      );
+      // handle checkboxes
+      typeCheckBoxes.forEach((type) => {
+        if (req.query.type.includes(type.name)) {
+          type.checked = true;
+        }
+      });
+    }
+
+    res.render("animals/animals-list.hbs", {
+      animals: animalsList,
+      pagination: {limit, prevPage: page - 1, nexPage: page + 1},
+      types: typeCheckBoxes,
+      currentUser,
+    });
+  } catch (err) {
+    console.log(`Error while getting the animals from the DB: ${err}`);
   }
 });
 
