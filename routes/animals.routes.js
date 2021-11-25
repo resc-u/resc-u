@@ -55,11 +55,23 @@ router
 
 router.get("/:id", (req, res) => {
   const currentUser = req.session.loggedInUser;
+  let isMyShelter = false;
+  let isAdopter = false;
+
 
   Animal.findById(req.params.id)
     .populate("shelter")
     .then((animal) => {
-      res.render("animals/animal-page", { animal, currentUser });
+
+      if (currentUser.usertype === "shelter" || currentUser.usertype === "Shelter") {
+        if (animal.shelter.id === currentUser._id) {
+          isMyShelter = true;
+        }
+      } else {
+        isAdopter = true;
+      }
+
+      res.render("animals/animal-page", { animal, currentUser, isMyShelter, isAdopter });
     })
     .catch((e) => {
       console.log(`Error while showing an animal profile: ${e}`);

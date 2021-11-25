@@ -5,7 +5,7 @@
       <img src="{{animal.imageUrl.[0].path}}" alt="{{animal.name}}">
       <p class="name-animal"> {{animal.name}}</p>
       
-      {{#if canEdit}}
+      {{#if isAdopter}}
       <svg id="{{animal.id}}" 
           data-current-page="animal-page"
           class="heart-icon {{#ifIn animal.id @root.currentUser.favorites }} fav {{else}} notfav {{/ifIn}}" 
@@ -68,9 +68,9 @@
       </div>
 
       <div class="group-btn">
-          {{#if canEdit}}
-            <a href="/animals/edit/{{animal.id}}">Edit info</a>
-            <a href="/animals/delete/{{animal.id}}">Delete</a>
+          {{#if isMyShelter}}
+            <a href="/animals/edit/{{animal.id}}" class="btn">Edit info</a>
+            <a href="/animals/delete/{{animal.id}}" class="btn">Delete</a>
           {{/if}}
           <a href="#" class="btn secondary">Adoption details</a>
           <a href="/animals" class="btn">See more animals</a>      
