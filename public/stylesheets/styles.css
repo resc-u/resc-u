@@ -452,6 +452,10 @@ section {
   margin: 0 10px 10px 10px;
   position: relative;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .animals-grid .animal-in-list .heart-icon {
   bottom: 68px;
@@ -462,16 +466,23 @@ section {
   color: black;
   font-size: 15px;
 }
-.animals-grid .animal-in-list img {
-  width: 100%;
+.animals-grid .animal-in-list .main-pic-wrapper {
   border-radius: 10px;
   transition: all 0.2s 0s;
+  overflow: hidden;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 10px;
+}
+.animals-grid .animal-in-list .main-pic-wrapper img {
+  transition: all 0.4s 0s;
   object-fit: cover;
   width: 160px;
   height: 160px;
 }
-.animals-grid .animal-in-list img:hover {
+.animals-grid .animal-in-list .main-pic-wrapper img:hover {
   box-shadow: 0px 3px 10px #CCB88D;
+  transform: scale(1.1);
 }
 .animals-grid .animal-in-list .animal-info {
   text-align: center;
@@ -668,8 +679,12 @@ footer {
   .animals-list .animals-grid .animal-in-list .heart-icon {
     right: 0px;
   }
-  .animals-list .animals-grid .animal-in-list img {
-    object-fit: cover;
+  .animals-list .animals-grid .animal-in-list .main-pic-wrapper {
+    width: 220px;
+    height: 220px;
+    margin-bottom: 20px;
+  }
+  .animals-list .animals-grid .animal-in-list .main-pic-wrapper img {
     width: 220px;
     height: 220px;
   }
@@ -710,9 +725,14 @@ footer {
     width: 43%;
     margin: 0 10px 10px 10px;
   }
-  .section_profile .animals-list .animal-in-list img,
-.section_profile .animals-favorite .animal-in-list img {
-    object-fit: cover;
+  .section_profile .animals-list .animal-in-list .main-pic-wrapper,
+.section_profile .animals-favorite .animal-in-list .main-pic-wrapper {
+    width: 160px;
+    height: 160px;
+    margin-bottom: 20px;
+  }
+  .section_profile .animals-list .animal-in-list .main-pic-wrapper img,
+.section_profile .animals-favorite .animal-in-list .main-pic-wrapper img {
     width: 160px;
     height: 160px;
   }
