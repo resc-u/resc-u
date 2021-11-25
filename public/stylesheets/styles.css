@@ -689,25 +689,25 @@ footer {
     display: block;
   }
 
-  .section_profile .animals-grid .animals-grid,
-.section_profile .animals-favorite .animals-grid {
-    padding: unset;
+  .section_profile .animals-list,
+.section_profile .animals-favorite {
+    margin-top: 0;
+    margin-left: 20px;
   }
-  .section_profile .animals-grid .animal-in-list,
+  .section_profile .animals-list .animals-grid,
+.section_profile .animals-favorite .animals-grid {
+    padding: 20px 10px;
+  }
+  .section_profile .animals-list .animal-in-list,
 .section_profile .animals-favorite .animal-in-list {
     width: 45%;
     margin: 0 10px 10px 10px;
   }
-  .section_profile .animals-grid .animal-in-list img,
+  .section_profile .animals-list .animal-in-list img,
 .section_profile .animals-favorite .animal-in-list img {
     object-fit: cover;
     width: 160px;
     height: 160px;
-  }
-
-  .animals-favorite {
-    margin-top: 0 !important;
-    margin-left: 20px !important;
   }
 }
 @media all and (min-width: 1100px) {
