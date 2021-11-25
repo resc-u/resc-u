@@ -14,6 +14,8 @@ router
     res.render("animals/new-animal.hbs", { currentUser });
   })
   .post(fileUploader.array("animal-image[]", 3), (req, res) => {
+    const shelterId = req.session.loggedInUser._id;
+
     const {
       name,
       description,
@@ -44,7 +46,7 @@ router
       shelter: req.session.loggedInUser._id,
     })
       .then((newlyCreatedAnimalFromDB) => {
-        res.redirect("/shelters/animals");
+        res.redirect(`/shelters/animals/${shelterId}`);
       })
       .catch((error) =>
         console.log(`Error while creating a new animal: ${error}`)
@@ -64,32 +66,29 @@ router.get("/:id", (req, res) => {
     });
 });
 
-
 router.get("/:id/:fav", async (req, res) => {
-  
   const currentUser = req.session.loggedInUser;
-  const fav = req.params.fav
+  const fav = req.params.fav;
 
   try {
-    
-    const animal = await Animal.findById(req.params.id).populate("shelter")
-    let favorites = currentUser.favorites
+    const animal = await Animal.findById(req.params.id).populate("shelter");
+    let favorites = currentUser.favorites;
 
-    if (fav === "addFav") favorites.push(animal.id)
+    if (fav === "addFav") favorites.push(animal.id);
     else if (fav === "removeFav") {
-      let indexAnimal = favorites.indexOf(animal)
-      favorites.splice(indexAnimal)
+      let indexAnimal = favorites.indexOf(animal);
+      favorites.splice(indexAnimal);
     }
 
     await Adopter.findByIdAndUpdate(
-          currentUser._id, 
-          { favorites: favorites }, 
-          { new: true })
+      currentUser._id,
+      { favorites: favorites },
+      { new: true }
+    );
 
-    res.redirect(`/animals/${animal.id}`)
-
+    res.redirect(`/animals/${animal.id}`);
   } catch (e) {
-    console.log(`Error while adding or removing a favorite animal: ${e}`)
+    console.log(`Error while adding or removing a favorite animal: ${e}`);
   }
 });
 
@@ -213,7 +212,7 @@ router.get("/", async (req, res) => {
     nextPage: { number: parseInt(page) + 1, class: "active" },
   };
 
-  if (pagination.prevPage.number <= 0) {
+  if (pagination.prevPage.number < 0) {
     pagination.prevPage.number = 0;
     pagination.prevPage.class = "inactive";
   }
