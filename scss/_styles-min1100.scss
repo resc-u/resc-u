@@ -1,4 +1,9 @@
 @media all and (min-width: 1100px) {     
+    
+    .section_profile {
+        width: 85%;
+        margin: 0 auto;
+    }
 
     .section_profile.shelter {
         .animals-shelter {
@@ -18,6 +23,28 @@
                 }
             }
         }    
+        
+    }
+
+
+    .section_profile .animals-list,
+    .section_profile .animals-favorite {
+        
+        margin-left: 50px;
+
+        .animals-grid {
+            padding: 30px;
+        }
+        .animal-in-list {
+            width: 165px;
+            margin: 0 20px 20px 20px;
+
+            img {
+                object-fit: cover;
+                width: 165px;
+                height: 165px;
+            }
+        }
     }
     
 
