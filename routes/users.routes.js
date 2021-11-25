@@ -105,6 +105,9 @@ router
   .post( fileUploader.single('imageUrl'), isLoggedIn, async (req, res) => {
     const currentUser = req.session.loggedInUser;
     let updatedUser = null;
+    let imageUrl = "";
+
+    if (req.file) imageUrl = req.file.path
 
     try {
       switch (currentUser.usertype) {
@@ -114,7 +117,7 @@ router
             req.body;
           updatedUser = await Adopter.findByIdAndUpdate(
             currentUser._id,
-            { fullname, children, animalPreference, housingSize, imageUrl: req.file.path },
+            { fullname, children, animalPreference, housingSize, imageUrl },
             { new: true }
           );
           break;

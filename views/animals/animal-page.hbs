@@ -71,9 +71,10 @@
           {{#if isMyShelter}}
             <a href="/animals/edit/{{animal.id}}" class="btn">Edit info</a>
             <a href="/animals/delete/{{animal.id}}" class="btn">Delete</a>
+          {{else}}
+            <a href="#" class="btn secondary">Adoption details</a>
+            <a href="/animals" class="btn">See more animals</a>      
           {{/if}}
-          <a href="#" class="btn secondary">Adoption details</a>
-          <a href="/animals" class="btn">See more animals</a>      
       </div>
 
     </div>
