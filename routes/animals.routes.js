@@ -165,6 +165,7 @@ router.get("/delete/:id", async (req, res) => {
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
   let { limit = 6, page = 0, type } = req.query;
+  const queryString = [`limit=${limit}`];
 
   // type checkboxes
   const typeCheckBoxes = [
@@ -201,6 +202,7 @@ router.get("/", async (req, res) => {
     typeCheckBoxes.forEach((type) => {
       if (req.query.type.includes(type.name)) {
         type.checked = true;
+        queryString.push(`type=${type.name}`);
       }
     });
   }
@@ -208,10 +210,11 @@ router.get("/", async (req, res) => {
   // pagination
   const pagination = {
     limit,
-    currentPage: Number(page) + 1,
-    prevPage: { number: parseInt(page) - 1, class: "active" },
-    nextPage: { number: parseInt(page) + 1, class: "active" },
+    currentPage: Number(page),
   };
+  // add previous and next page objects
+  pagination.prevPage = { number: pagination.currentPage - 1, class: "active" };
+  pagination.nextPage = { number: pagination.currentPage + 1, class: "active" };
 
   if (pagination.prevPage.number < 0) {
     pagination.prevPage.number = 0;
@@ -228,15 +231,24 @@ router.get("/", async (req, res) => {
     const animalCount = await Animal.count(filter);
     pagination.pages = Math.ceil(animalCount / limit);
     if (
-      pagination.currentPage >= pagination.pages ||
+      pagination.nextPage.number >= pagination.pages ||
       animalsList.length < limit
     ) {
-      pagination.nextPage.number = parseInt(page);
+      console.log("whiad");
+      pagination.nextPage.number = pagination.currentPage;
       pagination.nextPage.class = "inactive";
     }
+    pagination.pageLinks = new Array(pagination.pages)
+      .fill("")
+      .map((_, i) => i);
+    // add query strings for next and prev page
+    pagination.nextPage.query =
+      "?" + queryString.join("&") + `&page=${pagination.nextPage.number}`;
+    pagination.prevPage.query =
+      "?" + queryString.join("&") + `&page=${pagination.prevPage.number}`;
 
     console.log("pagination ===>", pagination);
-    console.log("animal count ===>", animalCount);
+    console.log("q string ===>", queryString);
 
     // pass current type query to hbs
     let typeQuery = null;
