@@ -29,32 +29,35 @@ router
     redirectToProfile(req, res);
   })
   .post(isNotLoggedIn, async (req, res) => {
-
     try {
       const { email, password } = req.body;
       // if one of the fields is missing
       if (!email || !password)
-        res.render("homepage", { messages: {error:  "Invalid credentials" }})
+        res.render("homepage", { messages: { error: "Invalid credentials" } });
 
       const loggedInUser = await User.findOne({ email });
-      
-      if (!loggedInUser)
-        res.render("homepage", { messages: {error:  "User doesn't exist!" }})
 
-      const isPwdCorrect = await bcrypt.compare(password, loggedInUser.password );
+      if (!loggedInUser)
+        res.render("homepage", { messages: { error: "User doesn't exist!" } });
+
+      const isPwdCorrect = await bcrypt.compare(
+        password,
+        loggedInUser.password
+      );
 
       if (isPwdCorrect) {
         req.session.loggedInUser = loggedInUser;
-        req.flash('info', 'You are logged in!')
+        req.flash("info", "You are logged in!");
         redirectToProfile(req, res);
       } else {
-        req.flash('error', 'Password is incorrect!')
+        req.flash("error", "Password is incorrect!");
         res.redirect("/");
       }
-      
     } catch (e) {
-      console.log("There's been an error!! ===> ", e)
-      res.render("homepage", { messages: {error: "We are sorry, there has been an error."}} )
+      console.log("There's been an error!! ===> ", e);
+      res.render("homepage", {
+        messages: { error: "We are sorry, there has been an error." },
+      });
     }
   });
 
@@ -63,18 +66,16 @@ router
   .route("/signup")
   .get((req, res) => res.render("auth/signup-form"))
   .post(async (req, res) => {
-
     const { username, email, password, role } = req.body;
 
     try {
-
       // user didn't fill all the fields
       if (!username || !email || !password || !role) {
         res.render("auth/signup-form", {
           username,
           email,
           role,
-          messages: {error: "All fields are required!"}
+          messages: { error: "All fields are required!" },
         });
       }
 
@@ -82,35 +83,47 @@ router
 
       // correct signup
       if (!user) {
-
         // encryption
         const salt = bcrypt.genSaltSync(4);
         const hashedPwd = bcrypt.hashSync(password, salt);
+        let loggedInUser = null;
 
         if (role === "adopter") {
-          await Adopter.create({ username, email, role, password: hashedPwd });
-
+          loggedInUser = await Adopter.create({
+            username,
+            email,
+            role,
+            password: hashedPwd,
+          });
         } else if (role === "shelter") {
-          await Shelter.create({ username, email, role, password: hashedPwd });
+          loggedInUser = await Shelter.create({
+            username,
+            email,
+            role,
+            password: hashedPwd,
+          });
         }
 
         // redirect to home/login
-        req.flash('info', 'Thank you for signing up!')
+        req.session.loggedInUser = loggedInUser;
+        req.flash("info", "Thank you for signing up!");
         res.redirect("/");
       } else {
         // user already exists
-        req.flash('error', 'This user already exists')
+        req.flash("error", "This user already exists");
         res.render("auth/signup-form", {
-          username, 
+          username,
           email,
           role,
-          messages: {error: "This user already exists!"}
+          messages: { error: "This user already exists!" },
         });
       }
     } catch (e) {
-      console.log("There's been an error!! ===> ", e)
-      res.render("auth/signup", { messages: {error: "We are sorry, there has been an error."}} )
-    } 
+      console.log("There's been an error!! ===> ", e);
+      res.render("auth/signup", {
+        messages: { error: "We are sorry, there has been an error." },
+      });
+    }
   });
 
 /* logout */
