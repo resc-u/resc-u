@@ -208,6 +208,7 @@ router.get("/", async (req, res) => {
   // pagination
   const pagination = {
     limit,
+    currentPage: Number(page) + 1,
     prevPage: { number: parseInt(page) - 1, class: "active" },
     nextPage: { number: parseInt(page) + 1, class: "active" },
   };
@@ -226,7 +227,10 @@ router.get("/", async (req, res) => {
     // calculate total number of pages
     const animalCount = await Animal.count(filter);
     pagination.pages = Math.ceil(animalCount / limit);
-    if (page >= pagination.pages || animalsList.length < limit) {
+    if (
+      pagination.currentPage >= pagination.pages ||
+      animalsList.length < limit
+    ) {
       pagination.nextPage.number = parseInt(page);
       pagination.nextPage.class = "inactive";
     }
