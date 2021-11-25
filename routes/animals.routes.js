@@ -60,43 +60,40 @@ router.get("/:id", (req, res) => {
       res.render("animals/animal-page", { animal, currentUser });
     })
     .catch((e) => {
-      console.log(`Error while creating a new animal: ${e}`);
+      console.log(`Error while showing an animal profile: ${e}`);
     });
 });
 
 
 router.get("/:id/:fav", async (req, res) => {
+  
   const currentUser = req.session.loggedInUser;
   const fav = req.params.fav
 
-  console.log("====>", fav)
+  try {
 
-  Animal.findById(req.params.id)
-    .populate("shelter")
-    .then((animal) => {
-      
-      let favorites = currentUser.favorites
-      let msg = ""
+    const animal = await Animal.findById(req.params.id).populate("shelter")
+    let favorites = currentUser.favorites
+    let msg = ""
 
-      if (fav === "addFav") {
-        favorites.push(animal.id)
-        msg = "Favorite animal added to profile!"
-      } else if (fav === "removeFav") {
-        favorites.splice(animal.id)
-        msg = "Favorite animal removed from profile!"
-      }
+    if (fav === "addFav") {
+      favorites.push(animal.id)
+      msg = "Favorite animal added to profile!"
+    } else if (fav === "removeFav") {
+      favorites.splice(animal.id)
+      msg = "Favorite animal removed from profile!"
+    }
 
-      console.log("My favorites ====>", favorites)
+    await Adopter.findByIdAndUpdate(
+          currentUser._id, 
+          { favorites: favorites }, 
+          { new: true })
 
-      Adopter.findByIdAndUpdate(currentUser.id, { favorites: favorites })
-          .then( (user) => console.log(msg))
-          .catch((e) => console.log("Error adding or removing favorite animal: ", e))
+    res.render("animals/animal-page", { animal, currentUser })
 
-      res.render("animals/animal-page", { animal, currentUser });
-    })
-    .catch((e) => {
-      console.log(`Error while creating a new animal: ${e}`);
-    });
+  } catch (e) {
+    console.log(`Error while adding or removing a favorite animal: ${e}`)
+  }
 });
 
 router
