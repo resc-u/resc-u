@@ -136,6 +136,7 @@ router.get("/delete/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
   const currentUser = req.session.loggedInUser;
+  let { limit = 6, page = 0, type } = req.query;
 
   // type checkboxes
   const typeCheckBoxes = [
@@ -165,21 +166,10 @@ router.get("/", async (req, res) => {
     },
   ];
 
-  // pagination
-  let { limit = 6, page = 0, type } = req.query;
-  const pagination = {
-    limit,
-    prevPage: parseInt(page) - 1,
-    nextPage: parseInt(page) + 1,
-  };
-  if (pagination.prevPage <= 0) pagination.prevPage = 0;
-
-  // filters
-
+  // create filter object and update checkboxes
   const filter = {};
   if (type) {
     filter.type = type;
-    // update checkboxes
     typeCheckBoxes.forEach((type) => {
       if (req.query.type.includes(type.name)) {
         type.checked = true;
@@ -193,12 +183,19 @@ router.get("/", async (req, res) => {
       .skip(limit * page)
       .limit(limit);
 
+    // pagination
+    const pagination = {
+      limit,
+      prevPage: parseInt(page) - 1,
+      nextPage: parseInt(page) + 1,
+    };
+    if (pagination.prevPage <= 0) pagination.prevPage = 0;
+    // calculate total number of pages
+    if (animalsList.length <= limit) pagination.nextPage = page;
+
     // pass current type query to hbs
-    console.log("queryTYPE==>", type);
     let typeQuery = null;
     typeof type === "string" ? (typeQuery = [type]) : (typeQuery = type);
-
-    console.log("query going to hbs", typeQuery);
 
     res.render("animals/animals-list.hbs", {
       animals: animalsList,

@@ -12,15 +12,10 @@
 
 <form action="/animals" method="get" id="animalFilter">
   <div class="filters">
-
     {{#each types}}
       <div class="animals-filter">
-        {{#if checked}}
-          <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" checked />
-        {{else}}
-          <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}"  />
-        {{/if}}
-        <label>{{name}}</label>
+          <input class="typeCheckbox" type="checkbox" name="type" value="{{name}}" {{#if checked}}checked{{/if}} />
+          <label>{{name}}</label>
       </div>
     {{/each}}
   </div>
