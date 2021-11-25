@@ -111,7 +111,14 @@
         }
     }
     
+    .pagination-links {
+        width: 80%;
+        margin: 40px auto;
+    }
+
     .animals-list .animals-grid {
+        width: 80%;
+        margin: 0 auto;
 
         .animal-in-list {
             width: 200px;
