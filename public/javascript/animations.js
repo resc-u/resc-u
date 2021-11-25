@@ -6,7 +6,8 @@ const loadAnimations = () => {
     let navMenu = document.querySelector("nav.menu")
     let flash = document.querySelector("flash")
     let imagesAnimal = document.querySelectorAll('img.pic-animal-small')
-    
+    let favHearts = document.querySelectorAll('svg.heart-icon')
+
     const isVisible = (element) => {
         console.log("HOLAAAA")
         
@@ -57,12 +58,26 @@ const loadAnimations = () => {
         })
     }
 
+    if (favHearts) {
+        favHearts.forEach( (heart) => {
+            heart.addEventListener('click', () => {
+
+                let isFav = false
+                let animalId = heart.id
+
+                if (heart.classList.contains("notfav")) isFav = true
+                
+                if (isFav) window.location.href = `/animals/${animalId}/fav`
+                else window.location.href = `/animals/${animalId}/unfav`
+            
+            })
+        })
+    }
 
     if (flash && isVisible(flash)) {
         alert("hey, un flash!")
         
     }
-
 }
 
 window.addEventListener("load", loadAnimations)
