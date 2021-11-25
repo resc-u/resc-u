@@ -5,11 +5,36 @@
         margin: 0 auto;
     }
 
+    .section_profile .animals-list,
+    .section_profile .animals-favorite {
+        
+        margin-left: 50px;
+
+        .animals-grid {
+            padding: 30px;
+
+            .animal-in-list {
+                width: 200px;
+                margin: 0 20px 20px 20px;
+    
+                .main-pic-wrapper {
+                    width: 220px;
+                    height: 220px;
+                    margin-bottom: 20px;
+            
+                    img {
+                        width: 220px;
+                        height: 220px;
+                    }
+                }
+            }
+        }
+    }
+
     .section_profile.shelter {
         .animals-shelter {
             width: 80%;
         }
-
         .animals-grid {
 
             .animal-in-list {
@@ -18,34 +43,18 @@
     
                 img {
                     object-fit: cover;
-                    width: 230px;
-                    height: 230px;
+                    width: 220px;
+                    height: 220px;
                 }
             }
         }    
-        
     }
 
-
-    .section_profile .animals-list,
-    .section_profile .animals-favorite {
-        
-        margin-left: 50px;
-
-        .animals-grid {
-            padding: 30px;
-        }
-        .animal-in-list {
-            width: 165px;
-            margin: 0 20px 20px 20px;
-
-            img {
-                object-fit: cover;
-                width: 165px;
-                height: 165px;
-            }
-        }
+    .animals-grid .animal-in-list .main-pic-wrapper {
+        width: 220px;
+        height: 220px;
     }
+
 
     .animals-list .animals-grid, 
     .pagination-links {

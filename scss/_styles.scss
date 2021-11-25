@@ -210,7 +210,7 @@ nav.menu {
     }
 
     
-    input, select, textarea {
+    input, select, textarea, option {
         border-radius: 6px;
         border: solid 1px #ccc;
         width: 60%;
@@ -330,6 +330,12 @@ section {
     border-radius: 30px;
     margin-top: 20px;
 }
+.empty-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
 .profile-preferences {
 
     .white-box.preferences {

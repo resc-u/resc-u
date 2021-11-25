@@ -21,7 +21,7 @@ router.get("/:id/:fav/:currentPage", async (req, res) => {
     } else if (fav === "removeFav") {
       let indexAnimal = favorites.indexOf(animal)
       favorites.splice(indexAnimal)
-      msg = "Animal remove from favorites"
+      msg = "Animal removed from favorites"
     }
 
     await Adopter.findByIdAndUpdate(
@@ -122,7 +122,7 @@ router.get("/delete/:id", async (req, res) => {
     req.flash("info", "Animal deleted!");
     res.redirect(`/shelters/animals/${shelterId}`);
   } catch (e) {
-    return console.log(e);
+    console.log(e);
   }
 });
 
@@ -235,6 +235,8 @@ router.get("/", async (req, res) => {
     let typeQuery = null;
     typeof type === "string" ? (typeQuery = [type]) : (typeQuery = type);
     pagination.currentPage++
+
+    console.log("IS ADOPTER ===> ", isAdopter)
 
     res.render("animals/animals-list", {
       animals: animalsList,

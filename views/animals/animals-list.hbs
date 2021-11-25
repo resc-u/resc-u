@@ -63,7 +63,7 @@
               <span class="animal-name">{{name}},</span> 
               {{age}} years
 
-              {{#if isAdopter}}
+              {{#if @root.isAdopter}}
                 <svg id="{{id}}" 
                     data-current-page="animals-list"
                     class="heart-icon {{#ifIn id @root.currentUser.favorites }} fav {{else}} notfav {{/ifIn}}" 

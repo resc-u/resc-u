@@ -234,7 +234,7 @@ nav.menu .close_menu {
   width: 40%;
   display: block;
 }
-.form input, .form select, .form textarea {
+.form input, .form select, .form textarea, .form option {
   border-radius: 6px;
   border: solid 1px #ccc;
   width: 60%;
@@ -342,6 +342,12 @@ section {
   padding: 20px;
   border-radius: 30px;
   margin-top: 20px;
+}
+
+.empty-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .profile-preferences .white-box.preferences {
@@ -827,19 +833,19 @@ footer {
 .section_profile .animals-favorite .animals-grid {
     padding: 20px 10px;
   }
-  .section_profile .animals-list .animal-in-list,
-.section_profile .animals-favorite .animal-in-list {
+  .section_profile .animals-list .animals-grid .animal-in-list,
+.section_profile .animals-favorite .animals-grid .animal-in-list {
     width: 43%;
     margin: 0 10px 10px 10px;
   }
-  .section_profile .animals-list .animal-in-list .main-pic-wrapper,
-.section_profile .animals-favorite .animal-in-list .main-pic-wrapper {
+  .section_profile .animals-list .animals-grid .animal-in-list .main-pic-wrapper,
+.section_profile .animals-favorite .animals-grid .animal-in-list .main-pic-wrapper {
     width: 160px;
     height: 160px;
     margin-bottom: 20px;
   }
-  .section_profile .animals-list .animal-in-list .main-pic-wrapper img,
-.section_profile .animals-favorite .animal-in-list .main-pic-wrapper img {
+  .section_profile .animals-list .animals-grid .animal-in-list .main-pic-wrapper img,
+.section_profile .animals-favorite .animals-grid .animal-in-list .main-pic-wrapper img {
     width: 160px;
     height: 160px;
   }
@@ -860,6 +866,31 @@ footer {
     margin: 0 auto;
   }
 
+  .section_profile .animals-list,
+.section_profile .animals-favorite {
+    margin-left: 50px;
+  }
+  .section_profile .animals-list .animals-grid,
+.section_profile .animals-favorite .animals-grid {
+    padding: 30px;
+  }
+  .section_profile .animals-list .animals-grid .animal-in-list,
+.section_profile .animals-favorite .animals-grid .animal-in-list {
+    width: 200px;
+    margin: 0 20px 20px 20px;
+  }
+  .section_profile .animals-list .animals-grid .animal-in-list .main-pic-wrapper,
+.section_profile .animals-favorite .animals-grid .animal-in-list .main-pic-wrapper {
+    width: 220px;
+    height: 220px;
+    margin-bottom: 20px;
+  }
+  .section_profile .animals-list .animals-grid .animal-in-list .main-pic-wrapper img,
+.section_profile .animals-favorite .animals-grid .animal-in-list .main-pic-wrapper img {
+    width: 220px;
+    height: 220px;
+  }
+
   .section_profile.shelter .animals-shelter {
     width: 80%;
   }
@@ -869,28 +900,13 @@ footer {
   }
   .section_profile.shelter .animals-grid .animal-in-list img {
     object-fit: cover;
-    width: 230px;
-    height: 230px;
+    width: 220px;
+    height: 220px;
   }
 
-  .section_profile .animals-list,
-.section_profile .animals-favorite {
-    margin-left: 50px;
-  }
-  .section_profile .animals-list .animals-grid,
-.section_profile .animals-favorite .animals-grid {
-    padding: 30px;
-  }
-  .section_profile .animals-list .animal-in-list,
-.section_profile .animals-favorite .animal-in-list {
-    width: 165px;
-    margin: 0 20px 20px 20px;
-  }
-  .section_profile .animals-list .animal-in-list img,
-.section_profile .animals-favorite .animal-in-list img {
-    object-fit: cover;
-    width: 165px;
-    height: 165px;
+  .animals-grid .animal-in-list .main-pic-wrapper {
+    width: 220px;
+    height: 220px;
   }
 
   .animals-list .animals-grid,
