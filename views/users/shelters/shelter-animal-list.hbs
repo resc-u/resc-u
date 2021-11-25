@@ -4,34 +4,7 @@
 
   <div class="animals-grid">
 
-    {{#each animalslist}}
-
-      <div class="animal-in-list">
-
-        <a href="/animals/{{this._id}}">
-          
-          <div class="main-pic-wrapper">
-            <img src="{{imageUrl.0.path}}" alt="animal picture" />
-          </div>
-
-          <div class="animal-info">
-            <p> <span class="animal-name">{{name}}</span>, {{age}} years</p>
-            <p>I'm {{status}}</p>
-          </div>
-        </a>
-
-        <div class="group-links">
-          <a href="/animals/edit/{{this._id}}">Edit info</a>
-          <a href="/animals/delete/{{this._id}}">Delete</a>
-        </div>
-
-      </div>
-
-    {{else}}
-
-      <p>There are no animals in this Shelter yet!</p>
-
-    {{/each}}
+    {{>shelterAnimals this=animalslist}}
 
   </div>
 

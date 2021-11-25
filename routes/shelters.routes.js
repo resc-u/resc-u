@@ -20,15 +20,17 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/animals", (req, res) => {
-  const currentUser = req.session.loggedInUser;
+router.get("/animals/:shelterId", (req, res) => {
 
-  Animal.find({ shelter: req.session.loggedInUser._id })
-    .then((animalsFromDB) => {
-      res.render("users/shelters/shelter-animal-list.hbs", {
-        animalslist: animalsFromDB,
+  const currentUser = req.session.loggedInUser;
+  let shelterId = req.params.shelterId
+
+  Animal.find({ shelter: shelterId })
+    .then( (animalslist) => {
+      res.render("users/shelters/shelter-animal-list", {
+        animalslist,
         currentUser,
-      });
+      })
     })
     .catch((err) =>
       console.log(`Error while getting the animals from the DB: ${err}`)

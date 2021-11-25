@@ -1,25 +1,54 @@
+<h1>Shelter {{user.name}}'s profile</h1>
 
-<section class="section_profile">
+<section class="section_profile shelter">
 
-    <h1>My Profile </h1>
+    <div class="profile-preferences ">
 
-    <p>Showing shelter's profile</p>
+        <p class="title-box">Information</p>
 
-    {{ user }}
+        <div class="white-box preferences">
 
-    <p>{{user.name}}</p>
-    <p>{{user.address}}</p>
-    <p>{{user.contact_email}}</p>
-    <p>{{user.contact_phone}}</p>
+            <p class="pref">
+                <span>Name: </span>
+                {{ user.name }}
+            </p>
 
-    <h1> List of Animals of {{user.name}} </h1>
+            <p class="pref">
+                <span>Address: </span>
+                {{user.address}} 
+            </p>
 
-    {{#if canEdit}}
-        <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
-        <a href="/animals/new" class="btn">Add an Animal</a>
-        <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a>      
-    {{/if}}
+            <p class="pref">
+                <span>Contact Email: </span>
+                {{user.contact_email}}
+            </p>
 
-    <a href="/shelters/animals" class="btn"> List of animals from this Shelter </a>
+            <p class="pref">
+                <span>Contact Phone: </span>
+                {{user.contact_phone}}
+            </p>
+        </div>
+
+        {{#if canEdit}}
+            <div class="group-btn">
+                <a href="/users/{{user.usertype}}/{{user.username}}/profile-edit" class="btn">Edit profile</a>
+                <a href="/animals/new" class="btn secondary">Add an Animal</a>
+            </div>
+            <a href="/users/{{user.usertype}}/{{user.username}}/delete-user" class="btn">Delete User</a> 
+        {{/if}}
+    </div>
+
+    <div class="animals-shelter">
+        <div class="shelter-list-animals">
+            <p class="title-box">List of animals</p>
+            {{>shelterAnimals this=animalslist}}
+        </div>
+
+        <a href="/shelters/animals/{{user.id}}" class="btn shelter-list-animals"> All shelter's animals</a>
+
+    </div>
 
 </section>
+
+
+
