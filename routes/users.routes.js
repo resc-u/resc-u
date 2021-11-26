@@ -9,23 +9,6 @@ const fileUploader = require("../config/cloudinary.config");
 
 const { isLoggedIn } = require("../middleware/userHelper");
 
-// GET /users ==> list of users
-router.route("/").get(async (req, res) => {
-  let listUsers = [];
-
-  try {
-    currentUser = req.session.loggedInUser;
-    listUsers = await User.find();
-  } catch (e) {
-    console.log("There's been an error!! ===> ", e);
-    res.render("homepage", {
-      messages: { info: "We are sorry, there has been an error." },
-    });
-  } finally {
-    res.render("users/list", { users: listUsers, currentUser });
-  }
-});
-
 /* users profile page */
 router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
   try {
@@ -33,8 +16,9 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
     const loggedInUser = req.session.loggedInUser;
 
     // find user in the DB
-    const user = await User.findOne({ username: req.params.username })
-                            .populate('favorites');
+    const user = await User.findOne({ username: req.params.username }).populate(
+      "favorites"
+    );
 
     let canEdit = false;
     if (
@@ -55,7 +39,7 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
         break;
       case "shelter":
       case "Shelter":
-        let animalslist = await Animal.find({ shelter: user.id })
+        let animalslist = await Animal.find({ shelter: user.id });
         res.render("users/shelters/profile", {
           user,
           canEdit,
@@ -102,15 +86,15 @@ router
         break;
     }
   })
-  .post( fileUploader.single('imageUrl'), isLoggedIn, async (req, res) => {
+  .post(fileUploader.single("imageUrl"), isLoggedIn, async (req, res) => {
     const currentUser = req.session.loggedInUser;
     let updatedUser = null;
 
     // if user entered an img, we set that as an avatar
-    let imageUrl = (req.file) ? req.file.path : null
+    let imageUrl = req.file ? req.file.path : null;
     // if not, we checked if he had already one
     if (imageUrl === null && currentUser.imageUrl) {
-      imageUrl = currentUser.imageUrl
+      imageUrl = currentUser.imageUrl;
     }
 
     try {
@@ -181,5 +165,22 @@ router
       });
     }
   });
+
+// GET /users ==> list of users
+router.route("/").get(async (req, res) => {
+  let listUsers = [];
+
+  try {
+    currentUser = req.session.loggedInUser;
+    listUsers = await User.find();
+  } catch (e) {
+    console.log("There's been an error!! ===> ", e);
+    res.render("homepage", {
+      messages: { info: "We are sorry, there has been an error." },
+    });
+  } finally {
+    res.render("users/list", { users: listUsers, currentUser });
+  }
+});
 
 module.exports = router;
