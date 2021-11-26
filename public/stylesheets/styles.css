@@ -99,6 +99,10 @@ header .logo {
 header .logo.loggedIn {
   display: none;
 }
+header .logout:hover {
+  color: #79663D;
+  border-bottom: solid 1px #79663D;
+}
 header .page-title {
   display: flex;
   flex-direction: column;
@@ -882,11 +886,17 @@ footer {
     width: 220px;
   }
   header .hello-user-wrapper {
-    width: 300px;
+    width: 320px;
+    justify-content: space-evenly;
   }
   header .hello-user-wrapper .logout-and-hello {
     display: flex;
     flex-direction: row;
+    width: 80%;
+    justify-content: space-around;
+  }
+  header .hello-user-wrapper .logout-and-hello .logout {
+    order: -1;
   }
 
   .section_profile {

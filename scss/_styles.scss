@@ -49,6 +49,13 @@ header {
         }
     }
 
+    .logout {
+        &:hover {
+            color: $color-green-dark;
+            border-bottom: solid 1px $color-green-dark;
+        }
+    }
+
     .page-title {
         display: flex;
         flex-direction: column;
