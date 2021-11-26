@@ -40,6 +40,15 @@ header {
     padding: 10px 20px;
     height: 80px;
 
+    .logo {
+        width: 180px;
+        margin: auto;
+
+        &.loggedIn {
+            display: none;
+        }
+    }
+
     .page-title {
         display: flex;
         flex-direction: column;
@@ -47,11 +56,8 @@ header {
         justify-content: space-evenly;
         width: 100%;
         height: 80px;
-
-        h1 {
-            margin: 0;
-        }
     }
+
 
     .menu_icon {
         width: 36px;
@@ -73,7 +79,6 @@ header {
         
         .hello_user {
             font-weight: bold;
-            margin: 0 20px;
         }
 
         .default-avatar {
@@ -86,6 +91,7 @@ header {
             height: 70px;
             border-radius: 50%;
             border: solid 2px $color-pink-light;
+            margin-left: 10px;
         }
     }
 }
@@ -105,7 +111,7 @@ nav.menu {
     transition: all 0.5s 0s ease-out;
     background-color: $color-green-light;
     border: solid 2px $color-green-medium;
-    padding: 20px 30px;
+    padding: 16px;
     width: 100vw;
     height: calc(100vh - 50px);
 
@@ -115,8 +121,8 @@ nav.menu {
         text-decoration: none;
         color: black;
         padding: 8px 0;
-        margin-left: 20px;
-        font-size: 20px;
+        margin-left: 0;
+        font-size: 16px;
 
         &:hover {
             color: $color-green-dark;
@@ -702,6 +708,18 @@ section {
 }
 
 /* ====== Shelters ======== */
+
+.shelter-list {
+    padding: 30px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .shelter {
+        width: 400px;
+        margin: 20px;
+    }
+}
+
 
 .section_profile.shelter {
     display: flex;

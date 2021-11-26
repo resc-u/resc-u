@@ -32,27 +32,34 @@ router
     try {
       const { email, password } = req.body;
       // if one of the fields is missing
-      if (!email || !password)
-        res.render("homepage", { messages: { error: "Invalid credentials" } });
+      if (!email || !password) {
+        req.flash("error", "Invalid credentials");
+        res.redirect("/");
+      }
 
       const loggedInUser = await User.findOne({ email });
 
-      if (!loggedInUser)
-        res.render("homepage", { messages: { error: "User doesn't exist!" } });
-
-      const isPwdCorrect = await bcrypt.compare(
-        password,
-        loggedInUser.password
-      );
-
-      if (isPwdCorrect) {
-        req.session.loggedInUser = loggedInUser;
-        req.flash("info", "You are logged in!");
-        redirectToProfile(req, res);
-      } else {
-        req.flash("error", "Password is incorrect!");
+      if (!loggedInUser) {
+        req.flash("error", "User doesn't exist!");
         res.redirect("/");
+
+      } else {
+
+        const isPwdCorrect = await bcrypt.compare(
+          password,
+          loggedInUser.password
+        );
+  
+        if (isPwdCorrect) {
+          req.session.loggedInUser = loggedInUser;
+          req.flash("info", "You are logged in!");
+          redirectToProfile(req, res);
+        } else {
+          req.flash("error", "Password is incorrect!");
+          res.redirect("/");
+        }
       }
+
     } catch (e) {
       console.log("There's been an error!! ===> ", e);
       res.render("homepage", {

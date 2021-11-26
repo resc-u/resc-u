@@ -14,6 +14,12 @@
         .menu_icon {
             display: none;
         }
+
+        .logo {
+            &.loggedIn {
+                display: block;
+            }
+        }
     }
 
     nav.menu {

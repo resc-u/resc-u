@@ -1,7 +1,23 @@
 @media all and (min-width: 1100px) {     
-    
+
+    header {
+        .logo {
+            width: 220px;
+        }
+        .hello-user-wrapper {
+            width: 300px;
+
+            .logout-and-hello {
+                display: flex;
+                flex-direction: row;
+            }
+        }
+
+    }
+
+
     .section_profile {
-        width: 85%;
+        width: 87%;
         margin: 0 auto;
     }
 
@@ -14,17 +30,17 @@
             padding: 30px;
 
             .animal-in-list {
-                width: 200px;
+                width: 170px;
                 margin: 0 20px 20px 20px;
     
                 .main-pic-wrapper {
-                    width: 220px;
-                    height: 220px;
+                    width: 190px;
+                    height: 190px;
                     margin-bottom: 20px;
             
                     img {
-                        width: 220px;
-                        height: 220px;
+                        width: 190px;
+                        height: 190px;
                     }
                 }
             }

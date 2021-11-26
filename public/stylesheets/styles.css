@@ -92,6 +92,13 @@ header {
   padding: 10px 20px;
   height: 80px;
 }
+header .logo {
+  width: 180px;
+  margin: auto;
+}
+header .logo.loggedIn {
+  display: none;
+}
 header .page-title {
   display: flex;
   flex-direction: column;
@@ -99,9 +106,6 @@ header .page-title {
   justify-content: space-evenly;
   width: 100%;
   height: 80px;
-}
-header .page-title h1 {
-  margin: 0;
 }
 header .menu_icon {
   width: 36px;
@@ -120,7 +124,6 @@ header .hello-user-wrapper {
 }
 header .hello-user-wrapper .hello_user {
   font-weight: bold;
-  margin: 0 20px;
 }
 header .hello-user-wrapper .default-avatar {
   height: 96%;
@@ -131,6 +134,7 @@ header .hello-user-wrapper .user-avatar {
   height: 70px;
   border-radius: 50%;
   border: solid 2px #FDEFF0;
+  margin-left: 10px;
 }
 
 nav.menu {
@@ -146,7 +150,7 @@ nav.menu {
   transition: all 0.5s 0s ease-out;
   background-color: #ECDDBD;
   border: solid 2px #CCB88D;
-  padding: 20px 30px;
+  padding: 16px;
   width: 100vw;
   height: calc(100vh - 50px);
 }
@@ -155,8 +159,8 @@ nav.menu a {
   text-decoration: none;
   color: black;
   padding: 8px 0;
-  margin-left: 20px;
-  font-size: 20px;
+  margin-left: 0;
+  font-size: 16px;
 }
 nav.menu a:hover {
   color: #79663D;
@@ -657,6 +661,16 @@ section {
 }
 
 /* ====== Shelters ======== */
+.shelter-list {
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.shelter-list .shelter {
+  width: 400px;
+  margin: 20px;
+}
+
 .section_profile.shelter {
   display: flex;
   flex-direction: column;
@@ -699,6 +713,9 @@ footer {
   }
   header .menu_icon {
     display: none;
+  }
+  header .logo.loggedIn {
+    display: block;
   }
 
   nav.menu {
@@ -861,8 +878,19 @@ footer {
   }
 }
 @media all and (min-width: 1100px) {
+  header .logo {
+    width: 220px;
+  }
+  header .hello-user-wrapper {
+    width: 300px;
+  }
+  header .hello-user-wrapper .logout-and-hello {
+    display: flex;
+    flex-direction: row;
+  }
+
   .section_profile {
-    width: 85%;
+    width: 87%;
     margin: 0 auto;
   }
 
@@ -876,19 +904,19 @@ footer {
   }
   .section_profile .animals-list .animals-grid .animal-in-list,
 .section_profile .animals-favorite .animals-grid .animal-in-list {
-    width: 200px;
+    width: 170px;
     margin: 0 20px 20px 20px;
   }
   .section_profile .animals-list .animals-grid .animal-in-list .main-pic-wrapper,
 .section_profile .animals-favorite .animals-grid .animal-in-list .main-pic-wrapper {
-    width: 220px;
-    height: 220px;
+    width: 190px;
+    height: 190px;
     margin-bottom: 20px;
   }
   .section_profile .animals-list .animals-grid .animal-in-list .main-pic-wrapper img,
 .section_profile .animals-favorite .animals-grid .animal-in-list .main-pic-wrapper img {
-    width: 220px;
-    height: 220px;
+    width: 190px;
+    height: 190px;
   }
 
   .section_profile.shelter .animals-shelter {

@@ -18,9 +18,18 @@
       </div>
 
       <div class="fields">
-          <label>Type: <br/><small>(dog, cat, turtle...)</small></label>
-          <input type="text" name="type" value="{{animal.type}}" placeholder="- which type of animal -"/>
+        <label>Type:</label>
+        <select name="type" required>
+          <option selected disabled>- which type of animal -</option>
+          <option value="dog" {{#ifEquals "dog" @root.animal.type }} selected {{/ifEquals}}>Dog</option>
+          <option value="cat" {{#ifEquals "cat" @root.animal.type }} selected {{/ifEquals}}>Cat</option>
+          <option value="turtle" {{#ifEquals "turtle" @root.animal.type }} selected {{/ifEquals}}>Turtle</option>
+          <option value="fish" {{#ifEquals "fish" @root.animal.type }} selected {{/ifEquals}}>Fish</option>
+          <option value="exoticAnimal" {{#ifEquals "exoticAnimal" @root.animal.type }} selected {{/ifEquals}}>Exotic animal</option>
+          <option value="other" {{#ifEquals "other" @root.animal.type }} selected {{/ifEquals}}>Other</option>
+        </select>
       </div>
+
 
       <div class="fields">
         <label for="sex">Sex: </label>
