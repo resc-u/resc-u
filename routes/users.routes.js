@@ -28,9 +28,8 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
       canEdit = true;
 
     // render profile page for that user
-    switch (req.params.usertype) {
+    switch (req.params.usertype.toLowerCase()) {
       case "adopter":
-      case "Adopter":
         res.render("users/adopters/profile", {
           user,
           canEdit,
@@ -38,7 +37,6 @@ router.get("/:usertype/:username", isLoggedIn, async (req, res) => {
         });
         break;
       case "shelter":
-      case "Shelter":
         let animalslist = await Animal.find({ shelter: user.id });
         res.render("users/shelters/profile", {
           user,
@@ -66,16 +64,14 @@ router
     // get user info from cookie
     const currentUser = req.session.loggedInUser;
 
-    switch (req.params.usertype) {
+    switch (req.params.usertype.toLowerCase()) {
       case "adopter":
-      case "Adopter":
         res.render("users/adopters/edit-profile", {
           user: currentUser,
           currentUser,
         });
         break;
       case "shelter":
-      case "Shelter":
         res.render("users/shelters/edit-profile", {
           user: currentUser,
           currentUser,
@@ -98,8 +94,8 @@ router
     }
 
     try {
-      switch (currentUser.usertype) {
-        case "Adopter":
+      switch (currentUser.usertype.toLowerCase()) {
+        case "adopter":
           // deconstruct body and take info from the form
           const { fullname, children, animalPreference, housingSize } =
             req.body;
@@ -109,7 +105,7 @@ router
             { new: true }
           );
           break;
-        case "Shelter":
+        case "shelter":
           // deconstruct body and take info from the form
           const { name, address, contact_phone, contact_email } = req.body;
           updatedUser = await Shelter.findByIdAndUpdate(
@@ -125,11 +121,11 @@ router
       console.log("There's been an error!! ===> ", e);
 
       let view = "";
-      switch (currentUser.usertype) {
-        case "Adopter":
+      switch (currentUser.usertype.toLowerCase()) {
+        case "adopter":
           view = "users/adopters/edit-profile";
           break;
-        case "Shelter":
+        case "shelter":
           view = "users/shelters/edit-profile";
           break;
         default:
