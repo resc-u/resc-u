@@ -6,7 +6,7 @@ const animalSchema = new Schema({
   description: { type: String, trim: true },
   type: {
     type: String,
-    enum: ["dog", "cat", "turtle", "fish", "exoticAnimal", "other"],
+    enum: ["dog", "cat", "turtle", "fish", "exotic", "other"],
     required: true,
   },
   sex: {
