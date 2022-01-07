@@ -1,5 +1,7 @@
 # resc-u
 
+[Deploy Link](https://m2-project.herokuapp.com/)
+
 Adopt an animal. Rescue yourself.
 
 ## Description
@@ -109,10 +111,4 @@ center: {type: Schema.Types.ObjectId, ref: "Shelter"}
 
 ## Links
 
-### Git
-
-The url to your repository and to your deployed project
-
-[Repository Link](http://github.com)
-
-[Deploy Link](http://heroku.com)
+[Deploy Link](https://m2-project.herokuapp.com/)
