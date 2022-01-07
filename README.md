@@ -1,6 +1,6 @@
-# resc-u
+# [resc-u](https://resc-u-app.herokuapp.com/)
 
-[Adopt an animal. Rescue yourself.](https://resc-u-app.herokuapp.com/)
+Adopt an animal. Rescue yourself.
 
 
 ## Description
