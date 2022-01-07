@@ -116,9 +116,3 @@ The url to your repository and to your deployed project
 [Repository Link](http://github.com)
 
 [Deploy Link](http://heroku.com)
-
-### Slides
-
-The url to your presentation slides
-
-[Slides Link](http://slides.com)
