@@ -1,8 +1,7 @@
 # resc-u
 
-[Deploy Link](https://m2-project.herokuapp.com/)
+[Adopt an animal. Rescue yourself.](https://resc-u-app.herokuapp.com/)
 
-Adopt an animal. Rescue yourself.
 
 ## Description
 
@@ -111,4 +110,4 @@ center: {type: Schema.Types.ObjectId, ref: "Shelter"}
 
 ## Links
 
-[Deploy Link](https://m2-project.herokuapp.com/)
+[Deploy Link](https://resc-u-app.herokuapp.com/)
